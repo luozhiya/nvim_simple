@@ -26,11 +26,19 @@ map({ 'i', 'n' }, '<esc>', '<cmd>noh<cr><esc>', { desc = 'Escape and clear hlsea
 map('n', '<C-j>', '15gj')
 map('n', '<C-k>', '15gk')
 
+map('n', '<c-p>', [[<cmd>Telescope buffers show_all_buffers=true theme=get_dropdown<cr>]])
+
+vim.cmd([[
+  command -nargs=+ LspHover lua vim.lsp.buf.hover()
+  set keywordprg=:LspHover    
+]])
 M.lsp = {
   { 'gd', vim.lsp.buf.definition, desc = 'Goto Definition' },
-  { 'K', vim.lsp.buf.hover, desc = 'Hover' },
+  -- { 'K', vim.lsp.buf.hover, desc = 'Hover' },
   { 'gn', vim.lsp.buf.rename, desc = 'Rename' },
   { 'ga', vim.lsp.buf.code_action, desc = 'Code Action' },
+  { '[d', vim.diagnostic.goto_prev, desc = 'Goto Diagnostic Prev' },
+  { ']d', vim.diagnostic.goto_next, desc = 'Goto Diagnostic Next' },
 }
 
 M.cmp = function(cmp)
