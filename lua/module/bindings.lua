@@ -70,21 +70,46 @@ M.cmp = function(cmp)
 end
 
 M.aerial = function(buffer)
-  map('n', '{', '<cmd>AerialPrev<CR>', { buffer = buffer })
-  map('n', '}', '<cmd>AerialNext<CR>', { buffer = buffer })
+  map('n', '{', '<cmd>AerialPrev<cr>', { buffer = buffer })
+  map('n', '}', '<cmd>AerialNext<cr>', { buffer = buffer })
+end
+
+M.toggleterm = function()
+  return {
+    open_mapping = [[<c-\>]],
+    on_open = function(buffer)
+      map('n', 'q', '<cmd>close<CR>', { noremap = true, silent = true, buffer = buffer })
+    end,
+  }
 end
 
 M.wk = function()
   return {
-    ['a'] = { '<cmd>AerialToggle!<CR>', 'Toggle aerial' },
-    ['o'] = { '<cmd>:e! $MYVIMRC<cr>', 'Edit config' },
+    ['o'] = { '<cmd>e! $MYVIMRC<cr>', 'Edit config' },
     ['f'] = { "<cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown{previewer = false})<cr>", 'Find files' },
     l = {
       name = 'LSP',
       i = { '<cmd>LspInfo<cr>', 'Info' },
-      d = { '<cmd>Telescope diagnostics bufnr=0<cr>', 'Document Diagnostics' },
       f = { '<cmd>lua vim.lsp.buf.format{async=true}<cr>', 'Format' },
-      h = { '<esc>:ClangdSwitchSourceHeader<cr>', 'Switch C/C++ header/source' },
+      h = { '<cmd>ClangdSwitchSourceHeader<cr>', 'Switch C/C++ header/source' },
+    },
+    g = {
+      name = 'Git',
+      l = { '<cmd>ToggleTerminalLazyGit<cr>', 'Lazygit' },
+      g = { '<cmd>ToggleTerminalGitUI<cr>', 'GitUI' },
+    },
+    t = {
+      name = 'Telescope',
+      d = { '<cmd>Telescope diagnostics bufnr=0<cr>', 'Document Diagnostics' },
+      a = { '<cmd>Telescope aerial bufnr=0<cr>', 'Document Aerial Outline' },
+    },
+    e = {
+      name = 'Terminal',
+      h = { '<cmd>ToggleTerm direction=horizontal<cr>', 'Terminal Horizontal' },
+      f = { '<cmd>ToggleTerm direction=float<cr>', 'Terminal Floating' },
+    },
+    r = {
+      name = 'Run',
     },
   }
 end

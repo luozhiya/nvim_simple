@@ -1,12 +1,13 @@
 return {
   -- Framework
   { 'folke/tokyonight.nvim' },
-  { 'nvim-treesitter/nvim-treesitter' },
-  { 'nvim-lua/plenary.nvim' },
-  { 'nvim-telescope/telescope.nvim' },
   { 'stevearc/aerial.nvim' },
   { 'lewis6991/gitsigns.nvim' },
   { 'folke/which-key.nvim' },
+  { 'akinsho/toggleterm.nvim' },
+  { 'nvim-treesitter/nvim-treesitter' },
+  { 'nvim-lua/plenary.nvim' },
+  { 'nvim-telescope/telescope.nvim' },
 
   -- C++ Coding LSP/Complete
   { 'neovim/nvim-lspconfig' },
