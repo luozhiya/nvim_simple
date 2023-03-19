@@ -47,6 +47,7 @@ if plugin_installed('nvim-telescope/telescope.nvim') then
       file_browser = {
         -- theme = 'ivy',
         hijack_netrw = true,
+        mappings = bindings.telescope_file_browser(telescope.extensions.file_browser.actions),
       },
     },
   })
@@ -143,22 +144,7 @@ if plugin_installed('nvim-tree/nvim-tree.lua') then
     view = {
       adaptive_size = false,
       preserve_window_proportions = true,
-      mappings = {
-        list = {
-          {
-            key = '<c-f>',
-            action_cb = function()
-              return launch_telescope_ontree('find_files')
-            end,
-          },
-          {
-            key = '<c-g>',
-            action_cb = function()
-              return launch_telescope_ontree('live_grep')
-            end,
-          },
-        },
-      },
+      mappings = bindings.tree(launch_telescope_ontree),
     },
   })
   vim.api.nvim_create_user_command('TelescopeFindInTreeNode', function()
@@ -170,10 +156,6 @@ if plugin_installed('nvim-tree/nvim-tree.lua') then
 
   if plugin_installed('anuvyklack/hydra.nvim') then
     local api = require('nvim-tree.api')
-    local function change_root_to_global_cwd()
-      local global_cwd = vim.fn.getcwd()
-      api.tree.change_root(global_cwd)
-    end
     local hint = [[
 _w_: cd CWD   _c_: Path yank    _/_: Filter
 _y_: Copy     _x_: Cut          _p_: Paste
@@ -200,7 +182,7 @@ _h_: Hidden   _?_: Help
         mode = 'n',
         body = 'H',
         heads = {
-          { 'w', change_root_to_global_cwd, { silent = true } },
+          { 'w', api.tree.change_root(vim.fn.getcwd()), { silent = true } },
           { 'c', api.fs.copy.absolute_path, { silent = true } },
           { '/', api.live_filter.start, { silent = true } },
           { 'y', api.fs.copy.node, { silent = true } },
@@ -211,7 +193,6 @@ _h_: Hidden   _?_: Help
           { 'n', api.fs.create, { silent = true } },
           { 'h', api.tree.toggle_hidden_filter, { silent = true } },
           { '?', api.tree.toggle_help, { silent = true } },
-          -- { "q", nil, { exit = true, nowait = true } },
         },
       })
       nvim_tree_hydra:activate()
@@ -239,6 +220,9 @@ if plugin_installed('stevearc/dressing.nvim') then
       prompt_align = 'center',
       relative = 'editor',
       prefer_width = 0.6,
+      win_options = {
+        winblend = 0, -- Window transparency (0-100)
+      },
     },
     select = {
       enabled = false,

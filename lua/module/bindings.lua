@@ -26,7 +26,8 @@ map({ 'i', 'n' }, '<esc>', '<cmd>noh<cr><esc>', { desc = 'Escape and clear hlsea
 map('n', '<C-j>', '15gj')
 map('n', '<C-k>', '15gk')
 
-map('n', '<c-p>', [[<cmd>Telescope buffers show_all_buffers=true theme=get_dropdown<cr>]])
+map('n', '<c-p>', '<cmd>Telescope buffers show_all_buffers=true theme=get_dropdown previewer=false<cr>')
+map('n', '<c-s-p>', '<cmd>Telescope commands<cr>')
 
 vim.cmd([[
   command -nargs=+ LspHover lua vim.lsp.buf.hover()
@@ -86,6 +87,7 @@ end
 M.wk = function()
   return {
     ['o'] = { '<cmd>e! $MYVIMRC<cr>', 'Edit config' },
+    ['q'] = { '<cmd>qa<CR>', 'Quit All' },
     ['f'] = { "<cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown{previewer = false})<cr>", 'Find files' },
     l = {
       name = 'LSP',
@@ -111,10 +113,12 @@ M.wk = function()
       u = { '<cmd>Telescope undo bufnr=0<cr>', 'Undo Tree' },
       p = { '<cmd>Telescope projects<cr>', 'Projects' },
       o = { '<cmd>Telescope oldfiles<cr>', 'Recently Used Files' },
-      O = { '<cmd>Telescope frecency<cr>', 'Mozilla Frecency algorithm' },
+      O = { '<cmd>Telescope frecency<cr>', 'Mozilla Frecency Algorithm' },
       l = { '<cmd>Telescope live_grep<cr>', 'Find Text' },
       L = { '<cmd>Telescope live_grep_args<cr>', 'Find Text Args' },
       f = { '<cmd>Telescope file_browser<cr>', 'File Browser' },
+      s = { '<cmd>Telescope lsp_document_symbols<cr>', 'Document Symbols' },
+      S = { '<cmd>Telescope lsp_dynamic_workspace_symbols<cr>', 'Workspace Symbols' },
     },
     e = {
       name = 'Terminal',
@@ -132,6 +136,39 @@ M.wk = function()
       p = { '<cmd>Lazy profile<cr>', 'Lazy Profile' },
       u = { '<cmd>Lazy update<cr>', 'Lazy Update' },
       c = { '<cmd>Lazy clean<cr>', 'Lazy Clean' },
+    },
+  }
+end
+
+M.telescope_file_browser = function(fb_actions)
+  return {
+    i = {
+      ['<c-n>'] = fb_actions.create,
+      ['<c-r>'] = fb_actions.rename,
+      ['<c-h>'] = fb_actions.toggle_hidden,
+      ['<c-x>'] = fb_actions.remove,
+      ['<c-p>'] = fb_actions.move,
+      ['<c-y>'] = fb_actions.copy,
+      ['<c-a>'] = fb_actions.select_all,
+    },
+  }
+end
+
+M.tree = function(fx)
+  return {
+    list = {
+      {
+        key = '<c-f>',
+        action_cb = function()
+          return fx('find_files')
+        end,
+      },
+      {
+        key = '<c-g>',
+        action_cb = function()
+          return fx('live_grep')
+        end,
+      },
     },
   }
 end
