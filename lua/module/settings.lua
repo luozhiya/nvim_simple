@@ -44,6 +44,10 @@ if plugin_installed('nvim-telescope/telescope.nvim') then
         override_file_sorter = true, -- override the file sorter
         case_mode = 'smart_case', -- or "ignore_case" or "respect_case" -- the default case_mode is "smart_case"
       },
+      file_browser = {
+        -- theme = 'ivy',
+        hijack_netrw = true,
+      },
     },
   })
   telescope.load_extension('ui-select')
@@ -51,6 +55,7 @@ if plugin_installed('nvim-telescope/telescope.nvim') then
   telescope.load_extension('fzf')
   telescope.load_extension('frecency')
   telescope.load_extension('live_grep_args')
+  telescope.load_extension('file_browser')
 end
 
 if plugin_installed('lewis6991/gitsigns.nvim') then
@@ -117,6 +122,9 @@ if plugin_installed('nvim-tree/nvim-tree.lua') then
     sort_by = 'case_sensitive',
     sync_root_with_cwd = true,
     respect_buf_cwd = true,
+    hijack_directories = {
+      enable = false,
+    },
     update_focused_file = {
       enable = true,
       update_root = true,
