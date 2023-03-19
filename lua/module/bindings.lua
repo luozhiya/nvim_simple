@@ -108,6 +108,7 @@ M.wk = function()
       name = 'Telescope',
       d = { '<cmd>Telescope diagnostics bufnr=0<cr>', 'Document Diagnostics' },
       a = { '<cmd>Telescope aerial bufnr=0<cr>', 'Document Aerial Outline' },
+      p = { "<cmd>lua require('telescope').extensions.projects.projects()<cr>", 'Projects' },
     },
     e = {
       name = 'Terminal',
@@ -115,7 +116,9 @@ M.wk = function()
       f = { '<cmd>ToggleTerm direction=float<cr>', 'Terminal Floating' },
     },
     r = {
-      name = 'Run',
+      name = 'Tree',
+      e = { '<cmd>NvimTreeToggle<cr>', 'Tree Explorer' },
+      f = { '<cmd>NvimTreeFindFile<cr>', 'Tree Find' },
     },
     z = {
       name = 'Lazy',

@@ -11,6 +11,9 @@ return {
   { 'nvim-telescope/telescope-ui-select.nvim' },
   { 'nvim-telescope/telescope-fzf-native.nvim' },
   { 'nvim-tree/nvim-tree.lua' },
+  { 'anuvyklack/hydra.nvim' },
+  { 'stevearc/dressing.nvim' },
+  { 'ahmedkhalf/project.nvim' },
 
   -- C++ Coding LSP/Complete
   { 'neovim/nvim-lspconfig' },
