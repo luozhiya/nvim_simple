@@ -10,36 +10,41 @@ vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagn
 })
 
 local bindings = require('module.bindings')
-local cmp = require('cmp')
-cmp.setup({
-  sources = {
-    { name = 'nvim_lsp' },
-  },
-  formatting = {
-    fields = { 'kind', 'abbr', 'menu' },
-    format = function(entry, vim_item)
-      vim_item.menu = ({
-        nvim_lsp = '[LSP]',
-      })[entry.source.name]
-      local ellipsis = '…'
-      local label = 45
-      local fill_ws = function(max, len)
-        return (' '):rep(max - len)
-      end
-      local content = vim_item.abbr
-      if #content > label then
-        vim_item.abbr = vim.fn.strcharpart(content, 0, label) .. ellipsis
-      else
-        vim_item.abbr = content .. fill_ws(label, #content)
-      end
-      return vim_item
-    end,
-  },
-  mapping = bindings.cmp(cmp),
-})
+local plugin_installed = require('module.base').plugin_installed
 
-require('clangd_extensions').setup({
-  server = {
+if plugin_installed('hrsh7th/nvim-cmp') then
+  local cmp = require('cmp')
+  cmp.setup({
+    sources = {
+      { name = 'nvim_lsp' },
+    },
+    formatting = {
+      fields = { 'kind', 'abbr', 'menu' },
+      format = function(entry, vim_item)
+        vim_item.menu = ({
+          nvim_lsp = '[LSP]',
+        })[entry.source.name]
+        local ellipsis = '…'
+        local label = 45
+        local fill_ws = function(max, len)
+          return (' '):rep(max - len)
+        end
+        local content = vim_item.abbr
+        if #content > label then
+          vim_item.abbr = vim.fn.strcharpart(content, 0, label) .. ellipsis
+        else
+          vim_item.abbr = content .. fill_ws(label, #content)
+        end
+        return vim_item
+      end,
+    },
+    mapping = bindings.cmp(cmp),
+  })
+end
+
+local lsp_config = {}
+if plugin_installed('p00f/clangd_extensions.nvim') then
+  lsp_config = {
     -- cmd = {
     --   'clangd',
     --   "-j=16",
@@ -56,11 +61,28 @@ require('clangd_extensions').setup({
       end
     end,
     capabilities = (function()
-      local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
-      capabilities.textDocument.completion.completionItem.snippetSupport = false
-      return capabilities
+      if plugin_installed('hrsh7th/nvim-cmp') then
+        local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+        capabilities.textDocument.completion.completionItem.snippetSupport = false
+        return capabilities
+      else
+        return vim.lsp.protocol.make_client_capabilities()
+      end
     end)(),
-  },
-})
+  }
+end
 
-require('lsp_signature').setup({})
+if plugin_installed('ms-jpq/coq_nvim') then
+  local coq = require('coq')
+  lsp_config = coq.lsp_ensure_capabilities(lsp_config)
+end
+
+if plugin_installed('p00f/clangd_extensions.nvim') then
+  require('clangd_extensions').setup({
+    server = lsp_config,
+  })
+end
+
+if plugin_installed('ray-x/lsp_signature.nvim') then
+  require('lsp_signature').setup({})
+end

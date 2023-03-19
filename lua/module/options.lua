@@ -58,6 +58,7 @@ local opts = {
   clipboard = 'unnamedplus', -- allows neovim to access the system clipboard
   completeopt = { 'menu', 'menuone', 'noselect' },
   autoread = true,
+  guifont = 'InconsolataGo Nerd Font',
   shortmess = {
     t = true, -- truncate file messages at start
     A = true, -- ignore annoying swap file messages
