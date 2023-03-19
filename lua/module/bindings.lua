@@ -30,11 +30,11 @@ map('n', '<c-p>', [[<cmd>Telescope buffers show_all_buffers=true theme=get_dropd
 
 vim.cmd([[
   command -nargs=+ LspHover lua vim.lsp.buf.hover()
-  set keywordprg=:LspHover    
+  set keywordprg=:LspHover
 ]])
 M.lsp = {
   { 'gd', vim.lsp.buf.definition, desc = 'Goto Definition' },
-  -- { 'K', vim.lsp.buf.hover, desc = 'Hover' },
+  { 'gh', vim.lsp.buf.hover, desc = 'Hover' },
   { 'gn', vim.lsp.buf.rename, desc = 'Rename' },
   { 'ga', vim.lsp.buf.code_action, desc = 'Code Action' },
   { '[d', vim.diagnostic.goto_prev, desc = 'Goto Diagnostic Prev' },
@@ -116,6 +116,13 @@ M.wk = function()
     },
     r = {
       name = 'Run',
+    },
+    z = {
+      name = 'Lazy',
+      i = { '<cmd>Lazy<cr>', 'Lazy Dashboard' },
+      p = { '<cmd>Lazy profile<cr>', 'Lazy Profile' },
+      u = { '<cmd>Lazy update<cr>', 'Lazy Update' },
+      c = { '<cmd>Lazy clean<cr>', 'Lazy Clean' },
     },
   }
 end
