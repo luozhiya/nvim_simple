@@ -109,6 +109,7 @@ M.wk = function()
       d = { '<cmd>Telescope diagnostics bufnr=0<cr>', 'Document Diagnostics' },
       a = { '<cmd>Telescope aerial bufnr=0<cr>', 'Document Aerial Outline' },
       p = { "<cmd>lua require('telescope').extensions.projects.projects()<cr>", 'Projects' },
+      u = { '<cmd>Telescope undo bufnr=0<cr>', 'Undo Tree' },
     },
     e = {
       name = 'Terminal',

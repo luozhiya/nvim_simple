@@ -10,6 +10,7 @@ return {
   { 'nvim-telescope/telescope.nvim' },
   { 'nvim-telescope/telescope-ui-select.nvim' },
   { 'nvim-telescope/telescope-fzf-native.nvim' },
+  { 'debugloop/telescope-undo.nvim'},
   { 'nvim-tree/nvim-tree.lua' },
   { 'anuvyklack/hydra.nvim' },
   { 'stevearc/dressing.nvim' },
