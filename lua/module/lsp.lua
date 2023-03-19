@@ -41,8 +41,10 @@ cmp.setup({
 require('clangd_extensions').setup({
   server = {
     on_attach = function(client, buffer)
-      for _, keys in pairs(bindings.lsp) do
-        bindings.map(keys.mode or 'n', keys[1], keys[2], { noremap = true, silent = true, buffer = buffer })
+      if vim.api.nvim_buf_is_valid(buffer) then
+        for _, keys in pairs(bindings.lsp) do
+          bindings.map(keys.mode or 'n', keys[1], keys[2], { noremap = true, silent = true, buffer = buffer })
+        end
       end
     end,
     capabilities = (function()
