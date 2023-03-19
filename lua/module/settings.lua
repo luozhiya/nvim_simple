@@ -50,6 +50,7 @@ if plugin_installed('nvim-telescope/telescope.nvim') then
   telescope.load_extension('undo')
   telescope.load_extension('fzf')
   telescope.load_extension('frecency')
+  telescope.load_extension('live_grep_args')
 end
 
 if plugin_installed('lewis6991/gitsigns.nvim') then

@@ -12,6 +12,7 @@ return {
   { 'nvim-telescope/telescope-fzf-native.nvim' },
   { 'debugloop/telescope-undo.nvim' },
   { 'nvim-telescope/telescope-frecency.nvim' },
+  { 'nvim-telescope/telescope-live-grep-args.nvim'},
   { 'nvim-tree/nvim-tree.lua' },
   { 'anuvyklack/hydra.nvim' },
   { 'stevearc/dressing.nvim' },

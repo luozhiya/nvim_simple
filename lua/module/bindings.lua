@@ -112,7 +112,8 @@ M.wk = function()
       p = { "<cmd>Telescope projects<cr>", 'Projects' },
       o = { '<cmd>Telescope oldfiles<cr>', 'Recently Used Files' },
       f = { '<cmd>Telescope frecency<cr>', 'Mozilla Frecency algorithm' },
-      l = { '<cmd>Telescope live_grep<cr>', 'Find text' },
+      l = { '<cmd>Telescope live_grep<cr>', 'Find Text' },
+      s = { '<cmd>Telescope live_grep_args<cr>', 'Find Text Args' },
     },
     e = {
       name = 'Terminal',
