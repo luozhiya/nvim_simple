@@ -38,8 +38,6 @@ if plugin_installed('nvim-telescope/telescope.nvim') then
       ['ui-select'] = {
         require('telescope.themes').get_dropdown({}),
       },
-      undo = {
-      },
       fzf = {
         fuzzy = true, -- false will only do exact matching
         override_generic_sorter = true, -- override the generic sorter
@@ -49,8 +47,9 @@ if plugin_installed('nvim-telescope/telescope.nvim') then
     },
   })
   telescope.load_extension('ui-select')
-  telescope.load_extension("undo")
+  telescope.load_extension('undo')
   telescope.load_extension('fzf')
+  telescope.load_extension('frecency')
 end
 
 if plugin_installed('lewis6991/gitsigns.nvim') then

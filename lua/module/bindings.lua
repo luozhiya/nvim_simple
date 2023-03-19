@@ -108,8 +108,11 @@ M.wk = function()
       name = 'Telescope',
       d = { '<cmd>Telescope diagnostics bufnr=0<cr>', 'Document Diagnostics' },
       a = { '<cmd>Telescope aerial bufnr=0<cr>', 'Document Aerial Outline' },
-      p = { "<cmd>lua require('telescope').extensions.projects.projects()<cr>", 'Projects' },
       u = { '<cmd>Telescope undo bufnr=0<cr>', 'Undo Tree' },
+      p = { "<cmd>Telescope projects<cr>", 'Projects' },
+      o = { '<cmd>Telescope oldfiles<cr>', 'Recently Used Files' },
+      f = { '<cmd>Telescope frecency<cr>', 'Mozilla Frecency algorithm' },
+      l = { '<cmd>Telescope live_grep<cr>', 'Find text' },
     },
     e = {
       name = 'Terminal',

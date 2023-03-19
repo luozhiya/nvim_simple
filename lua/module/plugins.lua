@@ -10,11 +10,13 @@ return {
   { 'nvim-telescope/telescope.nvim' },
   { 'nvim-telescope/telescope-ui-select.nvim' },
   { 'nvim-telescope/telescope-fzf-native.nvim' },
-  { 'debugloop/telescope-undo.nvim'},
+  { 'debugloop/telescope-undo.nvim' },
+  { 'nvim-telescope/telescope-frecency.nvim' },
   { 'nvim-tree/nvim-tree.lua' },
   { 'anuvyklack/hydra.nvim' },
   { 'stevearc/dressing.nvim' },
   { 'ahmedkhalf/project.nvim' },
+  { 'kkharji/sqlite.lua' },
 
   -- C++ Coding LSP/Complete
   { 'neovim/nvim-lspconfig' },
