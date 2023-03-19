@@ -15,6 +15,7 @@ return {
   -- C++ Coding LSP/Complete
   { 'neovim/nvim-lspconfig' },
   { 'p00f/clangd_extensions.nvim' },
+  { 'ray-x/lsp_signature.nvim' },
   { 'hrsh7th/nvim-cmp' },
   { 'hrsh7th/cmp-nvim-lsp' },
 }

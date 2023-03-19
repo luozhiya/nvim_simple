@@ -40,11 +40,19 @@ cmp.setup({
 
 require('clangd_extensions').setup({
   server = {
+    -- cmd = {
+    --   'clangd',
+    --   "-j=16",
+    --   "--background-index",
+    --   '--offset-encoding=utf-32',
+    --   "--all-scopes-completion",
+    --   "--completion-style=detailed",
+    --   "--header-insertion=iwyu",
+    -- },
+    filetypes = { 'c', 'cpp' },
     on_attach = function(client, buffer)
-      if vim.api.nvim_buf_is_valid(buffer) then
-        for _, keys in pairs(bindings.lsp) do
-          bindings.map(keys.mode or 'n', keys[1], keys[2], { noremap = true, silent = true, buffer = buffer })
-        end
+      for _, keys in pairs(bindings.lsp) do
+        bindings.map(keys.mode or 'n', keys[1], keys[2], { noremap = true, silent = true, buffer = buffer })
       end
     end,
     capabilities = (function()
@@ -54,3 +62,5 @@ require('clangd_extensions').setup({
     end)(),
   },
 })
+
+require('lsp_signature').setup({})

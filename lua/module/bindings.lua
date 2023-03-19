@@ -91,7 +91,13 @@ M.wk = function()
       name = 'LSP',
       i = { '<cmd>LspInfo<cr>', 'Info' },
       f = { '<cmd>lua vim.lsp.buf.format{async=true}<cr>', 'Format' },
+    },
+    c = {
+      name = 'Clangd',
+      a = { '<cmd>ClangAST<cr>', 'Clang AST' },
+      t = { '<cmd>ClangdTypeHierarchy<cr>', 'Clang Type Hierarchy' },
       h = { '<cmd>ClangdSwitchSourceHeader<cr>', 'Switch C/C++ header/source' },
+      m = { '<cmd>ClangdMemoryUsage<cr>', 'Clangd Memory Usage' },
     },
     g = {
       name = 'Git',
