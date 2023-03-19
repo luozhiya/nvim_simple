@@ -42,44 +42,25 @@ if plugin_installed('hrsh7th/nvim-cmp') then
   })
 end
 
-local lsp_config = {}
-if plugin_installed('p00f/clangd_extensions.nvim') then
-  lsp_config = {
-    -- cmd = {
-    --   'clangd',
-    --   "-j=16",
-    --   "--background-index",
-    --   '--offset-encoding=utf-32',
-    --   "--all-scopes-completion",
-    --   "--completion-style=detailed",
-    --   "--header-insertion=iwyu",
-    -- },
-    filetypes = { 'c', 'cpp' },
-    on_attach = function(client, buffer)
-      for _, keys in pairs(bindings.lsp) do
-        bindings.map(keys.mode or 'n', keys[1], keys[2], { noremap = true, silent = true, buffer = buffer })
-      end
-    end,
-    capabilities = (function()
-      if plugin_installed('hrsh7th/nvim-cmp') then
-        local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
-        capabilities.textDocument.completion.completionItem.snippetSupport = false
-        return capabilities
-      else
-        return vim.lsp.protocol.make_client_capabilities()
-      end
-    end)(),
-  }
-end
-
-if plugin_installed('ms-jpq/coq_nvim') then
-  local coq = require('coq')
-  lsp_config = coq.lsp_ensure_capabilities(lsp_config)
-end
-
 if plugin_installed('p00f/clangd_extensions.nvim') then
   require('clangd_extensions').setup({
-    server = lsp_config,
+    server = {
+      filetypes = { 'c', 'cpp' },
+      on_attach = function(client, buffer)
+        for _, keys in pairs(bindings.lsp) do
+          bindings.map(keys.mode or 'n', keys[1], keys[2], { noremap = true, silent = true, buffer = buffer })
+        end
+      end,
+      capabilities = (function()
+        if plugin_installed('hrsh7th/nvim-cmp') then
+          local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+          capabilities.textDocument.completion.completionItem.snippetSupport = false
+          return capabilities
+        else
+          return vim.lsp.protocol.make_client_capabilities()
+        end
+      end)(),
+    },
   })
 end
 

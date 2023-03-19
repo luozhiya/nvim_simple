@@ -16,7 +16,6 @@ return {
   { 'neovim/nvim-lspconfig' },
   { 'p00f/clangd_extensions.nvim' },
   { 'ray-x/lsp_signature.nvim' },
-  -- { 'ms-jpq/coq_nvim' },
   { 'hrsh7th/nvim-cmp' },
   { 'hrsh7th/cmp-nvim-lsp' },
 }
