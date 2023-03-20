@@ -8,4 +8,11 @@ M.plugin_installed = function(name)
   end
 end
 
+M.is_windows = function()
+  return vim.loop.os_uname().sysname == 'Windows_NT'
+end
+M.is_linux = function()
+  return vim.loop.os_uname().sysname == 'Linux'
+end
+
 return M

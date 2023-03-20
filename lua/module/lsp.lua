@@ -40,6 +40,24 @@ if plugin_installed('hrsh7th/nvim-cmp') then
     },
     mapping = bindings.cmp(cmp),
   })
+  require('cmp_cmdline')
+  cmp.setup.cmdline('/', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = { { name = 'buffer' } },
+  })
+  cmp.setup.cmdline(':', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = cmp.config.sources({
+      { name = 'path' },
+    }, {
+      {
+        name = 'cmdline',
+        option = {
+          ignore_cmds = { 'Man', '!' },
+        },
+      },
+    }),
+  })
 end
 
 if plugin_installed('p00f/clangd_extensions.nvim') then

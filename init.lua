@@ -12,7 +12,6 @@ if not vim.loop.fs_stat(opt.lazypath) then
 end
 require('lazy').setup('module.plugins', {
   root = opt.root,
-  defaults = { lazy = true },
   concurrency = 2,
 })
 

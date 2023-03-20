@@ -1,5 +1,9 @@
 require('module.bindings')
 
+vim.g.neovide_remember_window_size = true
+vim.g.neovide_refresh_rate_idle = 240
+vim.g.neovide_no_idle = true
+
 vim.g.loaded_python3_provider = 0
 vim.g.loaded_ruby_provider = 0
 vim.g.loaded_perl_provider = 0
@@ -58,7 +62,7 @@ local opts = {
   clipboard = 'unnamedplus', -- allows neovim to access the system clipboard
   completeopt = { 'menu', 'menuone', 'noselect' },
   autoread = true,
-  guifont = 'InconsolataGo Nerd Font',
+  guifont = 'InconsolataGo Nerd Font:h12',
   shortmess = {
     t = true, -- truncate file messages at start
     A = true, -- ignore annoying swap file messages
@@ -74,7 +78,11 @@ local opts = {
   },
   timeout = true,
   timeoutlen = 500, -- the timeout when WhichKey opens is controlled by the vim setting timeoutlen.
+  wildmode = 'full',
 }
+if require('module.base').is_windows() then
+  opts.guifont = 'InconsolataGo Nerd Font:h16'
+end
 for k, v in pairs(opts) do
   vim.opt[k] = v
 end
