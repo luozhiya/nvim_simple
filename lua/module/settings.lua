@@ -7,7 +7,7 @@ end
 
 if plugin_installed('nvim-treesitter/nvim-treesitter') then
   require('nvim-treesitter.configs').setup({
-    ensure_installed = { 'cpp', 'c', 'lua' },
+    ensure_installed = { 'cpp', 'c', 'lua', 'cmake' },
   })
 end
 

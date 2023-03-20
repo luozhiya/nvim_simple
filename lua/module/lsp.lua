@@ -1,3 +1,6 @@
+local bindings = require('module.bindings')
+local plugin_installed = require('module.base').plugin_installed
+
 vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
   border = 'rounded',
   width = 60,
@@ -9,8 +12,10 @@ vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagn
   underline = true,
 })
 
-local bindings = require('module.bindings')
-local plugin_installed = require('module.base').plugin_installed
+if plugin_installed('williamboman/mason.nvim') then
+  require('mason').setup({})
+  require('mason-lspconfig').setup({})
+end
 
 if plugin_installed('hrsh7th/nvim-cmp') then
   local cmp = require('cmp')
@@ -70,27 +75,48 @@ if plugin_installed('hrsh7th/nvim-cmp') then
   })
 end
 
+local lsp_on_attach = function(client, buffer)
+  for _, keys in pairs(bindings.lsp) do
+    bindings.map(keys.mode or 'n', keys[1], keys[2], { noremap = true, silent = true, buffer = buffer })
+  end
+end
+
+local lsp_capabilities = (function()
+  local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+  capabilities.textDocument.completion.completionItem.snippetSupport = true
+  capabilities.textDocument.completion.completionItem.resolveSupport = {
+    properties = { 'documentation', 'detail', 'additionalTextEdits' },
+  }
+  return capabilities
+end)()
+
 if plugin_installed('p00f/clangd_extensions.nvim') then
   require('clangd_extensions').setup({
     server = {
       filetypes = { 'c', 'cpp' },
-      on_attach = function(client, buffer)
-        for _, keys in pairs(bindings.lsp) do
-          bindings.map(keys.mode or 'n', keys[1], keys[2], { noremap = true, silent = true, buffer = buffer })
-        end
-      end,
-      capabilities = (function()
-        local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
-        capabilities.textDocument.completion.completionItem.snippetSupport = true
-        capabilities.textDocument.completion.completionItem.resolveSupport = {
-          properties = { 'documentation', 'detail', 'additionalTextEdits' },
-        }
-        return capabilities
-      end)(),
+      on_attach = lsp_on_attach,
+      capabilities = lsp_capabilities,
     },
+  })
+end
+
+if plugin_installed('folke/neodev.nvim') then
+  require('neodev').setup({})
+  require('lspconfig').lua_ls.setup({
+    on_attach = lsp_on_attach,
+    capabilities = lsp_capabilities,
   })
 end
 
 if plugin_installed('ray-x/lsp_signature.nvim') then
   require('lsp_signature').setup({})
+end
+
+if plugin_installed('j-hui/fidget.nvim') then
+  vim.cmd([[highlight FidgetTitle ctermfg=110 guifg=#0887c7]])
+  vim.cmd([[highlight FidgetTask ctermfg=110 guifg=#0887c7]])
+  require('fidget').setup({
+    text = { done = '' },
+    window = { blend = 0 },
+  })
 end

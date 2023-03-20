@@ -29,6 +29,8 @@ map('n', '<C-k>', '15gk')
 map('n', '<c-p>', '<cmd>Telescope buffers show_all_buffers=true theme=get_dropdown previewer=false<cr>')
 map('n', '<c-s-p>', '<cmd>Telescope commands<cr>')
 
+map('n', '<cr>', '<cmd>FineCmdline<cr>', { noremap = true })
+
 vim.cmd([[
   command -nargs=+ LspHover lua vim.lsp.buf.hover()
   set keywordprg=:LspHover

@@ -26,10 +26,16 @@ return {
   { 'L3MON4D3/LuaSnip' },
   { 'saadparwaiz1/cmp_luasnip' },
   { 'windwp/nvim-autopairs' },
+  { 'williamboman/mason.nvim' },
+  { 'williamboman/mason-lspconfig.nvim' },
+  { 'j-hui/fidget.nvim' },
+  { 'MunifTanjim/nui.nvim' },
+  { 'VonHeikemen/fine-cmdline.nvim' },
 
-  -- C++ Coding LSP/Complete
+  -- Core Coding LSP/Complete
   { 'neovim/nvim-lspconfig' },
   { 'p00f/clangd_extensions.nvim' },
   { 'ray-x/lsp_signature.nvim' },
   { 'hrsh7th/cmp-nvim-lsp' },
+  { 'folke/neodev.nvim' },
 }
