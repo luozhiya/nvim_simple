@@ -43,14 +43,29 @@ M.lsp = {
 }
 
 M.cmp = function(cmp)
-  local loop = function(forward)
-    return cmp.mapping(function(fallback)
+  local forward = function()
+    local has_words_before = function()
+      local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+      return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
+    end
+    return cmp.mapping(function()
       if cmp.visible() then
-        if forward then
-          cmp.select_next_item()
-        else
-          cmp.select_prev_item()
-        end
+        cmp.select_next_item()
+      elseif require('luasnip').expand_or_jumpable() then
+        require('luasnip').expand_or_jump()
+      elseif has_words_before() then
+        cmp.complete()
+      else
+        fallback()
+      end
+    end, { 'i', 's' })
+  end
+  local backward = function()
+    return cmp.mapping(function()
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif require('luasnip').jumpable(-1) then
+        require('luasnip').jump(-1)
       else
         fallback()
       end
@@ -63,8 +78,8 @@ M.cmp = function(cmp)
     ['<Down>'] = cmp.mapping.select_next_item(),
     ['<CR>'] = cmp.mapping.confirm({ select = true }),
     ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-    ['<Tab>'] = loop(true),
-    ['<S-Tab>'] = loop(false),
+    ['<Tab>'] = forward(),
+    ['<S-Tab>'] = backward(),
     ['<C-y>'] = cmp.mapping.confirm({ select = false }),
     ['<C-e>'] = cmp.mapping({ i = cmp.mapping.abort(), c = cmp.mapping.close() }),
   }

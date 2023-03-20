@@ -19,6 +19,7 @@ if plugin_installed('hrsh7th/nvim-cmp') then
       { name = 'nvim_lsp' },
       { name = 'buffer' },
       { name = 'path' },
+      { name = 'luasnip' },
     },
     formatting = {
       fields = { 'kind', 'abbr', 'menu' },
@@ -42,8 +43,20 @@ if plugin_installed('hrsh7th/nvim-cmp') then
         return vim_item
       end,
     },
+    snippet = {
+      expand = function(args)
+        require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+      end,
+    },
     mapping = bindings.cmp(cmp),
+    completion = { completeopt = 'menu, menuone, noinsert' },
+    experimental = { ghost_text = true },
   })
+  require('luasnip').config.set_config({ history = true, updateevents = 'TextChanged, TextChangedI' })
+  require('luasnip.loaders.from_vscode').load()
+  require('nvim-autopairs').setup()
+  local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+  cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '' } }))
   cmp.setup.cmdline('/', {
     mapping = cmp.mapping.preset.cmdline(),
     sources = { { name = 'buffer' } },
@@ -52,11 +65,7 @@ if plugin_installed('hrsh7th/nvim-cmp') then
     mapping = cmp.mapping.preset.cmdline(),
     sources = cmp.config.sources({
       { name = 'path' },
-    }, {
-      {
-        name = 'cmdline',
-        option = { ignore_cmds = { 'Man', '!' } },
-      },
+      { name = 'cmdline', option = { ignore_cmds = { 'Man', '!' } } },
     }),
   })
 end
@@ -71,13 +80,12 @@ if plugin_installed('p00f/clangd_extensions.nvim') then
         end
       end,
       capabilities = (function()
-        if plugin_installed('hrsh7th/nvim-cmp') then
-          local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
-          capabilities.textDocument.completion.completionItem.snippetSupport = false
-          return capabilities
-        else
-          return vim.lsp.protocol.make_client_capabilities()
-        end
+        local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+        capabilities.textDocument.completion.completionItem.snippetSupport = true
+        capabilities.textDocument.completion.completionItem.resolveSupport = {
+          properties = { 'documentation', 'detail', 'additionalTextEdits' },
+        }
+        return capabilities
       end)(),
     },
   })
