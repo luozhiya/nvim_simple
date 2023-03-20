@@ -103,7 +103,7 @@ M.toggleterm = function()
 end
 
 -- stylua: ignore start
-local elua = function()
+local wk_ve = function()
   return {
     name = 'Edit',
     i = { function() vim.cmd('e ' .. vim.fn.stdpath('config') .. '/init.lua') end, 'init.lua (bootstrap)' },
@@ -131,7 +131,7 @@ M.wk = function()
       p = { '<cmd>Lazy profile<cr>', 'Lazy Profile' },
       u = { '<cmd>Lazy update<cr>', 'Lazy Update' },
       c = { '<cmd>Lazy clean<cr>', 'Lazy Clean' },
-      e = elua(),
+      e = wk_ve(),
     },
     l = {
       name = 'LSP',
