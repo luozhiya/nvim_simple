@@ -17,6 +17,8 @@ if plugin_installed('hrsh7th/nvim-cmp') then
   cmp.setup({
     sources = {
       { name = 'nvim_lsp' },
+      { name = 'buffer' },
+      { name = 'path' },
     },
     formatting = {
       fields = { 'kind', 'abbr', 'menu' },
@@ -40,7 +42,6 @@ if plugin_installed('hrsh7th/nvim-cmp') then
     },
     mapping = bindings.cmp(cmp),
   })
-  require('cmp_cmdline')
   cmp.setup.cmdline('/', {
     mapping = cmp.mapping.preset.cmdline(),
     sources = { { name = 'buffer' } },
@@ -52,9 +53,7 @@ if plugin_installed('hrsh7th/nvim-cmp') then
     }, {
       {
         name = 'cmdline',
-        option = {
-          ignore_cmds = { 'Man', '!' },
-        },
+        option = { ignore_cmds = { 'Man', '!' } },
       },
     }),
   })
