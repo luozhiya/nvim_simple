@@ -15,7 +15,6 @@ vim.cmd([[
   vnoremap ; :
   vnoremap : ;
 ]])
-
 map('n', '<M-h>', '<C-w>h', { desc = 'Go to left window' })
 map('n', '<M-j>', '<C-w>j', { desc = 'Go to lower window' })
 map('n', '<M-k>', '<C-w>k', { desc = 'Go to upper window' })
@@ -25,11 +24,9 @@ map('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 map({ 'i', 'n' }, '<esc>', '<cmd>noh<cr><esc>', { desc = 'Escape and clear hlsearch' })
 map('n', '<C-j>', '15gj')
 map('n', '<C-k>', '15gk')
-
 map('n', '<c-p>', '<cmd>Telescope buffers show_all_buffers=true theme=get_dropdown previewer=false<cr>')
 map('n', '<c-s-p>', '<cmd>Telescope commands<cr>')
-
-map('n', '<cr>', '<cmd>FineCmdline<cr>', { noremap = true })
+map('n', '<M-cr>', '<cmd>FineCmdline<cr>')
 map('n', [[\]], '<cmd>Telescope cmdline<cr>')
 
 vim.cmd([[
@@ -178,37 +175,25 @@ M.wk = function()
   }
 end
 
-M.telescope_file_browser = function(fb_actions)
-  return {
-    i = {
-      ['<c-n>'] = fb_actions.create,
-      ['<c-r>'] = fb_actions.rename,
-      ['<c-h>'] = fb_actions.toggle_hidden,
-      ['<c-x>'] = fb_actions.remove,
-      ['<c-p>'] = fb_actions.move,
-      ['<c-y>'] = fb_actions.copy,
-      ['<c-a>'] = fb_actions.select_all,
-    },
-  }
+M.t_fb = function(fb_actions)
+  return { i = {
+    ['<c-n>'] = fb_actions.create,
+    ['<c-r>'] = fb_actions.rename,
+    ['<c-h>'] = fb_actions.toggle_hidden,
+    ['<c-x>'] = fb_actions.remove,
+    ['<c-p>'] = fb_actions.move,
+    ['<c-y>'] = fb_actions.copy,
+    ['<c-a>'] = fb_actions.select_all,
+  } }
 end
 
+-- stylua: ignore start
 M.tree = function(fx)
-  return {
-    list = {
-      {
-        key = '<c-f>',
-        action_cb = function()
-          return fx('find_files')
-        end,
-      },
-      {
-        key = '<c-g>',
-        action_cb = function()
-          return fx('live_grep')
-        end,
-      },
-    },
-  }
+  return { list = {
+    { key = '<c-f>', action_cb = function() return fx('find_files') end },
+    { key = '<c-g>', action_cb = function() return fx('live_grep') end },
+  } }
 end
+-- stylua: ignore end
 
 return M

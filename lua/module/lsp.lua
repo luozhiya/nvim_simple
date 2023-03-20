@@ -14,9 +14,7 @@ vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagn
 
 if plugin_installed('williamboman/mason.nvim') then
   require('mason').setup({})
-  require('mason-lspconfig').setup({
-    ensure_installed = { 'lua_ls' },
-  })
+  require('mason-lspconfig').setup({ ensure_installed = { 'lua_ls' } })
 end
 
 if plugin_installed('hrsh7th/nvim-cmp') then
@@ -31,28 +29,20 @@ if plugin_installed('hrsh7th/nvim-cmp') then
     formatting = {
       fields = { 'kind', 'abbr', 'menu' },
       format = function(entry, vim_item)
-        vim_item.menu = ({
-          nvim_lsp = '[LSP]',
-          buffer = '[Buffer]',
-          path = '[Path]',
-        })[entry.source.name]
-        local ellipsis = '…'
-        local label = 45
-        local fill_ws = function(max, len)
-          return (' '):rep(max - len)
-        end
+        vim_item.menu = ({ nvim_lsp = '[LSP]', buffer = '[Buffer]', path = '[Path]' })[entry.source.name]
+        local max = 45
         local content = vim_item.abbr
-        if #content > label then
-          vim_item.abbr = vim.fn.strcharpart(content, 0, label) .. ellipsis
+        if #content > max then
+          vim_item.abbr = vim.fn.strcharpart(content, 0, max) .. '…'
         else
-          vim_item.abbr = content .. fill_ws(label, #content)
+          vim_item.abbr = content .. (' '):rep(max - #content)
         end
         return vim_item
       end,
     },
     snippet = {
       expand = function(args)
-        require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+        require('luasnip').lsp_expand(args.body)
       end,
     },
     mapping = bindings.cmp(cmp),
@@ -84,43 +74,27 @@ local lsp_on_attach = function(client, buffer)
 end
 
 local lsp_capabilities = (function()
-  local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
-  capabilities.textDocument.completion.completionItem.snippetSupport = true
-  capabilities.textDocument.completion.completionItem.resolveSupport = {
-    properties = { 'documentation', 'detail', 'additionalTextEdits' },
-  }
-  return capabilities
+  local ex = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+  ex.textDocument.completion.completionItem.snippetSupport = true
+  ex.textDocument.completion.completionItem.resolveSupport = { properties = { 'documentation', 'detail', 'additionalTextEdits' } }
+  return ex
 end)()
 
 if plugin_installed('p00f/clangd_extensions.nvim') then
-  require('clangd_extensions').setup({
-    server = {
-      filetypes = { 'c', 'cpp' },
-      on_attach = lsp_on_attach,
-      capabilities = lsp_capabilities,
-    },
-  })
+  require('clangd_extensions').setup({ server = { filetypes = { 'c', 'cpp' }, on_attach = lsp_on_attach, capabilities = lsp_capabilities } })
 end
 
 if plugin_installed('folke/neodev.nvim') then
   require('neodev').setup({})
-  require('lspconfig').lua_ls.setup({
-    on_attach = lsp_on_attach,
-    capabilities = lsp_capabilities,
-  })
+  require('lspconfig').lua_ls.setup({ on_attach = lsp_on_attach, capabilities = lsp_capabilities })
 end
 
 if plugin_installed('ray-x/lsp_signature.nvim') then
-  require('lsp_signature').setup({
-    hint_prefix = ' ',
-  })
+  require('lsp_signature').setup({ hint_prefix = ' ' })
 end
 
 if plugin_installed('j-hui/fidget.nvim') then
   vim.cmd([[highlight FidgetTitle ctermfg=110 guifg=#0887c7]])
   vim.cmd([[highlight FidgetTask ctermfg=110 guifg=#0887c7]])
-  require('fidget').setup({
-    text = { done = '' },
-    window = { blend = 0 },
-  })
+  require('fidget').setup({ text = { done = '' }, window = { blend = 0 } })
 end

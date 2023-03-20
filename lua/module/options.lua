@@ -42,9 +42,8 @@ _G.modified_icon = function()
   return vim.bo.modified and circle or ''
 end
 local lsp_active = function()
-  local clients = vim.lsp.buf_get_clients()
   local names = {}
-  for _, client in pairs(clients) do
+  for _, client in pairs(vim.lsp.buf_get_clients()) do
     table.insert(names, client.name)
   end
   return 'Lsp<' .. table.concat(names, ', ') .. '>'
@@ -60,7 +59,6 @@ _G.lsp_progress = function()
   else
     return lsp_active()
   end
-  return ''
 end
 
 local opts = {
@@ -94,12 +92,11 @@ local opts = {
   timeoutlen = 500, -- the timeout when WhichKey opens is controlled by the vim setting timeoutlen.
   wildmode = 'full',
   title = true,
-  titlestring = [[  %{v:lua.vim.fn.fnamemodify(v:lua.vim.fn.getcwd(), ":t")} %{v:lua.modified_icon()}]],
+  -- titlestring = [[ %f %h%m%r%w %{v:progname} %{v:lua.vim.fn.fnamemodify(v:lua.vim.fn.getcwd(), ":t")}  %{v:lua.lsp_progress()} %{v:lua.modified_icon()}]],
 }
 if require('module.base').is_windows() then
   circle = '*'
   opts.guifont = 'InconsolataGo Nerd Font:h16'
-  opts.titlestring = [[%f %h%m%r%w %{v:progname} (%{tabpagenr()} of %{tabpagenr('$')}) %{v:lua.lsp_progress()} %{v:lua.modified_icon()}]]
 end
 for k, v in pairs(opts) do
   vim.opt[k] = v
