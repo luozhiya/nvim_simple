@@ -25,6 +25,8 @@ if plugin_installed('hrsh7th/nvim-cmp') then
       format = function(entry, vim_item)
         vim_item.menu = ({
           nvim_lsp = '[LSP]',
+          buffer = '[Buffer]',
+          path = '[Path]',
         })[entry.source.name]
         local ellipsis = '…'
         local label = 45
