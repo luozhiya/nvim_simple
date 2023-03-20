@@ -237,3 +237,9 @@ if plugin_installed('ahmedkhalf/project.nvim') then
     require('telescope').load_extension('projects')
   end
 end
+
+if plugin_installed('gelguy/wilder.nvim') then
+  local wilder = require('wilder')
+  wilder.setup({ modes = { ':', '/', '?' } })
+  wilder.set_option('renderer', wilder.popupmenu_renderer(wilder.popupmenu_border_theme()))
+end

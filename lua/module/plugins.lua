@@ -32,6 +32,7 @@ return {
   { 'MunifTanjim/nui.nvim' },
   { 'VonHeikemen/fine-cmdline.nvim' },
   { 'jonarrien/telescope-cmdline.nvim' },
+  { 'gelguy/wilder.nvim' },
 
   -- Core Coding LSP/Complete
   { 'neovim/nvim-lspconfig' },
