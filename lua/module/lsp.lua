@@ -54,7 +54,7 @@ if plugin_installed('hrsh7th/nvim-cmp') then
       end,
     },
     mapping = bindings.cmp(cmp),
-    completion = { completeopt = 'menu, menuone, noinsert' },
+    completion = { completeopt = 'menuone, noinsert, noselect' },
     experimental = { ghost_text = true },
   })
   require('luasnip').config.set_config({ history = true, updateevents = 'TextChanged, TextChangedI' })
@@ -62,17 +62,17 @@ if plugin_installed('hrsh7th/nvim-cmp') then
   require('nvim-autopairs').setup()
   local cmp_autopairs = require('nvim-autopairs.completion.cmp')
   cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '' } }))
-  -- cmp.setup.cmdline('/', {
-  --   mapping = cmp.mapping.preset.cmdline(),
-  --   sources = { { name = 'buffer' } },
-  -- })
-  -- cmp.setup.cmdline(':', {
-  --   mapping = cmp.mapping.preset.cmdline(),
-  --   sources = cmp.config.sources({
-  --     { name = 'path' },
-  --     { name = 'cmdline', option = { ignore_cmds = { 'Man', '!' } } },
-  --   }),
-  -- })
+  cmp.setup.cmdline('/', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = { { name = 'buffer' } },
+  })
+  cmp.setup.cmdline(':', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = cmp.config.sources({
+      { name = 'path' },
+      { name = 'cmdline', option = { ignore_cmds = { 'Man', '!' } } },
+    }),
+  })
 end
 
 local lsp_on_attach = function(client, buffer)
@@ -109,7 +109,9 @@ if plugin_installed('folke/neodev.nvim') then
 end
 
 if plugin_installed('ray-x/lsp_signature.nvim') then
-  require('lsp_signature').setup({})
+  require('lsp_signature').setup({
+    hint_prefix = ' ',
+  })
 end
 
 if plugin_installed('j-hui/fidget.nvim') then

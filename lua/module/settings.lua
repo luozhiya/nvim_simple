@@ -240,7 +240,8 @@ end
 
 if plugin_installed('gelguy/wilder.nvim') then
   local wilder = require('wilder')
-  wilder.setup({ modes = { ':', '/', '?' } })
+  -- wilder.setup({ modes = { ':', '/', '?' } })
+  wilder.setup({ modes = { '?' } })
   wilder.set_option('use_python_remote_plugin', 0)
   wilder.set_option('renderer', wilder.popupmenu_renderer(wilder.popupmenu_border_theme()))
 end

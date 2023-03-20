@@ -16,33 +16,77 @@ Key
 
 stdpath()
 ---------
-  config User configuration directory. |init.vim| is stored here. /home/luozhiya/.config/nvim/
-  cache  Cache directory: arbitrary temporary storage for plugins, etc. maybe log. /home/luozhiya/.cache/nvim/
-  data   User data directory. /home/luozhiya/.local/share/nvim/
-  log    Logs directory (for use by plugins too). /home/luozhiya/.local/state/nvim/
+https://github.com/neovim/neovim/blob/master/src/nvim/os/stdpaths.c
+  config  User configuration directory. |init.vim| is stored here. /home/luozhiya/.config/nvim/
+  cache   Cache directory: arbitrary temporary storage for plugins, etc. maybe log. /home/luozhiya/.cache/nvim/
+  data    User data directory. /home/luozhiya/.local/share/nvim/
+  log     Logs directory (for use by plugins too). /home/luozhiya/.local/state/nvim/
 
 completeopt
 -----------
-  'completeopt' 'cot'	string	(default: "menu,preview")
-	A comma-separated list of options for Insert mode completion
-	ins-completion.  The supported values are:
-  menu	    Use a popup menu to show the possible completions.  The
-    menu is only shown when there is more than one match and
-    sufficient colors are available.  ins-completion-menu
-  menuone  Use the popup menu also when there is only one match.
-    Useful when there is additional information about the
-    match, e.g., what file it comes from.
-  longest  Only insert the longest common text of the matches.  If
-    the menu is displayed you can use CTRL-L to add more
-    characters.  Whether case is ignored depends on the kind
-    of completion.  For buffer text the 'ignorecase' option is
-    used.
-  preview  Show extra information about the currently selected
-    completion in the preview window.  Only works in
-    combination with "menu" or "menuone".
-noinsert  Do not insert any text for a match until the user selects
-    a match from the menu. Only works in combination with
-    "menu" or "menuone". No effect if "longest" is present.
-noselect  Do not select a match in the menu, force the user to
-    select one from the menu. Only works in combination with
-    "menu" or "menuone".
+https://neovim.io/doc/user/options.html#'completeopt'
+                       A       B          C         D        E
+Completion Progress: input > trigger > pop menu > select > insert
+  menu	    C  Item > 1  Only shown when there is more than one match
+  menuone   C  Item >= 1
+  longest   E  Insert longest common text
+  preview   C  Show extra information.
+  noinsert  E  Do not insert 
+  noselect  D  Do not select
+
+wildmode
+--------
+https://neovim.io/doc/user/cmdline.html#cmdline-completion
+https://neovim.io/doc/user/options.html#'wildmode'
+four parts: A:B,C:D (':' = &, ',' = first,second <Tab>)
+full          Complete first full match, next match, etc.  (the default)
+longest,full  Complete longest common string, then each full match
+list:full     List all matches and complete each full match
+list,full     List all matches without completing, then each full match
+longest,list  Complete longest common string, then list alternatives.
+
+shortmess
+---------
+https://neovim.io/doc/user/options.html#'shortmess'
+      f	use "(3 of 5)" instead of "(file 3 of 5)"		shm-f
+      i	use "[noeol]" instead of "[Incomplete last line]"	shm-i
+      l	use "999L, 888B" instead of "999 lines, 888 bytes"	shm-l
+      m	use "[+]" instead of "[Modified]"			shm-m
+      n	use "[New]" instead of "[New File]"			shm-n
+      r	use "[RO]" instead of "[readonly]"			shm-r
+      w	use "[w]" instead of "written" for file write message	shm-w
+        and "[a]" instead of "appended" for ':w >> file' command
+      x	use "[dos]" instead of "[dos format]", "[unix]"		shm-x
+        instead of "[unix format]" and "[mac]" instead of "[mac
+        format]"
+      a	all of the above abbreviations				shm-a
+      o	overwrite message for writing a file with subsequent	shm-o
+        message for reading a file (useful for ":wn" or when
+        'autowrite' on)
+      O	message for reading a file overwrites any previous	shm-O
+        message;  also for quickfix message (e.g., ":cn")
+      s	don't give "search hit BOTTOM, continuing at TOP" or	shm-s
+        "search hit TOP, continuing at BOTTOM" messages; when using
+        the search count do not show "W" after the count message (see
+        S below)
+      t	truncate file message at the start if it is too long	shm-t
+        to fit on the command-line, "<" will appear in the left most
+        column; ignored in Ex mode
+      T	truncate other messages in the middle if they are too	shm-T
+        long to fit on the command line; "..." will appear in the
+        middle; ignored in Ex mode
+      W	don't give "written" or "[w]" when writing a file	shm-W
+      A	don't give the "ATTENTION" message when an existing	shm-A
+        swap file is found
+      I	don't give the intro message when starting Vim,		shm-I
+        see :intro
+      c	don't give ins-completion-menu messages; for		shm-c
+        example, "-- XXX completion (YYY)", "match 1 of 2", "The only
+        match", "Pattern not found", "Back at original", etc.
+      C	don't give messages while scanning for ins-completion	shm-C
+        items, for instance "scanning tags"
+      q	use "recording" instead of "recording @a"		shm-q
+      F	don't give the file info when editing a file, like	shm-F
+        :silent was used for the command
+      S	do not show search count message when searching, e.g.	shm-S
+        "[1/5]"
