@@ -30,6 +30,7 @@ map('n', '<c-p>', '<cmd>Telescope buffers show_all_buffers=true theme=get_dropdo
 map('n', '<c-s-p>', '<cmd>Telescope commands<cr>')
 
 map('n', '<cr>', '<cmd>FineCmdline<cr>', { noremap = true })
+map('n', [[\]], '<cmd>Telescope cmdline<cr>')
 
 vim.cmd([[
   command -nargs=+ LspHover lua vim.lsp.buf.hover()
@@ -50,7 +51,7 @@ M.cmp = function(cmp)
       local line, col = unpack(vim.api.nvim_win_get_cursor(0))
       return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
     end
-    return cmp.mapping(function()
+    return cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
       elseif require('luasnip').expand_or_jumpable() then
@@ -63,7 +64,7 @@ M.cmp = function(cmp)
     end, { 'i', 's' })
   end
   local backward = function()
-    return cmp.mapping(function()
+    return cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
       elseif require('luasnip').jumpable(-1) then
