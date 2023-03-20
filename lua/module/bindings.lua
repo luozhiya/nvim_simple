@@ -79,7 +79,7 @@ M.cmp = function(cmp)
     ['<C-j>'] = cmp.mapping.select_next_item(),
     ['<Up>'] = cmp.mapping.select_prev_item(),
     ['<Down>'] = cmp.mapping.select_next_item(),
-    ['<CR>'] = cmp.mapping.confirm({ select = true }),
+    ['<cr>'] = cmp.mapping.confirm({ select = true }),
     ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
     ['<Tab>'] = forward(),
     ['<S-Tab>'] = backward(),
@@ -97,16 +97,42 @@ M.toggleterm = function()
   return {
     open_mapping = [[<c-\>]],
     on_open = function(buffer)
-      map('n', 'q', '<cmd>close<CR>', { noremap = true, silent = true, buffer = buffer })
+      map('n', 'q', '<cmd>close<cr>', { noremap = true, silent = true, buffer = buffer })
     end,
   }
 end
 
+-- stylua: ignore start
+local elua = function()
+  return {
+    name = 'Edit',
+    i = { function() vim.cmd('e ' .. vim.fn.stdpath('config') .. '/init.lua') end, 'init.lua (bootstrap)' },
+    b = { function() vim.cmd('e ' .. vim.fn.stdpath('config') .. '/lua/module/base.lua') end, 'base.lua' },
+    k = { function() vim.cmd('e ' .. vim.fn.stdpath('config') .. '/lua/module/bindings.lua') end, 'bindings.lua' },
+    l = { function() vim.cmd('e ' .. vim.fn.stdpath('config') .. '/lua/module/lsp.lua') end, 'lsp.lua' },
+    o = { function() vim.cmd('e ' .. vim.fn.stdpath('config') .. '/lua/module/options.lua') end, 'options.lua' },
+    p = { function() vim.cmd('e ' .. vim.fn.stdpath('config') .. '/lua/module/plugins.lua') end, 'plugins.lua' },
+    s = { function() vim.cmd('e ' .. vim.fn.stdpath('config') .. '/lua/module/settings.lua') end, 'settings.lua' },
+  }
+end
+-- stylua: ignore end
+
 M.wk = function()
   return {
-    ['o'] = { '<cmd>e! $MYVIMRC<cr>', 'Edit config' },
-    ['q'] = { '<cmd>qa<CR>', 'Quit All' },
-    ['f'] = { "<cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown{previewer = false})<cr>", 'Find files' },
+    q = {
+      name = 'Quit',
+      q = { '<cmd>qa<cr>', 'Quit All' },
+      w = { '<cmd>wqall<cr>', 'Quit And Save Everything' },
+      r = { '<cmd>Obsession ~/session.vim<cr>:!start neovide -S ~/session.vim<cr><cr>:wqall<cr>', 'Quit And Reload' },
+    },
+    v = {
+      name = 'Vim',
+      i = { '<cmd>Lazy<cr>', 'Lazy Dashboard' },
+      p = { '<cmd>Lazy profile<cr>', 'Lazy Profile' },
+      u = { '<cmd>Lazy update<cr>', 'Lazy Update' },
+      c = { '<cmd>Lazy clean<cr>', 'Lazy Clean' },
+      e = elua(),
+    },
     l = {
       name = 'LSP',
       i = { '<cmd>LspInfo<cr>', 'Info' },
@@ -134,9 +160,10 @@ M.wk = function()
       O = { '<cmd>Telescope frecency<cr>', 'Mozilla Frecency Algorithm' },
       l = { '<cmd>Telescope live_grep<cr>', 'Find Text' },
       L = { '<cmd>Telescope live_grep_args<cr>', 'Find Text Args' },
-      f = { '<cmd>Telescope file_browser<cr>', 'File Browser' },
+      e = { '<cmd>Telescope file_browser<cr>', 'File Explorer' },
       s = { '<cmd>Telescope lsp_document_symbols<cr>', 'Document Symbols' },
       S = { '<cmd>Telescope lsp_dynamic_workspace_symbols<cr>', 'Workspace Symbols' },
+      f = { '<cmd>Telescope find_files theme=get_dropdown previewer=false<cr>', 'Find files' },
     },
     e = {
       name = 'Terminal',
@@ -147,13 +174,6 @@ M.wk = function()
       name = 'Tree',
       e = { '<cmd>NvimTreeToggle<cr>', 'Tree Explorer' },
       f = { '<cmd>NvimTreeFindFile<cr>', 'Tree Find' },
-    },
-    z = {
-      name = 'Lazy',
-      i = { '<cmd>Lazy<cr>', 'Lazy Dashboard' },
-      p = { '<cmd>Lazy profile<cr>', 'Lazy Profile' },
-      u = { '<cmd>Lazy update<cr>', 'Lazy Update' },
-      c = { '<cmd>Lazy clean<cr>', 'Lazy Clean' },
     },
   }
 end

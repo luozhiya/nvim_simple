@@ -14,7 +14,9 @@ vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagn
 
 if plugin_installed('williamboman/mason.nvim') then
   require('mason').setup({})
-  require('mason-lspconfig').setup({})
+  require('mason-lspconfig').setup({
+    ensure_installed = { 'lua_ls' },
+  })
 end
 
 if plugin_installed('hrsh7th/nvim-cmp') then
