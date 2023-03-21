@@ -176,7 +176,6 @@ M.wk = function()
     l = {
       name = 'LSP',
       i = { '<cmd>LspInfo<cr>', 'Info' },
-      f = { '<cmd>lua vim.lsp.buf.format{async=true}<cr>', 'Format' },
     },
     c = {
       name = 'Code',
@@ -184,6 +183,7 @@ M.wk = function()
       t = { '<cmd>ClangdTypeHierarchy<cr>', 'Clang Type Hierarchy' },
       h = { '<cmd>ClangdSwitchSourceHeader<cr>', 'Switch C/C++ header/source' },
       m = { '<cmd>ClangdMemoryUsage<cr>', 'Clangd Memory Usage' },
+      f = { '<cmd>lua vim.lsp.buf.format{async=true}<cr>', 'Code Format' },
     },
     g = {
       name = 'Git',
@@ -196,8 +196,8 @@ M.wk = function()
       a = { '<cmd>Telescope aerial bufnr=0<cr>', 'Document Aerial Outline' },
       u = { '<cmd>Telescope undo bufnr=0<cr>', 'Undo Tree' },
       p = { '<cmd>Telescope projects<cr>', 'Projects' },
-      o = { '<cmd>Telescope oldfiles<cr>', 'Recently Used Files' },
-      O = { '<cmd>Telescope frecency<cr>', 'Mozilla Frecency Algorithm' },
+      r = { '<cmd>Telescope oldfiles<cr>', 'Recently Used Files' },
+      R = { '<cmd>Telescope frecency<cr>', 'Mozilla Frecency Algorithm' },
       l = { '<cmd>Telescope live_grep<cr>', 'Find Text' },
       L = { '<cmd>Telescope live_grep_args<cr>', 'Find Text Args' },
       e = { '<cmd>Telescope file_browser<cr>', 'File Explorer' },
