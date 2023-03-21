@@ -33,6 +33,7 @@ return {
   { 'VonHeikemen/fine-cmdline.nvim' },
   { 'jonarrien/telescope-cmdline.nvim' },
   { 'gelguy/wilder.nvim' },
+  { 'tpope/vim-obsession' },
 
   -- Core Coding LSP/Complete
   { 'neovim/nvim-lspconfig' },

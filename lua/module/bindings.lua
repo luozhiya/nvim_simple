@@ -128,7 +128,8 @@ M.wk = function()
       w = { '<cmd>wqall<cr>', 'Quit And Save Everything' },
       f = { '<cmd>q!<cr>', 'Quit Force' },
       F = { '<cmd>qa!<cr>', 'Quit All Force' },
-      r = { '<cmd>Obsession ~/session.vim<cr>:!start neovide -S ~/session.vim<cr><cr>:wqall<cr>', 'Quit And Reload' },
+      s = { '<cmd>Obsession ~/session.vim<cr>', 'Save Session'},
+      r = { '<cmd>Obsession ~/session.vim<cr>:!start neovide -- -S ~/session.vim<cr><cr>:wqall<cr>', 'Quit And Reload' },
     },
     v = {
       name = 'Vim',
