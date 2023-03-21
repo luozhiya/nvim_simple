@@ -214,13 +214,10 @@ end
 -- stylua: ignore end
 
 vim.cmd([[
-  nnoremap ; :
-  nnoremap : ;
-  vnoremap ; :
-  vnoremap : ;
   command -nargs=+ LspHover lua vim.lsp.buf.hover()
   set keywordprg=:LspHover
 ]])
+M.map('n', ';', ':', { silent = false })
 
 M.legendary = function()
   return {
@@ -228,6 +225,7 @@ M.legendary = function()
       {
         itemgroup = 'Core',
         keymaps = {
+          -- { ';', ':', opts = { silent = false } },
           { 'j', "v:count == 0 ? 'gj' : 'j'", opts = { expr = true, noremap = true } },
           { 'k', "v:count == 0 ? 'gk' : 'k'", opts = { expr = true, noremap = true } },
           { '<esc>', '<cmd>noh<cr><esc>', description = 'Escape And Clear hlsearch', opts = { noremap = true }, mode = { 'i', 'n' } },

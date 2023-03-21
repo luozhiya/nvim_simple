@@ -98,8 +98,8 @@ laststatus
 2     always
 3     always and ONLY the last window
 
-Code
-----
+Config
+------
 https://github.com/LunarVim/Neovim-from-scratch
 https://github.com/wbthomason/dotfiles/tree/linux/neovim/.config/nvim
 https://github.com/akinsho/dotfiles/tree/main/.config/nvim
@@ -114,7 +114,17 @@ https://github.com/nvim-telescope/telescope.nvim/issues/new?assignees=&labels=bu
 nvim\site\pack\packer\opt\nvim-cmp\lua\cmp\utils\misc.lua
 site\pack\packer\opt\nvim-lspconfig\lua\lspconfig\util.lua
 
-Book
-----
+Vim
+---
 gq in Vim
 https://asciinema.org/a/188316
+https://vi.stackexchange.com/questions/36890/how-to-set-keywordprg-to-call-a-lua-function-in-neovim
+https://github.com/lewis6991/hover.nvim/issues/1
+https://github.com/neovim/neovim/issues/18997
+map colon semicolon in neovim lua
+https://stackoverflow.com/questions/73738932/remapped-colon-key-not-show-command-line-mode-immediately
+
+Lua
+---
+https://github.com/neovim/neovim/blob/master/runtime/lua/vim/shared.lua#L324
+https://shanekrolikowski.com/blog/love2d-merge-tables/
