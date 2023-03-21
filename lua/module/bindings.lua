@@ -54,6 +54,7 @@ end
 M.lsp = {
   { 'gd', vim.lsp.buf.definition, desc = 'Goto Definition' },
   { 'gh', vim.lsp.buf.hover, desc = 'Hover' },
+  { 'K', vim.lsp.buf.hover, desc = 'Hover' },
   { 'gn', vim.lsp.buf.rename, desc = 'Rename' },
   { 'ga', vim.lsp.buf.code_action, desc = 'Code Action' },
   { '[d', vim.diagnostic.goto_prev, desc = 'Goto Diagnostic Prev' },
