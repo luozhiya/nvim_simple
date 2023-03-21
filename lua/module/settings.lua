@@ -190,3 +190,8 @@ end
 if installed('VonHeikemen/fine-cmdline.nvim') then
   require('fine-cmdline').setup({ cmdline = { prompt = ' > ' } })
 end
+
+if installed('kazhala/close-buffers.nvim') then
+  require('close_buffers').setup({})
+  vim.api.nvim_create_user_command('BufferCloseOthers', function() require('close_buffers').wipe({ type = 'other' }) end, {})
+end

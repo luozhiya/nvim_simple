@@ -122,14 +122,36 @@ M.wk = function()
   end
   -- stylua: ignore end
   return {
-    q = {
-      name = 'Quit',
+    s = {
+      name = 'Session',
       q = { '<cmd>qa<cr>', 'Quit All' },
       w = { '<cmd>wqall<cr>', 'Quit And Save Everything' },
       f = { '<cmd>q!<cr>', 'Quit Force' },
       F = { '<cmd>qa!<cr>', 'Quit All Force' },
-      s = { '<cmd>Obsession ~/session.vim<cr>', 'Save Session'},
+      s = { '<cmd>w<cr>', 'Save' },
+      S = { '<cmd>Obsession ~/session.vim<cr>', 'Save Session' },
       r = { '<cmd>Obsession ~/session.vim<cr>:!start neovide -- -S ~/session.vim<cr><cr>:wqall<cr>', 'Quit And Reload' },
+    },
+    w = {
+      name = 'Windows',
+      h = { '<C-w>h', 'Jump Left' },
+      j = { '<C-w>j', 'Jump Down' },
+      k = { '<C-w>k', 'Jump Up' },
+      l = { '<C-w>l', 'Jump Right' },
+      y = { '<cmd>vsplit<cr><esc>', 'Split Left' },
+      u = { '<cmd>split<cr><C-w>j<esc>', 'Split Down' },
+      i = { '<cmd>split<cr><esc>', 'Split Up' },
+      o = { '<cmd>vsplit<cr><C-w>l<esc>', 'Split Right' },
+    },
+    b = {
+      name = 'Buffer',
+      b = { '<cmd>Buffers<cr>', 'Buffers' },
+      h = { '<cmd>bprevious<cr>', 'Previous' },
+      l = { '<cmd>bnext<cr>', 'Next' },
+      k = { '<cmd>bfirst<cr>', 'First' },
+      j = { '<cmd>blast<cr>', 'Last' },
+      d = { '<cmd>BD<cr>', 'Delete' },
+      o = { '<cmd>BufferCloseOthers<cr>', 'Only, Close Others' },
     },
     v = {
       name = 'Vim',
@@ -146,7 +168,7 @@ M.wk = function()
       f = { '<cmd>lua vim.lsp.buf.format{async=true}<cr>', 'Format' },
     },
     c = {
-      name = 'C++',
+      name = 'Code',
       a = { '<cmd>ClangAST<cr>', 'Clang AST' },
       t = { '<cmd>ClangdTypeHierarchy<cr>', 'Clang Type Hierarchy' },
       h = { '<cmd>ClangdSwitchSourceHeader<cr>', 'Switch C/C++ header/source' },
@@ -157,7 +179,7 @@ M.wk = function()
       l = { '<cmd>ToggleTerminalLazyGit<cr>', 'Lazygit' },
       g = { '<cmd>ToggleTerminalGitUI<cr>', 'GitUI' },
     },
-    t = {
+    e = {
       name = 'Telescope',
       d = { '<cmd>Telescope diagnostics bufnr=0<cr>', 'Document Diagnostics' },
       a = { '<cmd>Telescope aerial bufnr=0<cr>', 'Document Aerial Outline' },
@@ -172,7 +194,7 @@ M.wk = function()
       S = { '<cmd>Telescope lsp_dynamic_workspace_symbols<cr>', 'Workspace Symbols' },
       f = { '<cmd>Telescope find_files theme=get_dropdown previewer=false<cr>', 'Find files' },
     },
-    e = {
+    t = {
       name = 'Terminal',
       h = { '<cmd>ToggleTerm direction=horizontal<cr>', 'Terminal Horizontal' },
       f = { '<cmd>ToggleTerm direction=float<cr>', 'Terminal Floating' },

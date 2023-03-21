@@ -34,6 +34,9 @@ return {
   { 'jonarrien/telescope-cmdline.nvim' },
   { 'gelguy/wilder.nvim' },
   { 'tpope/vim-obsession' },
+  { 'qpkorr/vim-bufkill' },
+  { 'moll/vim-bbye' },
+  { 'kazhala/close-buffers.nvim' },
 
   -- Core Coding LSP/Complete
   { 'neovim/nvim-lspconfig' },
