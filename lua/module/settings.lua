@@ -70,35 +70,7 @@ end
 -- stylua: ignore end
 
 if installed('nvim-tree/nvim-tree.lua') then
-  local launch_telescope_ontree = function(action, opts)
-    local actions = require('telescope.actions')
-    local node = require('nvim-tree.lib').get_node_at_cursor()
-    if node == nil then
-      return
-    end
-    local is_folder = node.fs_stat and node.fs_stat.type == 'directory' or false
-    local basedir = is_folder and node.absolute_path or vim.fn.fnamemodify(node.absolute_path, ':h')
-    if node.name == '..' and TreeExplorer ~= nil then
-      basedir = TreeExplorer.cwd
-    end
-    opts = opts or {}
-    opts.cwd = basedir
-    opts.search_dirs = { basedir }
-    opts.attach_mappings = function(prompt_bufnr, map)
-      actions.select_default:replace(function()
-        actions.close(prompt_bufnr)
-        local selection = require('telescope.actions.state').get_selected_entry()
-        local filename = selection.filename
-        if filename == nil then
-          filename = selection[1]
-        end
-        require('nvim-tree.actions.node.open-file').fn('preview', filename)
-      end)
-      return true
-    end
-    return require('telescope.builtin')[action](opts)
-  end
-  require('nvim-tree').setup({
+  local opts = {
     sort_by = 'case_sensitive',
     sync_root_with_cwd = true,
     respect_buf_cwd = true,
@@ -108,61 +80,36 @@ if installed('nvim-tree/nvim-tree.lua') then
     view = {
       adaptive_size = false,
       preserve_window_proportions = true,
-      mappings = bindings.tree(launch_telescope_ontree),
     },
-  })
-  -- stylua: ignore start
-  vim.api.nvim_create_user_command('TelescopeFindInTreeNode', function() launch_telescope_ontree('find_files') end, {})
-  vim.api.nvim_create_user_command('TelescopeLiveGrepInTreeNode', function() launch_telescope_ontree('live_grep') end, {})
-  -- stylua: ignore end
-
-  if installed('anuvyklack/hydra.nvim') then
-    local hint = [[
-_w_: cd CWD   _c_: Path yank    _/_: Filter
-_y_: Copy     _x_: Cut          _p_: Paste
-_r_: Rename   _d_: Remove       _n_: New
-_h_: Hidden   _?_: Help
-^
-]]
-    local nvim_tree_hydra = nil
-    local nt_au_group = vim.api.nvim_create_augroup('NvimTreeHydraAu', { clear = true })
-    local function spawn_nvim_tree_hydra()
-      nvim_tree_hydra = require('hydra')({
-        name = 'NvimTree',
-        hint = hint,
-        config = { color = 'pink', invoke_on_body = true, buffer = 0, hint = { position = 'bottom', border = 'rounded' } },
-        mode = 'n',
-        body = 'H',
-        heads = {
-          { 'w', require('nvim-tree.api').tree.change_root(vim.fn.getcwd()), { silent = true } },
-          { 'c', require('nvim-tree.api').fs.copy.absolute_path, { silent = true } },
-          { '/', require('nvim-tree.api').live_filter.start, { silent = true } },
-          { 'y', require('nvim-tree.api').fs.copy.node, { silent = true } },
-          { 'x', require('nvim-tree.api').fs.cut, { exit = true, silent = true } },
-          { 'p', require('nvim-tree.api').fs.paste, { exit = true, silent = true } },
-          { 'r', require('nvim-tree.api').fs.rename, { silent = true } },
-          { 'd', require('nvim-tree.api').fs.remove, { silent = true } },
-          { 'n', require('nvim-tree.api').fs.create, { silent = true } },
-          { 'h', require('nvim-tree.api').tree.toggle_hidden_filter, { silent = true } },
-          { '?', require('nvim-tree.api').tree.toggle_help, { silent = true } },
-        },
-      })
-      nvim_tree_hydra:activate()
-    end
-    vim.api.nvim_create_autocmd({ 'BufEnter' }, {
-      pattern = '*',
-      callback = function(opts)
-        if vim.bo[opts.buf].filetype == 'NvimTree' then
-          spawn_nvim_tree_hydra()
-        else
-          if nvim_tree_hydra then
-            nvim_tree_hydra:exit()
-          end
-        end
-      end,
-      group = nt_au_group,
-    })
+  }
+  opts = vim.tbl_deep_extend('error', opts, bindings.nvim_tree())
+  require('nvim-tree').setup(opts)
+  local nvim_tree_hydra = nil
+  local nt_au_group = vim.api.nvim_create_augroup('NvimTreeHydraAu', { clear = true })
+  local function spawn_nvim_tree_hydra()
+    local hydraopts = {
+      name = 'NvimTree',
+      config = { color = 'pink', invoke_on_body = true, buffer = 0, hint = { position = 'bottom', border = 'rounded' } },
+      mode = 'n',
+      body = 'H',
+    }
+    hydraopts = vim.tbl_deep_extend('error', hydraopts, bindings.nvim_tree_hydra())
+    nvim_tree_hydra = require('hydra')(hydraopts)
+    nvim_tree_hydra:activate()
   end
+  vim.api.nvim_create_autocmd({ 'BufEnter' }, {
+    pattern = '*',
+    callback = function(opts)
+      if vim.bo[opts.buf].filetype == 'NvimTree' then
+        spawn_nvim_tree_hydra()
+      else
+        if nvim_tree_hydra then
+          nvim_tree_hydra:exit()
+        end
+      end
+    end,
+    group = nt_au_group,
+  })
 end
 
 if installed('stevearc/dressing.nvim') then
@@ -194,7 +141,6 @@ end
 -- stylua: ignore start
 if installed('kazhala/close-buffers.nvim') then
   require('close_buffers').setup({})
-  vim.api.nvim_create_user_command('BufferCloseOthers', function() require('close_buffers').wipe({ type = 'other' }) end, {})
 end
 -- stylua: ignore end
 

@@ -72,9 +72,7 @@ end
 M.toggleterm = function()
   return {
     open_mapping = [[<c-\>]],
-    on_open = function(buffer)
-      M.map('n', 'q', '<cmd>close<cr>', { noremap = true, silent = true, buffer = buffer })
-    end,
+    on_open = function(buffer) M.map('n', 'q', '<cmd>close<cr>', { noremap = true, silent = true, buffer = buffer }) end,
   }
 end
 
@@ -204,14 +202,67 @@ M.t_fb = function(fb_actions)
   } }
 end
 
--- stylua: ignore start
-M.tree = function(fx)
-  return { list = {
-    { key = '<c-f>', action_cb = function() return fx('find_files') end },
-    { key = '<c-g>', action_cb = function() return fx('live_grep') end },
-  } }
+local launch_telescope_ontree = function(action, opts)
+  local actions = require('telescope.actions')
+  local node = require('nvim-tree.lib').get_node_at_cursor()
+  if node == nil then
+    return
+  end
+  local is_folder = node.fs_stat and node.fs_stat.type == 'directory' or false
+  local basedir = is_folder and node.absolute_path or vim.fn.fnamemodify(node.absolute_path, ':h')
+  if node.name == '..' and TreeExplorer ~= nil then
+    basedir = TreeExplorer.cwd
+  end
+  opts = opts or {}
+  opts.cwd = basedir
+  opts.search_dirs = { basedir }
+  opts.attach_mappings = function(prompt_bufnr, map)
+    actions.select_default:replace(function()
+      actions.close(prompt_bufnr)
+      local selection = require('telescope.actions.state').get_selected_entry()
+      local filename = selection.filename
+      if filename == nil then
+        filename = selection[1]
+      end
+      require('nvim-tree.actions.node.open-file').fn('preview', filename)
+    end)
+    return true
+  end
+  return require('telescope.builtin')[action](opts)
 end
--- stylua: ignore end
+
+M.nvim_tree = function()
+  return { view = { mappings = { list = {
+    { key = '<c-f>', action_cb = function() return launch_telescope_ontree('find_files') end },
+    { key = '<c-g>', action_cb = function() return launch_telescope_ontree('live_grep') end },
+  } } } }
+end
+
+M.nvim_tree_hydra = function()
+  local hint = [[
+    _w_: cd CWD   _c_: Path yank    _/_: Filter
+    _y_: Copy     _x_: Cut          _p_: Paste
+    _r_: Rename   _d_: Remove       _n_: New
+    _h_: Hidden   _?_: Help
+    ^
+    ]]
+  return {
+    hint = hint,
+    heads = {
+      { 'w', require('nvim-tree.api').tree.change_root(vim.fn.getcwd()), { silent = true } },
+      { 'c', require('nvim-tree.api').fs.copy.absolute_path, { silent = true } },
+      { '/', require('nvim-tree.api').live_filter.start, { silent = true } },
+      { 'y', require('nvim-tree.api').fs.copy.node, { silent = true } },
+      { 'x', require('nvim-tree.api').fs.cut, { exit = true, silent = true } },
+      { 'p', require('nvim-tree.api').fs.paste, { exit = true, silent = true } },
+      { 'r', require('nvim-tree.api').fs.rename, { silent = true } },
+      { 'd', require('nvim-tree.api').fs.remove, { silent = true } },
+      { 'n', require('nvim-tree.api').fs.create, { silent = true } },
+      { 'h', require('nvim-tree.api').tree.toggle_hidden_filter, { silent = true } },
+      { '?', require('nvim-tree.api').tree.toggle_help, { silent = true } },
+    },
+  }
+end
 
 vim.cmd([[
   command -nargs=+ LspHover lua vim.lsp.buf.hover()
@@ -296,6 +347,25 @@ M.legendary = function()
         },
       },
     },
+    commands = {
+      {
+        ':BufferCloseOthers',
+        function() require('close_buffers').wipe({ type = 'other' }) end,
+        description = 'Close Others',
+      },
+      {
+        ':TelescopeFindInTreeNode',
+        function() launch_telescope_ontree('find_files') end,
+        description = 'Find In Folder...',
+      },
+      {
+        ':TelescopeLiveGrepInTreeNode',
+        function() launch_telescope_ontree('live_grep') end,
+        description = 'Grep In Folder...',
+      },
+    },
+    funcs = {},
+    autocmds = {},
   }
 end
 
