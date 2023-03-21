@@ -1,80 +1,83 @@
-require('module.bindings')
-
-vim.g.neovide_remember_window_size = true
-vim.g.neovide_refresh_rate_idle = 240
-vim.g.neovide_no_idle = true
-
-vim.g.loaded_python3_provider = 0
-vim.g.loaded_ruby_provider = 0
-vim.g.loaded_perl_provider = 0
-vim.g.loaded_node_provider = 0
-
-local disabled_built_ins = {
-  'gzip',
-  'man',
-  'matchit',
-  'matchparen',
-  'shada_plugin',
-  'tarPlugin',
-  'tar',
-  'zipPlugin',
-  'zip',
-  'netrwPlugin',
-  'netrw',
-}
-for i, v in ipairs(disabled_built_ins) do
-  vim.g['loaded_' .. v] = 1
-end
-vim.cmd([[
-  autocmd Filetype log if getfsize(@%) > 1000000 | setlocal syntax=OFF | endif
-  au FocusGained * :checktime
-  aunmenu PopUp.How-to\ disable\ mouse
-  aunmenu PopUp.-1-
-]])
-
 local M = {}
+
 M.lazy = vim.fn.stdpath('config') .. '/lazy/lazy.nvim'
 M.root = vim.fn.stdpath('config') .. '/lazy'
-local font = function()
-  if require('base').is_linux() then
-    return 'InconsolataGo Nerd Font:h12'
+
+function M.setup()
+  vim.g.neovide_remember_window_size = true
+  vim.g.neovide_refresh_rate_idle = 240
+  vim.g.neovide_no_idle = true
+
+  vim.g.loaded_python3_provider = 0
+  vim.g.loaded_ruby_provider = 0
+  vim.g.loaded_perl_provider = 0
+  vim.g.loaded_node_provider = 0
+
+  local disabled_built_ins = {
+    'gzip',
+    'man',
+    'matchit',
+    'matchparen',
+    'shada_plugin',
+    'tarPlugin',
+    'tar',
+    'zipPlugin',
+    'zip',
+    'netrwPlugin',
+    'netrw',
+  }
+  for i, v in ipairs(disabled_built_ins) do
+    vim.g['loaded_' .. v] = 1
   end
-  return 'InconsolataGo Nerd Font:h16'
-end
-local opts = {
-  runtimepath = vim.opt.runtimepath:append(M.lazy),
-  shellslash = true, -- A forward slash is used when expanding file names.
-  laststatus = 3, -- Status line style
-  cmdheight = 0, -- command-line
-  showmode = false, -- Dont show mode since we have a statusline
-  -- lazyredraw = true, -- no redraws in macros. Disabled for: https://github.com/neovim/neovim/issues/22674
-  scrolloff = 4, -- Minimal number of screen lines to keep above and below the cursor.
-  sidescrolloff = 8, -- The minimal number of screen columns to keep to the left and to the right of the cursor if 'nowrap' is set.
-  number = true, -- Print line number
-  signcolumn = 'auto:1',
-  termguicolors = true, -- True color support
-  wrap = false, -- Disable line wrap
-  tabstop = 2, -- length of an actual \t character
-  expandtab = true, -- if set, only insert spaces; otherwise insert \t and complete with spaces
-  shiftwidth = 0, -- Number of spaces to use for each step of (auto)indent. (0 for ‘tabstop’)
-  softtabstop = 0, -- length to use when editing text (eg. TAB and BS keys). (0 for ‘tabstop’, -1 for ‘shiftwidth’)
-  shiftround = true, -- round indentation to multiples of 'shiftwidth' when shifting text
-  smartindent = true, -- Insert indents automatically
-  cinoptions = vim.opt.cinoptions:append('g0'), -- gN. See https://neovim.io/doc/user/indent.html#cinoptions-values
-  synmaxcol = 200, -- don't syntax-highlight long lines
-  ignorecase = true, -- Ignore case
-  smartcase = true, -- Don't ignore case with capitals
-  clipboard = 'unnamedplus', -- allows neovim to access the system clipboard
-  completeopt = { 'menuone', 'noselect', 'noinsert' },
-  autoread = true, -- When a file has been detected to have been changed outside of Vim and it has not been changed inside of Vim, automatically read it again.
-  guifont = font(),
-  shortmess = acIW, -- See https://neovim.io/doc/user/options.html#'shortmess'
-  timeout = true, -- Limit the time searching for suggestions to {millisec} milli seconds.
-  timeoutlen = 500, -- the timeout when WhichKey opens is controlled by the vim setting timeoutlen.
-  wildmode = 'full',
-}
-for k, v in pairs(opts) do
-  vim.opt[k] = v
+
+  vim.cmd([[
+    autocmd Filetype log if getfsize(@%) > 1000000 | setlocal syntax=OFF | endif
+    au FocusGained * :checktime
+    aunmenu PopUp.How-to\ disable\ mouse
+    aunmenu PopUp.-1-
+  ]])
+
+  local font = function()
+    if require('base').is_linux() then
+      return 'InconsolataGo Nerd Font:h12'
+    end
+    return 'InconsolataGo Nerd Font:h16'
+  end
+  local opts = {
+    runtimepath = vim.opt.runtimepath:append(M.lazy),
+    shellslash = true, -- A forward slash is used when expanding file names.
+    laststatus = 3, -- Status line style
+    cmdheight = 0, -- command-line
+    showmode = false, -- Dont show mode since we have a statusline
+    -- lazyredraw = true, -- no redraws in macros. Disabled for: https://github.com/neovim/neovim/issues/22674
+    scrolloff = 4, -- Minimal number of screen lines to keep above and below the cursor.
+    sidescrolloff = 8, -- The minimal number of screen columns to keep to the left and to the right of the cursor if 'nowrap' is set.
+    number = true, -- Print line number
+    signcolumn = 'auto:1',
+    termguicolors = true, -- True color support
+    wrap = false, -- Disable line wrap
+    tabstop = 2, -- length of an actual \t character
+    expandtab = true, -- if set, only insert spaces; otherwise insert \t and complete with spaces
+    shiftwidth = 0, -- Number of spaces to use for each step of (auto)indent. (0 for ‘tabstop’)
+    softtabstop = 0, -- length to use when editing text (eg. TAB and BS keys). (0 for ‘tabstop’, -1 for ‘shiftwidth’)
+    shiftround = true, -- round indentation to multiples of 'shiftwidth' when shifting text
+    smartindent = true, -- Insert indents automatically
+    cinoptions = vim.opt.cinoptions:append('g0'), -- gN. See https://neovim.io/doc/user/indent.html#cinoptions-values
+    synmaxcol = 200, -- don't syntax-highlight long lines
+    ignorecase = true, -- Ignore case
+    smartcase = true, -- Don't ignore case with capitals
+    clipboard = 'unnamedplus', -- allows neovim to access the system clipboard
+    completeopt = { 'menuone', 'noselect', 'noinsert' },
+    autoread = true, -- When a file has been detected to have been changed outside of Vim and it has not been changed inside of Vim, automatically read it again.
+    guifont = font(),
+    shortmess = acIW, -- See https://neovim.io/doc/user/options.html#'shortmess'
+    timeout = true, -- Limit the time searching for suggestions to {millisec} milli seconds.
+    timeoutlen = 500, -- the timeout when WhichKey opens is controlled by the vim setting timeoutlen.
+    wildmode = 'full',
+  }
+  for k, v in pairs(opts) do
+    vim.opt[k] = v
+  end
 end
 
 return M
