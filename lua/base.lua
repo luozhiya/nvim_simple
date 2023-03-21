@@ -2,7 +2,7 @@ local M = {}
 
 local cached = {}
 M.cached = cached
-M.plugin_installed = function(name)
+M.installed = function(name)
   if vim.tbl_isempty(cached) then
     for _, plugin in pairs(require('module.plugins')) do
       table.insert(cached, plugin[1])

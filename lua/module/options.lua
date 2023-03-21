@@ -43,7 +43,8 @@ local font = function()
 end
 local opts = {
   runtimepath = vim.opt.runtimepath:append(M.lazy),
-  laststatus = 3, -- Only last window
+  shellslash = true, -- A forward slash is used when expanding file names.
+  laststatus = 3, -- Status line style
   cmdheight = 0, -- command-line
   showmode = false, -- Dont show mode since we have a statusline
   -- lazyredraw = true, -- no redraws in macros. Disabled for: https://github.com/neovim/neovim/issues/22674

@@ -1,5 +1,5 @@
 local bindings = require('module.bindings')
-local plugin_installed = require('base').plugin_installed
+local installed = require('base').installed
 
 vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
   border = 'rounded',
@@ -12,12 +12,12 @@ vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagn
   underline = true,
 })
 
-if plugin_installed('williamboman/mason.nvim') then
+if installed('williamboman/mason.nvim') then
   require('mason').setup({})
   require('mason-lspconfig').setup({ ensure_installed = { 'lua_ls' } })
 end
 
-if plugin_installed('hrsh7th/nvim-cmp') then
+if installed('hrsh7th/nvim-cmp') then
   local cmp = require('cmp')
   cmp.setup({
     sources = {
@@ -79,20 +79,20 @@ local lsp_capabilities = (function()
   return ex
 end)()
 
-if plugin_installed('p00f/clangd_extensions.nvim') then
+if installed('p00f/clangd_extensions.nvim') then
   require('clangd_extensions').setup({ server = { filetypes = { 'c', 'cpp' }, on_attach = lsp_on_attach, capabilities = lsp_capabilities } })
 end
 
-if plugin_installed('folke/neodev.nvim') then
+if installed('folke/neodev.nvim') then
   require('neodev').setup({})
   require('lspconfig').lua_ls.setup({ on_attach = lsp_on_attach, capabilities = lsp_capabilities })
 end
 
-if plugin_installed('ray-x/lsp_signature.nvim') then
+if installed('ray-x/lsp_signature.nvim') then
   require('lsp_signature').setup({ hint_prefix = ' ' })
 end
 
-if plugin_installed('j-hui/fidget.nvim') then
+if installed('j-hui/fidget.nvim') then
   vim.cmd([[highlight FidgetTitle ctermfg=110 guifg=#0887c7]])
   vim.cmd([[highlight FidgetTask ctermfg=110 guifg=#0887c7]])
   require('fidget').setup({ text = { done = ' ' }, window = { blend = 0 } })

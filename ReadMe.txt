@@ -90,3 +90,10 @@ https://neovim.io/doc/user/options.html#'shortmess'
         :silent was used for the command
       S	do not show search count message when searching, e.g.	shm-S
         "[1/5]"
+
+laststatus
+----------
+0     never
+1     only if there are at least two windows
+2     always
+3     always and ONLY the last window
