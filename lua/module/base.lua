@@ -1,11 +1,14 @@
 local M = {}
+
+local cached = {}
+M.cached = cached
 M.plugin_installed = function(name)
-  local plugins = require('module.plugins')
-  for k, v in ipairs(plugins) do
-    if vim.tbl_contains(v, name) then
-      return true
+  if vim.tbl_isempty(cached) then
+    for _, plugin in pairs(require('module.plugins')) do
+      table.insert(cached, plugin[1])
     end
   end
+  return vim.tbl_contains(cached, name)
 end
 
 M.is_windows = function()
