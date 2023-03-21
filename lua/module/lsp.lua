@@ -52,8 +52,7 @@ if plugin_installed('hrsh7th/nvim-cmp') then
   require('luasnip').config.set_config({ history = true, updateevents = 'TextChanged, TextChangedI' })
   require('luasnip.loaders.from_vscode').load()
   require('nvim-autopairs').setup()
-  local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-  cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '' } }))
+  cmp.event:on('confirm_done', require('nvim-autopairs.completion.cmp').on_confirm_done({ map_char = { tex = '' } }))
   cmp.setup.cmdline('/', {
     mapping = cmp.mapping.preset.cmdline(),
     sources = { { name = 'buffer' } },
@@ -96,5 +95,5 @@ end
 if plugin_installed('j-hui/fidget.nvim') then
   vim.cmd([[highlight FidgetTitle ctermfg=110 guifg=#0887c7]])
   vim.cmd([[highlight FidgetTask ctermfg=110 guifg=#0887c7]])
-  require('fidget').setup({ text = { done = '' }, window = { blend = 0 } })
+  require('fidget').setup({ text = { done = ' ' }, window = { blend = 0 } })
 end

@@ -1,6 +1,13 @@
 local plugin_installed = require('base').plugin_installed
 local bindings = require('module.bindings')
 
+-- stylua: ignore start
+vim.api.nvim_create_user_command('ToggleFocusMode', function() 
+  vim.opt.laststatus = vim.opt.laststatus._value == 0 and 3 or 0 
+  vim.opt.number = vim.opt.number._value == false 
+end, {})
+-- stylua: ignore end
+
 if plugin_installed('folke/tokyonight.nvim') then
   vim.cmd([[colorscheme tokyonight]])
 end

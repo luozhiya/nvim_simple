@@ -120,6 +120,8 @@ M.wk = function()
       name = 'Quit',
       q = { '<cmd>qa<cr>', 'Quit All' },
       w = { '<cmd>wqall<cr>', 'Quit And Save Everything' },
+      f = { '<cmd>q!<cr>', 'Quit Force' },
+      F = { '<cmd>qa!<cr>', 'Quit All Force' },
       r = { '<cmd>Obsession ~/session.vim<cr>:!start neovide -S ~/session.vim<cr><cr>:wqall<cr>', 'Quit And Reload' },
     },
     v = {
@@ -128,6 +130,7 @@ M.wk = function()
       p = { '<cmd>Lazy profile<cr>', 'Lazy Profile' },
       u = { '<cmd>Lazy update<cr>', 'Lazy Update' },
       c = { '<cmd>Lazy clean<cr>', 'Lazy Clean' },
+      f = { '<cmd>ToggleFocusMode<cr>', 'Focus Mode' },
       e = wk_ve(),
     },
     l = {
@@ -136,7 +139,7 @@ M.wk = function()
       f = { '<cmd>lua vim.lsp.buf.format{async=true}<cr>', 'Format' },
     },
     c = {
-      name = 'Clangd',
+      name = 'C++',
       a = { '<cmd>ClangAST<cr>', 'Clang AST' },
       t = { '<cmd>ClangdTypeHierarchy<cr>', 'Clang Type Hierarchy' },
       h = { '<cmd>ClangdSwitchSourceHeader<cr>', 'Switch C/C++ header/source' },

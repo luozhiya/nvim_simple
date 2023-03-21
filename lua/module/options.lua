@@ -25,7 +25,6 @@ local disabled_built_ins = {
 for i, v in ipairs(disabled_built_ins) do
   vim.g['loaded_' .. v] = 1
 end
-
 vim.cmd([[
   autocmd Filetype log if getfsize(@%) > 1000000 | setlocal syntax=OFF | endif
   au FocusGained * :checktime
@@ -36,10 +35,15 @@ vim.cmd([[
 local M = {}
 M.lazy = vim.fn.stdpath('config') .. '/lazy/lazy.nvim'
 M.root = vim.fn.stdpath('config') .. '/lazy'
-
+local font = function()
+  if require('base').is_linux() then
+    return 'InconsolataGo Nerd Font:h12'
+  end
+  return 'InconsolataGo Nerd Font:h16'
+end
 local opts = {
   runtimepath = vim.opt.runtimepath:append(M.lazy),
-  laststatus = 0, -- Only last window
+  laststatus = 3, -- Only last window
   cmdheight = 0, -- command-line
   showmode = false, -- Dont show mode since we have a statusline
   -- lazyredraw = true, -- no redraws in macros. Disabled for: https://github.com/neovim/neovim/issues/22674
@@ -62,15 +66,12 @@ local opts = {
   clipboard = 'unnamedplus', -- allows neovim to access the system clipboard
   completeopt = { 'menuone', 'noselect', 'noinsert' },
   autoread = true, -- When a file has been detected to have been changed outside of Vim and it has not been changed inside of Vim, automatically read it again.
-  guifont = 'InconsolataGo Nerd Font:h12',
+  guifont = font(),
   shortmess = acIW, -- See https://neovim.io/doc/user/options.html#'shortmess'
   timeout = true, -- Limit the time searching for suggestions to {millisec} milli seconds.
   timeoutlen = 500, -- the timeout when WhichKey opens is controlled by the vim setting timeoutlen.
   wildmode = 'full',
 }
-if require('base').is_windows() then
-  opts.guifont = 'InconsolataGo Nerd Font:h16'
-end
 for k, v in pairs(opts) do
   vim.opt[k] = v
 end
