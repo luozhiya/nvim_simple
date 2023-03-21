@@ -17,6 +17,8 @@ M.setup_vim = function()
     nnoremap : ;
     vnoremap ; :
     vnoremap : ;
+    command -nargs=+ LspHover lua vim.lsp.buf.hover()
+    set keywordprg=:LspHover    
   ]])
   M.map('n', '<M-h>', '<C-w>h', { desc = 'Go to left window' })
   M.map('n', '<M-j>', '<C-w>j', { desc = 'Go to lower window' })
@@ -27,10 +29,8 @@ M.setup_vim = function()
   M.map({ 'i', 'n' }, '<esc>', '<cmd>noh<cr><esc>', { desc = 'Escape and clear hlsearch' })
   M.map('n', '<C-j>', '15gj')
   M.map('n', '<C-k>', '15gk')
-  vim.cmd([[
-    command -nargs=+ LspHover lua vim.lsp.buf.hover()
-    set keywordprg=:LspHover
-  ]])
+  M.map('v', '<', '<gv')
+  M.map('v', '>', '>gv')
 end
 
 M.setup_st = function()
