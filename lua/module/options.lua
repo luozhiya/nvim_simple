@@ -37,30 +37,6 @@ local M = {}
 M.lazypath = vim.fn.stdpath('config') .. '/lazy/lazy.nvim'
 M.root = vim.fn.stdpath('config') .. '/lazy'
 
-local circle = ''
-_G.modified_icon = function()
-  return vim.bo.modified and circle or ''
-end
-local lsp_active = function()
-  local names = {}
-  for _, client in pairs(vim.lsp.buf_get_clients()) do
-    table.insert(names, client.name)
-  end
-  return 'Lsp<' .. table.concat(names, ', ') .. '>'
-end
-_G.lsp_progress = function()
-  local lsp = vim.lsp.util.get_progress_messages()[1]
-  if lsp then
-    local name = lsp.name or ''
-    local msg = lsp.message or ''
-    local percentage = lsp.percentage or 0
-    local title = lsp.title or ''
-    return string.format(' <%s: %s %s (%s%%) ', name, title, msg, percentage)
-  else
-    return lsp_active()
-  end
-end
-
 local opts = {
   runtimepath = vim.opt.runtimepath:append(M.lazypath),
   laststatus = 0, -- Only last window
@@ -91,11 +67,8 @@ local opts = {
   timeout = true, -- Limit the time searching for suggestions to {millisec} milli seconds.
   timeoutlen = 500, -- the timeout when WhichKey opens is controlled by the vim setting timeoutlen.
   wildmode = 'full',
-  title = true,
-  -- titlestring = [[ %f %h%m%r%w %{v:progname} %{v:lua.vim.fn.fnamemodify(v:lua.vim.fn.getcwd(), ":t")}  %{v:lua.lsp_progress()} %{v:lua.modified_icon()}]],
 }
 if require('base').is_windows() then
-  circle = '*'
   opts.guifont = 'InconsolataGo Nerd Font:h16'
 end
 for k, v in pairs(opts) do
