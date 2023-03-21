@@ -221,3 +221,7 @@ if installed('nvim-lualine/lualine.nvim') then
     lualine_z = { location },
   } })
 end
+
+if installed('fedepujol/move.nvim') then
+  bindings.move()
+end

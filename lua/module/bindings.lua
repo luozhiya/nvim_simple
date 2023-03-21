@@ -253,4 +253,19 @@ M.tree = function(fx)
 end
 -- stylua: ignore end
 
+M.move = function()
+  local opts = { noremap = true, silent = true }
+  -- Normal-mode commands
+  M.map('n', '<A-j>', ':MoveLine(1)<CR>', opts)
+  M.map('n', '<A-k>', ':MoveLine(-1)<CR>', opts)
+  M.map('n', '<A-h>', ':MoveHChar(-1)<CR>', opts)
+  M.map('n', '<A-l>', ':MoveHChar(1)<CR>', opts)
+  
+  -- Visual-mode commands
+  M.map('v', '<A-j>', ':MoveBlock(1)<CR>', opts)
+  M.map('v', '<A-k>', ':MoveBlock(-1)<CR>', opts)
+  M.map('v', '<A-h>', ':MoveHBlock(-1)<CR>', opts)
+  M.map('v', '<A-l>', ':MoveHBlock(1)<CR>', opts)  
+end
+
 return M

@@ -39,6 +39,7 @@ return {
   { 'kazhala/close-buffers.nvim' },
   { 'numToStr/Comment.nvim' },
   { 'nvim-lualine/lualine.nvim' },
+  { 'fedepujol/move.nvim' },
 
   -- Core Coding LSP/Complete
   { 'neovim/nvim-lspconfig' },
