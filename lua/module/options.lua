@@ -34,11 +34,11 @@ vim.cmd([[
 ]])
 
 local M = {}
-M.lazypath = vim.fn.stdpath('config') .. '/lazy/lazy.nvim'
+M.lazy = vim.fn.stdpath('config') .. '/lazy/lazy.nvim'
 M.root = vim.fn.stdpath('config') .. '/lazy'
 
 local opts = {
-  runtimepath = vim.opt.runtimepath:append(M.lazypath),
+  runtimepath = vim.opt.runtimepath:append(M.lazy),
   laststatus = 0, -- Only last window
   cmdheight = 0, -- command-line
   showmode = false, -- Dont show mode since we have a statusline
