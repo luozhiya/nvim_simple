@@ -1,44 +1,43 @@
 local M = {}
 
-local function map(mode, lhs, rhs, opts)
+M.map = function(mode, lhs, rhs, opts)
   opts = opts or {}
   opts.silent = opts.silent ~= false
   vim.keymap.set(mode, lhs, rhs, opts)
 end
-M.map = map
 
-M.leader = function()
+M.setup_leader = function()
   vim.g.mapleader = ','
   vim.g.maplocalleader = ','
 end
 
-M.vim = function()
+M.setup_vim = function()
   vim.cmd([[
     nnoremap ; :
     nnoremap : ;
     vnoremap ; :
     vnoremap : ;
   ]])
-  map('n', '<M-h>', '<C-w>h', { desc = 'Go to left window' })
-  map('n', '<M-j>', '<C-w>j', { desc = 'Go to lower window' })
-  map('n', '<M-k>', '<C-w>k', { desc = 'Go to upper window' })
-  map('n', '<M-l>', '<C-w>l', { desc = 'Go to right window' })
-  map('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-  map('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-  map({ 'i', 'n' }, '<esc>', '<cmd>noh<cr><esc>', { desc = 'Escape and clear hlsearch' })
-  map('n', '<C-j>', '15gj')
-  map('n', '<C-k>', '15gk')
+  M.map('n', '<M-h>', '<C-w>h', { desc = 'Go to left window' })
+  M.map('n', '<M-j>', '<C-w>j', { desc = 'Go to lower window' })
+  M.map('n', '<M-k>', '<C-w>k', { desc = 'Go to upper window' })
+  M.map('n', '<M-l>', '<C-w>l', { desc = 'Go to right window' })
+  M.map('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+  M.map('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+  M.map({ 'i', 'n' }, '<esc>', '<cmd>noh<cr><esc>', { desc = 'Escape and clear hlsearch' })
+  M.map('n', '<C-j>', '15gj')
+  M.map('n', '<C-k>', '15gk')
   vim.cmd([[
     command -nargs=+ LspHover lua vim.lsp.buf.hover()
     set keywordprg=:LspHover
   ]])
 end
 
-M.st = function()
-  map('n', '<c-p>', '<cmd>Telescope buffers show_all_buffers=true theme=get_dropdown previewer=false<cr>')
-  map('n', '<c-s-p>', '<cmd>Telescope commands<cr>')
-  map('n', '<M-cr>', '<cmd>FineCmdline<cr>')
-  map('n', [[\]], '<cmd>Telescope cmdline<cr>')
+M.setup_st = function()
+  M.map('n', '<c-p>', '<cmd>Telescope buffers show_all_buffers=true theme=get_dropdown previewer=false<cr>')
+  M.map('n', '<c-s-p>', '<cmd>Telescope commands<cr>')
+  M.map('n', '<M-cr>', '<cmd>FineCmdline<cr>')
+  M.map('n', [[\]], '<cmd>Telescope cmdline<cr>')
 end
 
 M.lsp = {
@@ -94,15 +93,15 @@ M.cmp = function(cmp)
 end
 
 M.aerial = function(buffer)
-  map('n', '{', '<cmd>AerialPrev<cr>', { buffer = buffer })
-  map('n', '}', '<cmd>AerialNext<cr>', { buffer = buffer })
+  M.map('n', '{', '<cmd>AerialPrev<cr>', { buffer = buffer })
+  M.map('n', '}', '<cmd>AerialNext<cr>', { buffer = buffer })
 end
 
 M.toggleterm = function()
   return {
     open_mapping = [[<c-\>]],
     on_open = function(buffer)
-      map('n', 'q', '<cmd>close<cr>', { noremap = true, silent = true, buffer = buffer })
+      M.map('n', 'q', '<cmd>close<cr>', { noremap = true, silent = true, buffer = buffer })
     end,
   }
 end

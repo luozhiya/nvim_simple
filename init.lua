@@ -1,5 +1,5 @@
-require('module.bindings').leader()
-require('module.bindings').vim()
+require('module.bindings').setup_leader()
+require('module.bindings').setup_vim()
 local opt = require('module.options')
 opt.setup()
 
@@ -20,4 +20,4 @@ require('lazy').setup('module.plugins', {
 
 require('module.settings')
 require('module.lsp')
-require('module.bindings').st()
+require('module.bindings').setup_st()
