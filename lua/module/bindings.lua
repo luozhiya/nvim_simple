@@ -18,12 +18,12 @@ M.setup_vim = function()
     vnoremap ; :
     vnoremap : ;
     command -nargs=+ LspHover lua vim.lsp.buf.hover()
-    set keywordprg=:LspHover    
+    set keywordprg=:LspHover
   ]])
-  M.map('n', '<M-h>', '<C-w>h', { desc = 'Go To Left Window' })
-  M.map('n', '<M-j>', '<C-w>j', { desc = 'Go To Lower Window' })
-  M.map('n', '<M-k>', '<C-w>k', { desc = 'Go To Upper Window' })
-  M.map('n', '<M-l>', '<C-w>l', { desc = 'Go To Right Window' })
+  -- M.map('n', '<M-h>', '<C-w>h', { desc = 'Go To Left Window' })
+  -- M.map('n', '<M-j>', '<C-w>j', { desc = 'Go To Lower Window' })
+  -- M.map('n', '<M-k>', '<C-w>k', { desc = 'Go To Upper Window' })
+  -- M.map('n', '<M-l>', '<C-w>l', { desc = 'Go To Right Window' })
   M.map('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
   M.map('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
   M.map({ 'i', 'n' }, '<esc>', '<cmd>noh<cr><esc>', { desc = 'Escape And Clear hlsearch' })
@@ -122,7 +122,7 @@ M.wk = function()
   -- stylua: ignore start
   local wk_ve = function()
     return {
-      name = 'Edit',
+      name = 'Edit Config',
       i = { function() vim.cmd('e ' .. vim.fn.stdpath('config') .. '/init.lua') end,                'init.lua (bootstrap)' },
       b = { function() vim.cmd('e ' .. vim.fn.stdpath('config') .. '/lua/base.lua') end,            'base.lua' },
       k = { function() vim.cmd('e ' .. vim.fn.stdpath('config') .. '/lua/module/bindings.lua') end, 'bindings.lua' },
@@ -164,6 +164,7 @@ M.wk = function()
       j = { '<cmd>blast<cr>', 'Last' },
       d = { '<cmd>BD<cr>', 'Delete' },
       o = { '<cmd>BufferCloseOthers<cr>', 'Only, Close Others' },
+      a = { '', 'CloseAll' },
     },
     v = {
       name = 'Vim',
@@ -191,7 +192,7 @@ M.wk = function()
       l = { '<cmd>ToggleTerminalLazyGit<cr>', 'Lazygit' },
       g = { '<cmd>ToggleTerminalGitUI<cr>', 'GitUI' },
     },
-    e = {
+    t = {
       name = 'Telescope',
       d = { '<cmd>Telescope diagnostics bufnr=0<cr>', 'Document Diagnostics' },
       a = { '<cmd>Telescope aerial bufnr=0<cr>', 'Document Aerial Outline' },
@@ -206,15 +207,27 @@ M.wk = function()
       S = { '<cmd>Telescope lsp_dynamic_workspace_symbols<cr>', 'Workspace Symbols' },
       f = { '<cmd>Telescope find_files theme=get_dropdown previewer=false<cr>', 'Find files' },
     },
-    t = {
-      name = 'Terminal',
+    c = {
+      name = 'Command Terminal',
       h = { '<cmd>ToggleTerm direction=horizontal<cr>', 'Terminal Horizontal' },
       f = { '<cmd>ToggleTerm direction=float<cr>', 'Terminal Floating' },
     },
     r = {
-      name = 'Tree',
+      name = 'rrr Tree',
       e = { '<cmd>NvimTreeToggle<cr>', 'Tree Explorer' },
       f = { '<cmd>NvimTreeFindFile<cr>', 'Tree Find' },
+    },
+    e = {
+      name = 'Edit',
+      c = {
+        name = 'Copy',
+        c = { '', 'Copy Content' },
+        n = { '', 'Copy File Name' },
+        p = { '', 'Copy Path' },
+        P = { '', 'Copy Relative Path' },
+        r = { '', 'Reveal In File Explorer' },
+        R = { '', 'Reveal In New Vim' },
+      },
     },
   }
 end
