@@ -225,3 +225,7 @@ end
 if installed('fedepujol/move.nvim') then
   bindings.move()
 end
+
+if installed('mrjones2014/legendary.nvim') then
+  require('legendary').setup({ keymaps = bindings.legendary, which_key = { auto_register = true } })
+end

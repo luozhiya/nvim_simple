@@ -40,6 +40,7 @@ return {
   { 'numToStr/Comment.nvim' },
   { 'nvim-lualine/lualine.nvim' },
   { 'fedepujol/move.nvim' },
+  { 'mrjones2014/legendary.nvim' },
 
   -- Core Coding LSP/Complete
   { 'neovim/nvim-lspconfig' },
