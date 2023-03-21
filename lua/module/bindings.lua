@@ -11,46 +11,6 @@ M.setup_leader = function()
   vim.g.maplocalleader = ','
 end
 
-M.setup_vim = function()
-  vim.cmd([[
-    nnoremap ; :
-    nnoremap : ;
-    vnoremap ; :
-    vnoremap : ;
-    command -nargs=+ LspHover lua vim.lsp.buf.hover()
-    set keywordprg=:LspHover
-  ]])
-  -- M.map('n', '<M-h>', '<C-w>h', { desc = 'Go To Left Window' })
-  -- M.map('n', '<M-j>', '<C-w>j', { desc = 'Go To Lower Window' })
-  -- M.map('n', '<M-k>', '<C-w>k', { desc = 'Go To Upper Window' })
-  -- M.map('n', '<M-l>', '<C-w>l', { desc = 'Go To Right Window' })
-  M.map('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
-  M.map('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-  M.map({ 'i', 'n' }, '<esc>', '<cmd>noh<cr><esc>', { desc = 'Escape And Clear hlsearch' })
-  M.map('n', '<C-j>', '15gj', { desc = 'Move Down 15 Lines' })
-  M.map('n', '<C-k>', '15gk', { desc = 'Move Up 15 Lines' })
-  M.map('v', '<', '<gv')
-  M.map('v', '>', '>gv', { desc = 'Indent Continuously' })
-end
-
-M.setup_st = function()
-  M.map('n', '<c-p>', '<cmd>Telescope buffers show_all_buffers=true theme=get_dropdown previewer=false<cr>', { desc = 'Go To File...' })
-  M.map('n', '<c-s-p>', '<cmd>Telescope commands<cr>', { desc = 'Command Palette' })
-  M.map('n', '<M-cr>', '<cmd>FineCmdline<cr>', { desc = 'Fine Cmdline' })
-  M.map('n', [[\]], '<cmd>Telescope cmdline<cr>', { desc = 'Telescope Cmdline' })
-  -- stylua: ignore start
-  local comment = function()
-    local esc = vim.api.nvim_replace_termcodes('<ESC>', true, false, true)
-    local toggle = require('Comment.api').toggle
-    M.map('n', '<leader>cc', toggle.linewise.current, { desc = 'Comment Line' })
-    M.map('n', '<leader>cb', toggle.blockwise.current, { desc = 'Comment Block' })
-    M.map('x', '<leader>cc', function() vim.api.nvim_feedkeys(esc, 'nx', false) toggle.linewise(vim.fn.visualmode()) end, { desc = 'Comment Line' })
-    M.map('x', '<leader>cb', function() vim.api.nvim_feedkeys(esc, 'nx', false) toggle.blockwise(vim.fn.visualmode()) end, { desc = 'Comment Block' })
-  end
-  -- stylua: ignore end
-  comment()
-end
-
 M.lsp = {
   { 'gd', vim.lsp.buf.definition, desc = 'Goto Definition' },
   { 'gh', vim.lsp.buf.hover, desc = 'Hover' },
@@ -253,26 +213,92 @@ M.tree = function(fx)
 end
 -- stylua: ignore end
 
-M.move = function()
-  local opts = { noremap = true, silent = true }
-  -- Normal-mode commands
-  -- M.map('n', '<A-j>', ':MoveLine(1)<CR>', opts)
-  -- M.map('n', '<A-k>', ':MoveLine(-1)<CR>', opts)
-  -- M.map('n', '<A-h>', ':MoveHChar(-1)<CR>', opts)
-  -- M.map('n', '<A-l>', ':MoveHChar(1)<CR>', opts)
+vim.cmd([[
+  nnoremap ; :
+  nnoremap : ;
+  vnoremap ; :
+  vnoremap : ;
+  command -nargs=+ LspHover lua vim.lsp.buf.hover()
+  set keywordprg=:LspHover
+]])
 
-  -- Visual-mode commands
-  -- M.map('v', '<A-j>', ':MoveBlock(1)<CR>', opts)
-  -- M.map('v', '<A-k>', ':MoveBlock(-1)<CR>', opts)
-  -- M.map('v', '<A-h>', ':MoveHBlock(-1)<CR>', opts)
-  -- M.map('v', '<A-l>', ':MoveHBlock(1)<CR>', opts)
+M.legendary = function()
+  return {
+    keymaps = {
+      {
+        itemgroup = 'Core',
+        keymaps = {
+          { 'j', "v:count == 0 ? 'gj' : 'j'", opts = { expr = true, noremap = true } },
+          { 'k', "v:count == 0 ? 'gk' : 'k'", opts = { expr = true, noremap = true } },
+          { '<esc>', '<cmd>noh<cr><esc>', description = 'Escape And Clear hlsearch', opts = { noremap = true }, mode = { 'i', 'n' } },
+          { '<C-j>', '15gj', description = 'Move Down 15 Lines', opts = { noremap = true } },
+          { '<C-k>', '15gk', description = 'Move Up 15 Lines', opts = { noremap = true } },
+          { '<', '<gv', description = 'deIndent Continuously', opts = { noremap = true }, mode = { 'v' } },
+          { '>', '>gv', description = 'Indent Continuously', opts = { noremap = true }, mode = { 'v' } },
+        },
+      },
+      {
+        itemgroup = 'Edit',
+        keymaps = {
+          {
+            '<leader>cc',
+            {
+              n = { require('Comment.api').toggle.linewise.current },
+              x = {
+                function()
+                  local esc = vim.api.nvim_replace_termcodes('<ESC>', true, false, true)
+                  vim.api.nvim_feedkeys(esc, 'nx', false)
+                  require('Comment.api').toggle.linewise(vim.fn.visualmode())
+                end,
+              },
+            },
+            description = 'Comment Line (Comment.nvim)',
+          },
+          {
+            '<leader>cb',
+            {
+              n = { require('Comment.api').toggle.blockwise.current },
+              x = {
+                function()
+                  local esc = vim.api.nvim_replace_termcodes('<ESC>', true, false, true)
+                  vim.api.nvim_feedkeys(esc, 'nx', false)
+                  require('Comment.api').toggle.blockwise(vim.fn.visualmode())
+                end,
+              },
+            },
+            description = 'Comment Block (Comment.nvim)',
+          },
+        },
+      },
+      {
+        itemgroup = 'Selection',
+        keymaps = {
+          { '<A-j>', '<cmd>MoveLine(1)<cr>', description = 'Line: Move Up (move.nvim)', mode = { 'n' }, opts = { noremap = true } },
+          { '<A-k>', '<cmd>MoveLine(-1)<cr>', description = 'Line: Move Down (move.nvim)', mode = { 'n' }, opts = { noremap = true } },
+          { '<A-h>', '<cmd>MoveHChar(-1)<cr>', description = 'Line: Move Left (move.nvim)', mode = { 'n' }, opts = { noremap = true } },
+          { '<A-l>', '<cmd>MoveHChar(1)<cr>', description = 'Line: Move Right (move.nvim)', mode = { 'n' }, opts = { noremap = true } },
+          { '<A-j>', '<cmd>MoveBlock(1)<cr>', description = 'Block: Move Up (move.nvim)', mode = { 'v' }, opts = { noremap = true } },
+          { '<A-k>', '<cmd>MoveBlock(-1)<cr>', description = 'Block: Move Down (move.nvim)', mode = { 'v' }, opts = { noremap = true } },
+          { '<A-h>', '<cmd>MoveHBlock(-1)<cr>', description = 'Block: Move Left (move.nvim)', mode = { 'v' }, opts = { noremap = true } },
+          { '<A-l>', '<cmd>MoveHBlock(1)<cr>', description = 'Block: Move Right (move.nvim)', mode = { 'v' }, opts = { noremap = true } },
+        },
+      },
+      {
+        itemgroup = 'View',
+        keymaps = {
+          { '<M-cr>', '<cmd>FineCmdline<cr>', description = 'Fine Cmdline... (fine-cmdline.nvim)', opts = { noremap = true } },
+          { [[\]], '<cmd>Telescope cmdline<cr>', description = 'Cmdline... (telescope-cmdline.nvim)', opts = { noremap = true } },
+          { '<c-s-p>', '<cmd>Telescope commands<cr>', description = 'Command Palette... (telescope.nvim)', mode = { 'n' }, opts = { noremap = true } },
+        },
+      },
+      {
+        itemgroup = 'Go',
+        keymaps = {
+          { '<c-p>', '<cmd>Telescope buffers show_all_buffers=true theme=get_dropdown previewer=false<cr>', description = 'Go To File... (telescope.nvim)', mode = { 'n' }, opts = { noremap = true } },
+        },
+      },
+    },
+  }
 end
-
-M.legendary = {
-  { '<A-j>', '<cmd>MoveLine(1)<cr>', description = 'Line: move up (move.nvim)', opts = { noremap = true } },
-  { '<A-k>', '<cmd>MoveLine(-1)<cr>', description = 'Line: move down (move.nvim)', opts = { noremap = true } },
-  { '<A-h>', '<cmd>MoveHChar(-1)<cr>', description = 'Line: move left (move.nvim)', opts = { noremap = true } },
-  { '<A-l>', '<cmd>MoveHChar(1)<cr>', description = 'Line: move right (move.nvim)', opts = { noremap = true } },
-}
 
 return M

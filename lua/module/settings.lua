@@ -222,10 +222,8 @@ if installed('nvim-lualine/lualine.nvim') then
   } })
 end
 
-if installed('fedepujol/move.nvim') then
-  bindings.move()
-end
-
 if installed('mrjones2014/legendary.nvim') then
-  require('legendary').setup({ keymaps = bindings.legendary, which_key = { auto_register = true } })
+  local opts = { which_key = { auto_register = true } }
+  opts = vim.tbl_deep_extend('error', opts, bindings.legendary())
+  require('legendary').setup(opts)
 end
