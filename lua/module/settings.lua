@@ -203,3 +203,48 @@ if installed('numToStr/Comment.nvim') then
   -- vim.api.nvim_create_user_command('CommentLine', require('Comment.api').toggle.linewise.current, {})
   -- vim.api.nvim_create_user_command('CommentBlock', function(range) vim.api.nvim_feedkeys(esc, 'nx', false) require('Comment.api').toggle.linewise(vim.fn.visualmode()) end, {})
 end
+
+if installed('nvim-lualine/lualine.nvim') then
+  local lsp_active = function()
+    local names = {}
+    for _, client in pairs(vim.lsp.buf_get_clients()) do
+      table.insert(names, client.name)
+    end
+    return 'LSP<' .. table.concat(names, ', ') .. '>'
+  end
+  local lsp_progress = function()
+    local lsp = vim.lsp.util.get_progress_messages()[1]
+    if lsp then
+      local name = lsp.name or ''
+      local msg = lsp.message or ''
+      local percentage = lsp.percentage or 0
+      local title = lsp.title or ''
+      return string.format('LSP<%s: %s %s (%s%%%%)>', name, title, msg, percentage)
+    else
+      return lsp_active()
+    end
+  end
+  local ratio_progress = function()
+    local current_line = vim.fn.line('.')
+    local total_lines = vim.fn.line('$')
+    local line_ratio = current_line / total_lines * 100
+    -- https://github.com/nvim-lualine/lualine.nvim/issues/895#issuecomment-1323644475
+    -- in string.format you need to esape the parcents too.
+    -- So in this case you need 4 %. first escape gets interpreted and removed by string.format 2nd one gets removed by status line interpreter.
+    -- return tostring(line_ratio) ☯️   
+    return string.format('%02d%%%% ', line_ratio)
+  end
+  local function location()
+    local line = vim.fn.line('.')
+    local col = vim.fn.virtcol('.')
+    return string.format('%3d:%-2d ', line, col)
+  end
+  local fileformat = { 'fileformat', icons_enabled = false }
+  require('lualine').setup({
+    sections = {
+      lualine_x = { lsp_progress, 'encoding', fileformat, 'filetype' },
+      -- lualine_y = { 'location' },
+      lualine_z = { location },
+    },
+  })
+end

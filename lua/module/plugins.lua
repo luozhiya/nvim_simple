@@ -38,6 +38,7 @@ return {
   { 'moll/vim-bbye' },
   { 'kazhala/close-buffers.nvim' },
   { 'numToStr/Comment.nvim' },
+  { 'nvim-lualine/lualine.nvim' },
 
   -- Core Coding LSP/Complete
   { 'neovim/nvim-lspconfig' },

@@ -98,7 +98,7 @@ laststatus
 2     always
 3     always and ONLY the last window
 
-Refs
+Code
 ----
 https://github.com/LunarVim/Neovim-from-scratch
 https://github.com/wbthomason/dotfiles/tree/linux/neovim/.config/nvim
@@ -113,3 +113,8 @@ https://neovim.io/doc/user/options.html
 https://github.com/nvim-telescope/telescope.nvim/issues/new?assignees=&labels=bug&template=bug_report.yml
 nvim\site\pack\packer\opt\nvim-cmp\lua\cmp\utils\misc.lua
 site\pack\packer\opt\nvim-lspconfig\lua\lspconfig\util.lua
+
+Book
+----
+gq in Vim
+https://asciinema.org/a/188316
