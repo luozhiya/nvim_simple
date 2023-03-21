@@ -94,7 +94,7 @@ local opts = {
   title = true,
   -- titlestring = [[ %f %h%m%r%w %{v:progname} %{v:lua.vim.fn.fnamemodify(v:lua.vim.fn.getcwd(), ":t")}  %{v:lua.lsp_progress()} %{v:lua.modified_icon()}]],
 }
-if require('module.base').is_windows() then
+if require('base').is_windows() then
   circle = '*'
   opts.guifont = 'InconsolataGo Nerd Font:h16'
 end

@@ -1,4 +1,4 @@
-local plugin_installed = require('module.base').plugin_installed
+local plugin_installed = require('base').plugin_installed
 local bindings = require('module.bindings')
 
 if plugin_installed('folke/tokyonight.nvim') then

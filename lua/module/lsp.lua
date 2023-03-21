@@ -1,5 +1,5 @@
 local bindings = require('module.bindings')
-local plugin_installed = require('module.base').plugin_installed
+local plugin_installed = require('base').plugin_installed
 
 vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
   border = 'rounded',
