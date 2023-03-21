@@ -1,6 +1,7 @@
-require('module.bindings').setup_leader()
-require('module.bindings').setup_vim()
+local bindings = require('module.bindings')
 local opt = require('module.options')
+bindings.setup_leader()
+bindings.setup_vim()
 opt.setup()
 
 if not vim.loop.fs_stat(opt.lazy) then
@@ -20,4 +21,4 @@ require('lazy').setup('module.plugins', {
 
 require('module.settings')
 require('module.lsp')
-require('module.bindings').setup_st()
+bindings.setup_st()
