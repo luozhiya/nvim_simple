@@ -1,1 +1,1 @@
-vim.cmd([[set wildmode=longest,list]])
+require('mini_pack')

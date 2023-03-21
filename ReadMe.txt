@@ -97,3 +97,19 @@ laststatus
 1     only if there are at least two windows
 2     always
 3     always and ONLY the last window
+
+Refs
+----
+https://github.com/LunarVim/Neovim-from-scratch
+https://github.com/wbthomason/dotfiles/tree/linux/neovim/.config/nvim
+https://github.com/akinsho/dotfiles/tree/main/.config/nvim
+https://git.sr.ht/~yazdan/nvim-config/tree
+https://github.com/j-hui/fidget.nvim
+https://github.com/justinmk/config
+https://github.com/ray-x/lsp_signature.nvim/blob/master/tests/init_paq.lua
+https://github.com/Kethku/vim-config
+https://github.com/LazyVim/LazyVim
+https://neovim.io/doc/user/options.html
+https://github.com/nvim-telescope/telescope.nvim/issues/new?assignees=&labels=bug&template=bug_report.yml
+nvim\site\pack\packer\opt\nvim-cmp\lua\cmp\utils\misc.lua
+site\pack\packer\opt\nvim-lspconfig\lua\lspconfig\util.lua
