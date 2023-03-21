@@ -191,7 +191,15 @@ if installed('VonHeikemen/fine-cmdline.nvim') then
   require('fine-cmdline').setup({ cmdline = { prompt = ' > ' } })
 end
 
+-- stylua: ignore start
 if installed('kazhala/close-buffers.nvim') then
   require('close_buffers').setup({})
   vim.api.nvim_create_user_command('BufferCloseOthers', function() require('close_buffers').wipe({ type = 'other' }) end, {})
+end
+-- stylua: ignore end
+
+if installed('numToStr/Comment.nvim') then
+  require('Comment').setup()
+  -- vim.api.nvim_create_user_command('CommentLine', require('Comment.api').toggle.linewise.current, {})
+  -- vim.api.nvim_create_user_command('CommentBlock', function(range) vim.api.nvim_feedkeys(esc, 'nx', false) require('Comment.api').toggle.linewise(vim.fn.visualmode()) end, {})
 end

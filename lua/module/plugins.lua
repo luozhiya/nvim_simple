@@ -37,6 +37,7 @@ return {
   { 'qpkorr/vim-bufkill' },
   { 'moll/vim-bbye' },
   { 'kazhala/close-buffers.nvim' },
+  { 'numToStr/Comment.nvim' },
 
   -- Core Coding LSP/Complete
   { 'neovim/nvim-lspconfig' },

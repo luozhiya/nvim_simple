@@ -38,6 +38,17 @@ M.setup_st = function()
   M.map('n', '<c-s-p>', '<cmd>Telescope commands<cr>')
   M.map('n', '<M-cr>', '<cmd>FineCmdline<cr>')
   M.map('n', [[\]], '<cmd>Telescope cmdline<cr>')
+  -- stylua: ignore start
+  local comment = function()
+    local esc = vim.api.nvim_replace_termcodes('<ESC>', true, false, true)
+    local toggle = require('Comment.api').toggle
+    M.map('n', '<leader>cc', toggle.linewise.current, { desc = 'Comment Line' })
+    M.map('n', '<leader>cb', toggle.blockwise.current, { desc = 'Comment Block' })
+    M.map('x', '<leader>cc', function() vim.api.nvim_feedkeys(esc, 'nx', false) toggle.linewise(vim.fn.visualmode()) end, { desc = 'Comment Line' })
+    M.map('x', '<leader>cb', function() vim.api.nvim_feedkeys(esc, 'nx', false) toggle.blockwise(vim.fn.visualmode()) end, { desc = 'Comment Block' })
+  end
+  -- stylua: ignore end
+  comment()
 end
 
 M.lsp = {
