@@ -29,7 +29,7 @@ if installed('hrsh7th/nvim-cmp') then
     formatting = {
       fields = { 'kind', 'abbr', 'menu' },
       format = function(entry, vim_item)
-        vim_item.menu = ({ nvim_lsp = '[LSP]', buffer = '[Buffer]', path = '[Path]' })[entry.source.name]
+        vim_item.menu = ({ nvim_lsp = '[LSP]', buffer = '[Buffer]', path = '[Path]', luasnip = '[Snippet]' })[entry.source.name]
         local max = 45
         local content = vim_item.abbr
         if #content > max then
