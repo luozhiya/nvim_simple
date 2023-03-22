@@ -49,7 +49,7 @@ M.config = function(name)
           sync_root_with_cwd = true,
           respect_buf_cwd = true,
           hijack_directories = { enable = false },
-          update_focused_file = { enable = true, update_root = true },
+          update_focused_file = { enable = false, update_root = true },
           actions = { open_file = { resize_window = false } },
           view = {
             adaptive_size = false,
@@ -58,37 +58,37 @@ M.config = function(name)
         }
         opts = vim.tbl_deep_extend('error', opts, bindings.nvim_tree())
         require('nvim-tree').setup(opts)
-        local nvim_tree_hydra = nil
-        local nt_au_group = vim.api.nvim_create_augroup('NvimTreeHydraAu', { clear = true })
-        local function spawn_nvim_tree_hydra()
-          local hydraopts = {
-            name = 'NvimTree',
-            config = { color = 'pink', invoke_on_body = true, buffer = 0, hint = { position = 'bottom', border = 'rounded' } },
-            mode = 'n',
-            body = 'H',
-          }
-          hydraopts = vim.tbl_deep_extend('error', hydraopts, bindings.nvim_tree_hydra())
-          nvim_tree_hydra = require('hydra')(hydraopts)
-          nvim_tree_hydra:activate()
-        end
-        vim.api.nvim_create_autocmd({ 'BufEnter' }, {
-          pattern = '*',
-          callback = function(opts)
-            if vim.bo[opts.buf].filetype == 'NvimTree' then
-              spawn_nvim_tree_hydra()
-            else
-              if nvim_tree_hydra then
-                nvim_tree_hydra:exit()
-              end
-            end
-          end,
-          group = nt_au_group,
-        })
+        -- local nvim_tree_hydra = nil
+        -- local nt_au_group = vim.api.nvim_create_augroup('NvimTreeHydraAu', { clear = true })
+        -- local function spawn_nvim_tree_hydra()
+        --   local hydraopts = {
+        --     name = 'NvimTree',
+        --     config = { color = 'pink', invoke_on_body = true, buffer = 0, hint = { position = 'bottom', border = 'rounded' } },
+        --     mode = 'n',
+        --     body = 'H',
+        --   }
+        --   hydraopts = vim.tbl_deep_extend('error', hydraopts, bindings.nvim_tree_hydra())
+        --   nvim_tree_hydra = require('hydra')(hydraopts)
+        --   nvim_tree_hydra:activate()
+        -- end
+        -- vim.api.nvim_create_autocmd({ 'BufEnter' }, {
+        --   pattern = '*',
+        --   callback = function(opts)
+        --     if vim.bo[opts.buf].filetype == 'NvimTree' then
+        --       spawn_nvim_tree_hydra()
+        --     else
+        --       if nvim_tree_hydra then
+        --         nvim_tree_hydra:exit()
+        --       end
+        --     end
+        --   end,
+        --   group = nt_au_group,
+        -- })
       end,
       ['stevearc/dressing.nvim'] = function()
         require('dressing').setup({
           input = { enabled = true, prompt_align = 'center', relative = 'editor', prefer_width = 0.6, win_options = { winblend = 0 } }, -- Window transparency (0-100)
-          select = { enabled = false },
+          select = { enabled = true, backend = { 'telescope', 'fzf_lua', 'fzf', 'builtin', 'nui' } },
         })
       end,
       ['ahmedkhalf/project.nvim'] = function() require('project_nvim').setup() end,

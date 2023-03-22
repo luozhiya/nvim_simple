@@ -14,8 +14,8 @@ return {
   { 'nvim-telescope/telescope-live-grep-args.nvim' },
   { 'nvim-telescope/telescope-file-browser.nvim' },
   { 'jonarrien/telescope-cmdline.nvim' },
-  { 'stevearc/aerial.nvim', config = config('stevearc/aerial.nvim') },
-  { 'ahmedkhalf/project.nvim', config = config('ahmedkhalf/project.nvim') },
+  { 'stevearc/aerial.nvim', event = 'BufReadPost', config = config('stevearc/aerial.nvim') },
+  { 'ahmedkhalf/project.nvim', event = 'BufReadPost', config = config('ahmedkhalf/project.nvim') },
   --- Completion
   { 'hrsh7th/nvim-cmp', event = 'BufReadPost', config = config('hrsh7th/nvim-cmp') },
   { 'hrsh7th/cmp-cmdline', event = { 'CmdlineEnter', 'InsertEnter' } },
@@ -28,7 +28,7 @@ return {
   { 'kkharji/sqlite.lua', config = config('kkharji/sqlite.lua') },
   { 'anuvyklack/hydra.nvim' },
   { 'MunifTanjim/nui.nvim' },
-  { 'stevearc/dressing.nvim', config = config('stevearc/dressing.nvim') },
+  { 'stevearc/dressing.nvim', event = 'VeryLazy', config = config('stevearc/dressing.nvim') },
   --- Git
   { 'lewis6991/gitsigns.nvim', event = 'BufReadPost', config = config('lewis6991/gitsigns.nvim') },
   --- Buffer
