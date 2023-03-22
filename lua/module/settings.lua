@@ -187,6 +187,8 @@ M.config = function(name)
         opts = vim.tbl_deep_extend('error', opts, bindings.neotree())
         require('neo-tree').setup(opts)
       end,
+      ['tanvirtin/vgit.nvim'] = function() require('vgit').setup() end,
+      ['TimUntersberger/neogit'] = function() require('neogit').setup() end,
     }
   end
   return M.cached[name]

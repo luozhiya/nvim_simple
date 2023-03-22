@@ -31,6 +31,8 @@ return {
   { 'stevearc/dressing.nvim', event = 'VeryLazy', config = config('stevearc/dressing.nvim') },
   --- Git
   { 'lewis6991/gitsigns.nvim', event = 'BufReadPost', config = config('lewis6991/gitsigns.nvim') },
+  { 'tanvirtin/vgit.nvim', config = config('tanvirtin/vgit.nvim') },
+  { 'TimUntersberger/neogit', cmd = { 'Neogit' }, config = config('TimUntersberger/neogit') },
   --- Buffer
   { 'qpkorr/vim-bufkill', cmd = { 'BD' } },
   { 'moll/vim-bbye', cmd = { 'Bdelete' } },

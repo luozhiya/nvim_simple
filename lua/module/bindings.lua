@@ -98,7 +98,6 @@ M.wk = function(wk)
   end
   function _lazygit_toggle() _any_toggle('lazygit') end
   function _gitui_toggle() _any_toggle('gitui') end
-  
   -- stylua: ignore start
   local wk_ve = function()
     return {
@@ -166,8 +165,25 @@ M.wk = function(wk)
     },
     g = {
       name = 'Git',
-      l = { '<cmd>lua _lazygit_toggle()<CR>', 'Lazygit' },
+      l = { '<cmd>lua _lazygit_toggle()<cr>', 'Lazygit' },
       g = { '<cmd>lua _gitui_toggle()<cr>', 'GitUI' },
+      n = { '<cmd>Neogit<cr>', 'Neogit' },
+      v = {
+        name = 'VGit',
+        s = { [[<cmd>lua require('vgit').buffer_hunk_stage()<cr>]], 'Buffer Hunk Stage' },
+        r = { [[<cmd>lua require('vgit').buffer_hunk_reset()<cr>]], 'Buffer Hunk Reset' },
+        p = { [[<cmd>lua require('vgit').buffer_hunk_preview()<cr>]], 'Buffer Hunk Preview' },
+        b = { [[<cmd>lua require('vgit').buffer_blame_preview()<cr>]], 'Buffer Blame Preview' },
+        f = { [[<cmd>lua require('vgit').buffer_diff_preview()<cr>]], 'Buffer Diff Preview' },
+        h = { [[<cmd>lua require('vgit').buffer_history_preview()<cr>]], 'Buffer History Preview' },
+        u = { [[<cmd>lua require('vgit').buffer_reset()<cr>]], 'Buffer Reset' },
+        g = { [[<cmd>lua require('vgit').buffer_gutter_blame_preview()<cr>]], 'Buffer Gutter Blame Preview' },
+        d = { [[<cmd>lua require('vgit').project_diff_preview()<cr>]], 'Project Diff Preview' },
+        q = { [[<cmd>lua require('vgit').project_hunks_qf()<cr>]], 'Project Hunks QF' },
+        x = { [[<cmd>lua require('vgit').toggle_diff_preference()<cr>]], 'Toggle Diff Preference' },
+        l = { [[<cmd>lua require('vgit').buffer_hunks_preview()<cr>]], 'Buffer Hunks Preview'},
+        m = { [[<cmd>lua require('vgit').project_hunks_staged_preview()<cr>]], 'Project Hunks Staged Preview'},
+      },
     },
     t = {
       name = 'Telescope',

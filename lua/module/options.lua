@@ -74,6 +74,8 @@ function M.setup()
     timeout = true, -- Limit the time searching for suggestions to {millisec} milli seconds.
     timeoutlen = 500, -- the timeout when WhichKey opens is controlled by the vim setting timeoutlen.
     wildmode = 'full',
+    updatetime = 300,
+    incsearch = false,
   }
   for k, v in pairs(opts) do
     vim.opt[k] = v
