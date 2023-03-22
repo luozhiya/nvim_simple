@@ -32,9 +32,9 @@ return {
   --- Git
   { 'lewis6991/gitsigns.nvim', event = 'BufReadPost', config = config('lewis6991/gitsigns.nvim') },
   --- Buffer
-  { 'qpkorr/vim-bufkill', event = 'BufNew' },
-  { 'moll/vim-bbye', event = 'BufNew' },
-  { 'kazhala/close-buffers.nvim', event = 'BufNew', config = config('kazhala/close-buffers.nvim') },
+  { 'qpkorr/vim-bufkill', cmd = { 'BD' } },
+  { 'moll/vim-bbye', cmd = { 'Bdelete' } },
+  { 'kazhala/close-buffers.nvim', cmd = { 'BufferCloseOthers' }, config = config('kazhala/close-buffers.nvim') },
   --- Key Management
   { 'folke/which-key.nvim', keys = { { ',' }, { 'g' } }, config = config('folke/which-key.nvim') },
   { 'mrjones2014/legendary.nvim', event = 'VeryLazy', config = config('mrjones2014/legendary.nvim') },
@@ -47,7 +47,7 @@ return {
   { 'VonHeikemen/fine-cmdline.nvim', config = config('VonHeikemen/fine-cmdline.nvim'), cmd = { 'FineCmdline' } },
   { 'gelguy/wilder.nvim', keys = { { '?' } }, config = config('gelguy/wilder.nvim') },
   --- Edit
-  { 'tpope/vim-obsession' },
+  { 'tpope/vim-obsession', cmd = { 'Obsession' } },
   { 'windwp/nvim-autopairs' },
   { 'numToStr/Comment.nvim', keys = { { '<leader>cc' }, { '<leader>cb' } } },
   { 'fedepujol/move.nvim', cmd = { 'MoveLine', 'MoveBlock', 'MoveHChar', 'MoveHBlock' } },
