@@ -1,13 +1,6 @@
 local installed = require('base').installed
 local bindings = require('module.bindings')
 
--- stylua: ignore start
-vim.api.nvim_create_user_command('ToggleFocusMode', function() 
-  vim.opt.laststatus = vim.opt.laststatus._value == 0 and 3 or 0 
-  vim.opt.number = vim.opt.number._value == false 
-end, {})
--- stylua: ignore end
-
 if installed('folke/tokyonight.nvim') then
   vim.cmd([[colorscheme tokyonight]])
 end
@@ -52,23 +45,11 @@ if installed('lewis6991/gitsigns.nvim') then
   require('gitsigns').setup()
 end
 
--- stylua: ignore start
 if installed('akinsho/toggleterm.nvim') then
-  require('toggleterm').setup({ open_mapping = bindings.toggleterm().open_mapping })
-  local terminal_float_run = function(cmd, dir)
-    return require('toggleterm.terminal').Terminal:new({
-      cmd = cmd,
-      dir = dir,
-      direction = 'float',
-      float_opts = { border = 'double' },
-      on_open = function(term) vim.cmd('startinsert!') bindings.toggleterm().on_open(term.bufnr) end,
-      on_close = function(term) vim.cmd('startinsert!') end,
-    })
-  end
-  vim.api.nvim_create_user_command('ToggleTerminalGitUI', function() terminal_float_run('gitui', 'git_dir'):toggle() end, {})
-  vim.api.nvim_create_user_command('ToggleTerminalLazyGit', function() terminal_float_run('lazygit', 'git_dir'):toggle() end, {})
+  local opts = {}
+  opts = vim.tbl_deep_extend('error', opts, bindings.toggleterm())
+  require('toggleterm').setup(opts)
 end
--- stylua: ignore end
 
 if installed('nvim-tree/nvim-tree.lua') then
   local opts = {

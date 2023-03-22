@@ -78,6 +78,11 @@ end
 M.toggleterm = function()
   return {
     open_mapping = [[<c-\>]],
+  }
+end
+
+M.toggleterm_on_open = function()
+  return {
     on_open = function(buffer) M.map('n', 'q', '<cmd>close<cr>', { noremap = true, silent = true, buffer = buffer }) end,
   }
 end
@@ -246,6 +251,20 @@ local launch_telescope_ontree = function(action, opts)
   return require('telescope.builtin')[action](opts)
 end
 
+local terminal_float_run = function(cmd, dir)
+  return require('toggleterm.terminal').Terminal:new({
+    cmd = cmd,
+    dir = dir,
+    direction = 'float',
+    float_opts = { border = 'double' },
+    on_open = function(term)
+      vim.cmd('startinsert!')
+      bindings.toggleterm().on_open(term.bufnr)
+    end,
+    on_close = function(term) vim.cmd('startinsert!') end,
+  })
+end
+
 M.nvim_tree = function()
   return { view = { mappings = { list = {
     { key = '<c-f>', action_cb = function() return launch_telescope_ontree('find_files') end },
@@ -377,6 +396,24 @@ M.legendary = function()
         ':TelescopeLiveGrepInTreeNode',
         function() launch_telescope_ontree('live_grep') end,
         description = 'Grep In Folder...',
+      },
+      {
+        ':ToggleTerminalGitUI',
+        function() terminal_float_run('gitui', 'git_dir'):toggle() end,
+        description = 'Toggle Terminal GitUI...',
+      },
+      {
+        ':ToggleTerminalLazyGit',
+        function() terminal_float_run('lazygit', 'git_dir'):toggle() end,
+        description = 'Toggle Terminal LazyGit...',
+      },
+      {
+        ':ToggleFocusMode',
+        function()
+          vim.opt.laststatus = vim.opt.laststatus._value == 0 and 3 or 0
+          vim.opt.number = vim.opt.number._value == false
+        end,
+        description = 'Toggle Focus Mode',
       },
     },
     funcs = {},
