@@ -151,9 +151,6 @@ M.wk = function(wk)
     l = {
       name = 'LSP',
       i = { '<cmd>LspInfo<cr>', 'Info' },
-    },
-    c = {
-      name = 'Code',
       a = { '<cmd>ClangAST<cr>', 'Clang AST' },
       t = { '<cmd>ClangdTypeHierarchy<cr>', 'Clang Type Hierarchy' },
       h = { '<cmd>ClangdSwitchSourceHeader<cr>', 'Switch C/C++ header/source' },

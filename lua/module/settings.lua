@@ -99,11 +99,11 @@ M.config = function(name)
         wilder.set_option('use_python_remote_plugin', 0)
         wilder.set_option('renderer', wilder.popupmenu_renderer(wilder.popupmenu_border_theme()))
       end,
-      ['kazhala/close-buffers.nvim'] = function() require('close_buffers').setup() end,
+      ['kazhala/close-buffers.nvim'] = function() require('close_buffers').setup({}) end,
       ['nvim-lualine/lualine.nvim'] = function()
         local function lsp_active()
           local names = {}
-          for _, client in pairs(vim.lsp.buf_get_clients()) do
+          for _, client in pairs(vim.lsp.get_active_clients()) do
             table.insert(names, client.name)
           end
           return 'LSP<' .. table.concat(names, ', ') .. '>'
