@@ -30,11 +30,11 @@ return {
   { 'MunifTanjim/nui.nvim' },
   { 'stevearc/dressing.nvim', config = config('stevearc/dressing.nvim') },
   --- Git
-  { 'lewis6991/gitsigns.nvim', config = config('lewis6991/gitsigns.nvim') },
+  { 'lewis6991/gitsigns.nvim', event = 'BufReadPost', config = config('lewis6991/gitsigns.nvim') },
   --- Buffer
-  { 'qpkorr/vim-bufkill' },
-  { 'moll/vim-bbye' },
-  { 'kazhala/close-buffers.nvim', config = config('kazhala/close-buffers.nvim') },
+  { 'qpkorr/vim-bufkill', event = 'BufNew' },
+  { 'moll/vim-bbye', event = 'BufNew' },
+  { 'kazhala/close-buffers.nvim', event = 'BufNew', config = config('kazhala/close-buffers.nvim') },
   --- Key Management
   { 'folke/which-key.nvim', keys = { { ',' }, { 'g' } }, config = config('folke/which-key.nvim') },
   { 'mrjones2014/legendary.nvim', event = 'VeryLazy', config = config('mrjones2014/legendary.nvim') },
@@ -54,7 +54,7 @@ return {
   { 'ray-x/lsp_signature.nvim', config = config('ray-x/lsp_signature.nvim') },
 
   -- LSP
-  { 'neovim/nvim-lspconfig', event = 'BufReadPost', ft = { 'c', 'cpp', 'lua' }, config = require('module.lsp').setup, dependencies = { 'j-hui/fidget.nvim' } },
+  { 'neovim/nvim-lspconfig', event = 'BufReadPost', ft = { 'c', 'cpp', 'lua' }, config = require('module.lsp').setup, dependencies = { 'j-hui/fidget.nvim', 'ray-x/lsp_signature.nvim' } },
   { 'williamboman/mason.nvim' },
   { 'williamboman/mason-lspconfig.nvim' },
   { 'p00f/clangd_extensions.nvim' },
