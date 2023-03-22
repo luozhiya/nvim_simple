@@ -64,9 +64,13 @@ M.cmp = function(cmp)
   }
 end
 
-M.aerial = function(buffer)
-  M.map('n', '{', '<cmd>AerialPrev<cr>', { buffer = buffer })
-  M.map('n', '}', '<cmd>AerialNext<cr>', { buffer = buffer })
+M.aerial = function()
+  return {
+    on_attach = function(buffer)
+      M.map('n', '{', '<cmd>AerialPrev<cr>', { buffer = buffer })
+      M.map('n', '}', '<cmd>AerialNext<cr>', { buffer = buffer })
+    end,
+  }
 end
 
 M.toggleterm = function()

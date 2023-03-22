@@ -19,11 +19,12 @@ if installed('nvim-treesitter/nvim-treesitter') then
 end
 
 if installed('stevearc/aerial.nvim') then
-  require('aerial').setup({
+  local opts = {
     backends = { 'treesitter', 'lsp' },
-    on_attach = bindings.aerial,
     layout = { max_width = { 60, 0.4 } },
-  })
+  }
+  opts = vim.tbl_deep_extend('error', opts, bindings.aerial())
+  require('aerial').setup(opts)
   require('telescope').load_extension('aerial')
 end
 
