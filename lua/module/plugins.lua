@@ -24,7 +24,7 @@ return {
   { 'L3MON4D3/LuaSnip' },
   { 'saadparwaiz1/cmp_luasnip' },
   --- Base
-  { 'kkharji/sqlite.lua' },
+  { 'kkharji/sqlite.lua', config = config('kkharji/sqlite.lua') },
   { 'anuvyklack/hydra.nvim' },
   { 'MunifTanjim/nui.nvim' },
   { 'stevearc/dressing.nvim', config = config('stevearc/dressing.nvim') },

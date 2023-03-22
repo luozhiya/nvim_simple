@@ -179,6 +179,11 @@ M.config = function(name)
           }),
         })
       end,
+      ['kkharji/sqlite.lua'] = function()
+        if require('base').is_windows() then
+          vim.g.sqlite_clib_path = 'C:/Windows/sqlite3.dll'
+        end
+      end,
     }
   end
   return M.cached[name]
