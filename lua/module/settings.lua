@@ -126,12 +126,6 @@ if installed('kazhala/close-buffers.nvim') then
 end
 -- stylua: ignore end
 
-if installed('numToStr/Comment.nvim') then
-  require('Comment').setup()
-  -- vim.api.nvim_create_user_command('CommentLine', require('Comment.api').toggle.linewise.current, {})
-  -- vim.api.nvim_create_user_command('CommentBlock', function(range) vim.api.nvim_feedkeys(esc, 'nx', false) require('Comment.api').toggle.linewise(vim.fn.visualmode()) end, {})
-end
-
 if installed('nvim-lualine/lualine.nvim') then
   local function lsp_active()
     local names = {}

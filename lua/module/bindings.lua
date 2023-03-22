@@ -328,7 +328,7 @@ M.legendary = function()
           {
             '<leader>cc',
             {
-              n = { require('Comment.api').toggle.linewise.current },
+              n = { function() require('Comment.api').toggle.linewise.current() end },
               x = {
                 function()
                   local esc = vim.api.nvim_replace_termcodes('<ESC>', true, false, true)
@@ -342,7 +342,7 @@ M.legendary = function()
           {
             '<leader>cb',
             {
-              n = { require('Comment.api').toggle.blockwise.current },
+              n = { function() require('Comment.api').toggle.blockwise.current() end },
               x = {
                 function()
                   local esc = vim.api.nvim_replace_termcodes('<ESC>', true, false, true)

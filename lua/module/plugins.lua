@@ -1,3 +1,4 @@
+-- stylua: ignore start
 return {
   -- Framework
   { 'folke/tokyonight.nvim' },
@@ -37,7 +38,7 @@ return {
   { 'qpkorr/vim-bufkill' },
   { 'moll/vim-bbye' },
   { 'kazhala/close-buffers.nvim' },
-  { 'numToStr/Comment.nvim' },
+  { 'numToStr/Comment.nvim', lazy = true, keys = { { "<leader>cc" }, { "<leader>cb" }, } },
   { 'nvim-lualine/lualine.nvim' },
   { 'fedepujol/move.nvim' },
   { 'mrjones2014/legendary.nvim' },
@@ -49,3 +50,4 @@ return {
   { 'hrsh7th/cmp-nvim-lsp' },
   { 'folke/neodev.nvim' },
 }
+-- stylua: ignore end
