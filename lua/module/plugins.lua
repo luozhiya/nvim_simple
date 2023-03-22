@@ -14,6 +14,7 @@ return {
   { 'nvim-telescope/telescope-live-grep-args.nvim' },
   { 'nvim-telescope/telescope-file-browser.nvim' },
   { 'jonarrien/telescope-cmdline.nvim' },
+  { 'stevearc/aerial.nvim', config = config('stevearc/aerial.nvim') },
   { 'ahmedkhalf/project.nvim', config = config('ahmedkhalf/project.nvim') },
   --- Completion
   { 'hrsh7th/nvim-cmp', config = config('hrsh7th/nvim-cmp') },
@@ -39,7 +40,6 @@ return {
   { 'folke/which-key.nvim', config = config('folke/which-key.nvim') },
   { 'mrjones2014/legendary.nvim', config = config('mrjones2014/legendary.nvim') },
   --- UI
-  { 'stevearc/aerial.nvim', config = config('stevearc/aerial.nvim') },
   { 'j-hui/fidget.nvim', config = config('j-hui/fidget.nvim') },
   { 'nvim-lualine/lualine.nvim', config = config('nvim-lualine/lualine.nvim') },
   { 'nvim-tree/nvim-tree.lua', config = config('nvim-tree/nvim-tree.lua') },

@@ -16,7 +16,6 @@ M.config = function(name)
         }
         opts = vim.tbl_deep_extend('error', opts, bindings.aerial())
         require('aerial').setup(opts)
-        require('telescope').load_extension('aerial')
       end,
       ['folke/which-key.nvim'] = function()
         local wk = require('which-key')
@@ -35,6 +34,7 @@ M.config = function(name)
         telescope.load_extension('live_grep_args')
         telescope.load_extension('file_browser')
         telescope.load_extension('cmdline')
+        telescope.load_extension('aerial')
       end,
       ['lewis6991/gitsigns.nvim'] = function() require('gitsigns').setup() end,
       ['akinsho/toggleterm.nvim'] = function()
