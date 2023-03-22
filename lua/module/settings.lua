@@ -178,6 +178,77 @@ M.config = function(name)
           vim.g.sqlite_clib_path = 'C:/Windows/sqlite3.dll'
         end
       end,
+      ['nvim-neo-tree/neo-tree.nvim'] = function()
+        local function getTelescopeOpts(state, path)
+          return {
+            cwd = path,
+            search_dirs = { path },
+            attach_mappings = function(prompt_bufnr, map)
+              local actions = require('telescope.actions')
+              actions.select_default:replace(function()
+                actions.close(prompt_bufnr)
+                local action_state = require('telescope.actions.state')
+                local selection = action_state.get_selected_entry()
+                local filename = selection.filename
+                if filename == nil then
+                  filename = selection[1]
+                end
+                -- any way to open the file without triggering auto-close event of neo-tree?
+                require('neo-tree.sources.filesystem').navigate(state, state.path, filename)
+              end)
+              return true
+            end,
+          }
+        end
+        vim.g.neo_tree_remove_legacy_commands = 1
+        local opts = {
+          close_if_last_window = true,
+          default_component_configs = {
+            indent = {
+              -- with_markers = false,
+            },
+          },
+          source_selector = {
+            winbar = true,
+            statusline = false,
+          },
+          window = {
+            mappings = {
+              ['e'] = function() vim.api.nvim_exec('Neotree focus filesystem left', true) end,
+              ['b'] = function() vim.api.nvim_exec('Neotree focus buffers left', true) end,
+              ['g'] = function() vim.api.nvim_exec('Neotree focus git_status left', true) end,
+            },
+          },
+          filesystem = {
+            window = {
+              mappings = {
+                ['O'] = 'system_open',
+                ['tf'] = 'telescope_find',
+                ['tg'] = 'telescope_grep',
+              },
+            },
+            commands = {
+              system_open = function(state)
+                local node = state.tree:get_node()
+                local path = node:get_id()
+                vim.api.nvim_command(string.format("silent !xdg-open '%s'", path))
+                vim.api.nvim_command('silent !start ' .. path)
+              end,
+              telescope_find = function(state)
+                local node = state.tree:get_node()
+                local path = node:get_id()
+                require('telescope.builtin').find_files(getTelescopeOpts(state, path))
+              end,
+              telescope_grep = function(state)
+                local node = state.tree:get_node()
+                local path = node:get_id()
+                require('telescope.builtin').live_grep(getTelescopeOpts(state, path))
+              end,
+            },
+          },
+        }
+        require('neo-tree').setup(opts)
+      end,
     }
   end
   return M.cached[name]

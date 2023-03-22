@@ -184,6 +184,7 @@ M.wk = function(wk)
     },
     r = {
       name = 'rrr Tree',
+      r = { '<cmd>Neotree source=filesystem reveal=true position=left<cr>', 'Neo Tree' },
       e = { '<cmd>NvimTreeToggle<cr>', 'Tree Explorer' },
       f = { '<cmd>NvimTreeFindFile<cr>', 'Tree Find' },
     },
@@ -193,10 +194,14 @@ M.wk = function(wk)
         name = 'Copy',
         c = { '', 'Copy Content' },
         n = { '', 'Copy File Name' },
+        e = { '', 'Copy File Name With Ext' },
         p = { '', 'Copy Path' },
-        P = { '', 'Copy Relative Path' },
+        r = { '', 'Copy Relative Path' },
+      },
+      f = {
+        name = 'File',
         r = { '', 'Reveal In File Explorer' },
-        R = { '', 'Reveal In New Vim' },
+        v = { '', 'Reveal In New Vim' },
       },
     },
   }
