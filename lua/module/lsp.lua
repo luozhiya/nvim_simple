@@ -12,7 +12,7 @@ M.setup = function()
     update_in_insert = false,
     underline = true,
   })
-  require('mason').setup({})
+  require('mason').setup()
   require('mason-lspconfig').setup({ ensure_installed = { 'lua_ls' } })
   local lsp_on_attach = function(client, buffer)
     for _, keys in pairs(bindings.lsp) do
@@ -26,7 +26,7 @@ M.setup = function()
     return ex
   end)()
   require('clangd_extensions').setup({ server = { filetypes = { 'c', 'cpp' }, on_attach = lsp_on_attach, capabilities = lsp_capabilities } })
-  require('neodev').setup({})
+  require('neodev').setup()
   require('lspconfig').lua_ls.setup({ on_attach = lsp_on_attach, capabilities = lsp_capabilities })
 end
 

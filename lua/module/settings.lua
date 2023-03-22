@@ -35,6 +35,7 @@ M.config = function(name)
         telescope.load_extension('file_browser')
         telescope.load_extension('cmdline')
         telescope.load_extension('aerial')
+        telescope.load_extension('projects')
       end,
       ['lewis6991/gitsigns.nvim'] = function() require('gitsigns').setup() end,
       ['akinsho/toggleterm.nvim'] = function()
@@ -90,10 +91,7 @@ M.config = function(name)
           select = { enabled = false },
         })
       end,
-      ['ahmedkhalf/project.nvim'] = function()
-        require('project_nvim').setup()
-        require('telescope').load_extension('projects')
-      end,
+      ['ahmedkhalf/project.nvim'] = function() require('project_nvim').setup() end,
       ['gelguy/wilder.nvim'] = function()
         local wilder = require('wilder')
         -- wilder.setup({ modes = { ':', '/', '?' } })
@@ -101,7 +99,7 @@ M.config = function(name)
         wilder.set_option('use_python_remote_plugin', 0)
         wilder.set_option('renderer', wilder.popupmenu_renderer(wilder.popupmenu_border_theme()))
       end,
-      ['kazhala/close-buffers.nvim'] = function() require('close_buffers').setup({}) end,
+      ['kazhala/close-buffers.nvim'] = function() require('close_buffers').setup() end,
       ['nvim-lualine/lualine.nvim'] = function()
         local function lsp_active()
           local names = {}

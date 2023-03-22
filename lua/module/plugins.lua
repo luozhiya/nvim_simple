@@ -39,9 +39,9 @@ return {
   { 'folke/which-key.nvim', keys = { { ',' }, { 'g' } }, config = config('folke/which-key.nvim') },
   { 'mrjones2014/legendary.nvim', event = 'VeryLazy', config = config('mrjones2014/legendary.nvim') },
   --- UI
-  { 'j-hui/fidget.nvim', event = 'VeryLazy', config = config('j-hui/fidget.nvim') },
+  { 'j-hui/fidget.nvim', config = config('j-hui/fidget.nvim') },
   { 'nvim-lualine/lualine.nvim', event = 'VeryLazy', config = config('nvim-lualine/lualine.nvim') },
-  { 'nvim-tree/nvim-tree.lua', event = 'VeryLazy', config = config('nvim-tree/nvim-tree.lua') },
+  { 'nvim-tree/nvim-tree.lua', cmd = { 'NvimTreeToggle', 'NvimTreeFindFile' }, config = config('nvim-tree/nvim-tree.lua') },
   { 'akinsho/toggleterm.nvim', cmd = { 'ToggleTerm', 'ToggleTerminalGitUI', 'ToggleTerminalLazyGit' }, config = config('akinsho/toggleterm.nvim') },
   --- CmdLine
   { 'VonHeikemen/fine-cmdline.nvim', config = config('VonHeikemen/fine-cmdline.nvim'), cmd = { 'FineCmdline' } },
@@ -54,7 +54,7 @@ return {
   { 'ray-x/lsp_signature.nvim', config = config('ray-x/lsp_signature.nvim') },
 
   -- LSP
-  { 'neovim/nvim-lspconfig', event = 'BufReadPost', ft = { 'c', 'cpp', 'lua' }, config = require('module.lsp').setup },
+  { 'neovim/nvim-lspconfig', event = 'BufReadPost', ft = { 'c', 'cpp', 'lua' }, config = require('module.lsp').setup, dependencies = { 'j-hui/fidget.nvim' } },
   { 'williamboman/mason.nvim' },
   { 'williamboman/mason-lspconfig.nvim' },
   { 'p00f/clangd_extensions.nvim' },
