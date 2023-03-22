@@ -1,5 +1,4 @@
 local bindings = require('module.bindings')
-local installed = require('base').installed
 
 local M = {}
 M.setup = function()
@@ -21,14 +20,10 @@ M.setup = function()
     end
   end
   local lsp_capabilities = (function()
-    if installed('hrsh7th/nvim-cmp') then
-      local ex = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
-      ex.textDocument.completion.completionItem.snippetSupport = true
-      ex.textDocument.completion.completionItem.resolveSupport = { properties = { 'documentation', 'detail', 'additionalTextEdits' } }
-      return ex
-    else
-      return vim.lsp.protocol.make_client_capabilities()
-    end
+    local ex = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+    ex.textDocument.completion.completionItem.snippetSupport = true
+    ex.textDocument.completion.completionItem.resolveSupport = { properties = { 'documentation', 'detail', 'additionalTextEdits' } }
+    return ex
   end)()
   require('clangd_extensions').setup({ server = { filetypes = { 'c', 'cpp' }, on_attach = lsp_on_attach, capabilities = lsp_capabilities } })
   require('neodev').setup({})

@@ -1,4 +1,3 @@
-local installed = require('base').installed
 local bindings = require('module.bindings')
 
 local M = {}
