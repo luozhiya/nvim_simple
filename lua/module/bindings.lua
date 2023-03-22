@@ -81,13 +81,17 @@ M.toggleterm = function()
   }
 end
 
-M.toggleterm_on_open = function()
+M.toggleterm_float_run = function()
   return {
-    on_open = function(buffer) M.map('n', 'q', '<cmd>close<cr>', { noremap = true, silent = true, buffer = buffer }) end,
+    on_open = function(term)
+      vim.cmd('startinsert!')
+      M.map('n', 'q', '<cmd>close<cr>', { noremap = true, silent = true, buffer = term.bufnr })
+    end,
+    on_close = function(term) vim.cmd('startinsert!') end,
   }
 end
 
-M.wk = function()
+M.wk = function(wk)
   -- stylua: ignore start
   local wk_ve = function()
     return {
@@ -102,7 +106,7 @@ M.wk = function()
     }
   end
   -- stylua: ignore end
-  return {
+  local n = {
     s = {
       name = 'Session',
       q = { '<cmd>qa<cr>', 'Quit All' },
@@ -199,6 +203,7 @@ M.wk = function()
       },
     },
   }
+  wk.register(n, { mode = 'n', prefix = '<leader>' })
 end
 
 M.telescope = function(telescope)
@@ -252,17 +257,14 @@ local launch_telescope_ontree = function(action, opts)
 end
 
 local terminal_float_run = function(cmd, dir)
-  return require('toggleterm.terminal').Terminal:new({
+  local opts = {
     cmd = cmd,
     dir = dir,
     direction = 'float',
     float_opts = { border = 'double' },
-    on_open = function(term)
-      vim.cmd('startinsert!')
-      bindings.toggleterm().on_open(term.bufnr)
-    end,
-    on_close = function(term) vim.cmd('startinsert!') end,
-  })
+  }
+  opts = vim.tbl_deep_extend('error', opts, M.toggleterm_float_run())
+  return require('toggleterm.terminal').Terminal:new(opts)
 end
 
 M.nvim_tree = function()

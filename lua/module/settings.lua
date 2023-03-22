@@ -24,7 +24,7 @@ end
 if installed('folke/which-key.nvim') then
   local wk = require('which-key')
   wk.setup()
-  wk.register(bindings.wk(), { mode = 'n', prefix = '<leader>' })
+  bindings.wk(wk)
 end
 
 if installed('nvim-telescope/telescope.nvim') then
