@@ -51,16 +51,18 @@ M.cmp = function(cmp)
     end, { 'i', 's' })
   end
   return {
-    ['<C-k>'] = cmp.mapping.select_prev_item(),
-    ['<C-j>'] = cmp.mapping.select_next_item(),
-    ['<Up>'] = cmp.mapping.select_prev_item(),
-    ['<Down>'] = cmp.mapping.select_next_item(),
-    ['<cr>'] = cmp.mapping.confirm({ select = true }),
-    ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-    ['<Tab>'] = forward(),
-    ['<S-Tab>'] = backward(),
-    ['<C-y>'] = cmp.mapping.confirm({ select = false }),
-    ['<C-e>'] = cmp.mapping({ i = cmp.mapping.abort(), c = cmp.mapping.close() }),
+    mapping = {
+      ['<C-k>'] = cmp.mapping.select_prev_item(),
+      ['<C-j>'] = cmp.mapping.select_next_item(),
+      ['<Up>'] = cmp.mapping.select_prev_item(),
+      ['<Down>'] = cmp.mapping.select_next_item(),
+      ['<cr>'] = cmp.mapping.confirm({ select = true }),
+      ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+      ['<Tab>'] = forward(),
+      ['<S-Tab>'] = backward(),
+      ['<C-y>'] = cmp.mapping.confirm({ select = false }),
+      ['<C-e>'] = cmp.mapping({ i = cmp.mapping.abort(), c = cmp.mapping.close() }),
+    },
   }
 end
 

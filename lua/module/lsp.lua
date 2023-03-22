@@ -19,7 +19,7 @@ end
 
 if installed('hrsh7th/nvim-cmp') then
   local cmp = require('cmp')
-  cmp.setup({
+  local opts = {
     sources = {
       { name = 'nvim_lsp' },
       { name = 'buffer' },
@@ -43,10 +43,11 @@ if installed('hrsh7th/nvim-cmp') then
     snippet = {
       expand = function(args) require('luasnip').lsp_expand(args.body) end,
     },
-    mapping = bindings.cmp(cmp),
     completion = { completeopt = 'menuone, noinsert, noselect' },
     experimental = { ghost_text = true },
-  })
+  }
+  opts = vim.tbl_deep_extend('error', opts, bindings.cmp(cmp))
+  cmp.setup(opts)
   require('luasnip').config.set_config({ history = true, updateevents = 'TextChanged, TextChangedI' })
   require('luasnip.loaders.from_vscode').load()
   require('nvim-autopairs').setup()
