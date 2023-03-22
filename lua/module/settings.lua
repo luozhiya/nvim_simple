@@ -8,7 +8,7 @@ M.config = function(name)
     M.cached = {
       ['VonHeikemen/fine-cmdline.nvim'] = function() require('fine-cmdline').setup({ cmdline = { prompt = ' > ' } }) end,
       ['folke/tokyonight.nvim'] = function() vim.cmd([[colorscheme tokyonight]]) end,
-      ['nvim-treesitter/nvim-treesitter'] = function() require('nvim-treesitter.configs').setup({ ensure_installed = { 'cpp', 'c', 'lua', 'cmake' } }) end,
+      ['nvim-treesitter/nvim-treesitter'] = function() require('nvim-treesitter.configs').setup({ ensure_installed = { 'cpp', 'c', 'lua', 'cmake', 'markdown', 'markdown_inline' } }) end,
       ['stevearc/aerial.nvim'] = function()
         local opts = {
           backends = { 'treesitter', 'lsp' },
@@ -189,6 +189,7 @@ M.config = function(name)
       end,
       ['tanvirtin/vgit.nvim'] = function() require('vgit').setup() end,
       ['TimUntersberger/neogit'] = function() require('neogit').setup() end,
+      ['glepnir/lspsaga.nvim'] = function() require('lspsaga').setup() end,
     }
   end
   return M.cached[name]

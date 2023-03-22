@@ -56,8 +56,9 @@ return {
   { 'numToStr/Comment.nvim', keys = { { '<leader>cc' }, { '<leader>cb' } } },
   { 'fedepujol/move.nvim', cmd = { 'MoveLine', 'MoveBlock', 'MoveHChar', 'MoveHBlock' } },
   { 'ray-x/lsp_signature.nvim', config = config('ray-x/lsp_signature.nvim') },
+  { 'glepnir/lspsaga.nvim', cmd = { 'Lspsaga' }, config = config('glepnir/lspsaga.nvim') },
 
-  -- LSP
+  -- LSP Core
   { 'neovim/nvim-lspconfig', event = 'BufReadPost', ft = { 'c', 'cpp', 'lua' }, config = require('module.lsp').setup, dependencies = { 'j-hui/fidget.nvim', 'ray-x/lsp_signature.nvim' } },
   { 'williamboman/mason.nvim' },
   { 'williamboman/mason-lspconfig.nvim' },
