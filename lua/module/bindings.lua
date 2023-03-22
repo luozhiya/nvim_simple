@@ -190,16 +190,25 @@ M.wk = function()
   }
 end
 
-M.t_fb = function(fb_actions)
-  return { i = {
-    ['<c-n>'] = fb_actions.create,
-    ['<c-r>'] = fb_actions.rename,
-    ['<c-h>'] = fb_actions.toggle_hidden,
-    ['<c-x>'] = fb_actions.remove,
-    ['<c-p>'] = fb_actions.move,
-    ['<c-y>'] = fb_actions.copy,
-    ['<c-a>'] = fb_actions.select_all,
-  } }
+M.telescope = function(telescope)
+  local actions = telescope.extensions.file_browser.actions
+  return {
+    extensions = {
+      file_browser = {
+        mappings = {
+          i = {
+            ['<c-n>'] = actions.create,
+            ['<c-r>'] = actions.rename,
+            ['<c-h>'] = actions.toggle_hidden,
+            ['<c-x>'] = actions.remove,
+            ['<c-p>'] = actions.move,
+            ['<c-y>'] = actions.copy,
+            ['<c-a>'] = actions.select_all,
+          },
+        },
+      },
+    },
+  }
 end
 
 local launch_telescope_ontree = function(action, opts)
@@ -264,10 +273,10 @@ M.nvim_tree_hydra = function()
   }
 end
 
-vim.cmd([[
-  command -nargs=+ LspHover lua vim.lsp.buf.hover()
-  set keywordprg=:LspHover
-]])
+-- vim.cmd([[
+--   command -nargs=+ LspHover lua vim.lsp.buf.hover()
+--   set keywordprg=:LspHover
+-- ]])
 M.map('n', ';', ':', { silent = false })
 
 M.legendary = function()

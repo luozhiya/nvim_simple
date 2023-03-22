@@ -24,9 +24,7 @@ if installed('stevearc/aerial.nvim') then
     on_attach = bindings.aerial,
     layout = { max_width = { 60, 0.4 } },
   })
-  if installed('nvim-telescope/telescope.nvim') then
-    require('telescope').load_extension('aerial')
-  end
+  require('telescope').load_extension('aerial')
 end
 
 if installed('folke/which-key.nvim') then
@@ -37,7 +35,9 @@ end
 
 if installed('nvim-telescope/telescope.nvim') then
   local telescope = require('telescope')
-  telescope.setup({ extensions = { file_browser = { hijack_netrw = true, mappings = bindings.t_fb(telescope.extensions.file_browser.actions) } } })
+  local opts = { extensions = { file_browser = { hijack_netrw = true } } }
+  opts = vim.tbl_deep_extend('error', opts, bindings.telescope(telescope))
+  telescope.setup(opts)
   telescope.load_extension('ui-select')
   telescope.load_extension('undo')
   telescope.load_extension('fzf')
@@ -158,9 +158,7 @@ if installed('nvim-lualine/lualine.nvim') then
     end
     return 'LSP<' .. table.concat(names, ', ') .. '>'
   end
-  local function location()
-    return string.format('%3d:%-2d ', vim.fn.line('.'), vim.fn.virtcol('.'))
-  end
+  local function location() return string.format('%3d:%-2d ', vim.fn.line('.'), vim.fn.virtcol('.')) end
   local fileformat = { 'fileformat', icons_enabled = false }
   require('lualine').setup({ sections = {
     lualine_x = { lsp_active, 'encoding', fileformat, 'filetype' },

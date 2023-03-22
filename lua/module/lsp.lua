@@ -41,9 +41,7 @@ if installed('hrsh7th/nvim-cmp') then
       end,
     },
     snippet = {
-      expand = function(args)
-        require('luasnip').lsp_expand(args.body)
-      end,
+      expand = function(args) require('luasnip').lsp_expand(args.body) end,
     },
     mapping = bindings.cmp(cmp),
     completion = { completeopt = 'menuone, noinsert, noselect' },
