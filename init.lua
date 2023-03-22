@@ -8,7 +8,7 @@ if not vim.loop.fs_stat(opt.lazy) then
     'clone',
     '--filter=blob:none',
     'https://github.com/folke/lazy.nvim.git',
-    '--branch=stable', -- latest stable release
+    '--branch=latest', -- latest stable release
     opt.lazy,
   })
 end

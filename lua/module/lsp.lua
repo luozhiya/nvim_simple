@@ -72,10 +72,14 @@ local lsp_on_attach = function(client, buffer)
 end
 
 local lsp_capabilities = (function()
-  local ex = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
-  ex.textDocument.completion.completionItem.snippetSupport = true
-  ex.textDocument.completion.completionItem.resolveSupport = { properties = { 'documentation', 'detail', 'additionalTextEdits' } }
-  return ex
+  if installed('hrsh7th/nvim-cmp') then
+    local ex = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+    ex.textDocument.completion.completionItem.snippetSupport = true
+    ex.textDocument.completion.completionItem.resolveSupport = { properties = { 'documentation', 'detail', 'additionalTextEdits' } }
+    return ex
+  else
+    return vim.lsp.protocol.make_client_capabilities()
+  end
 end)()
 
 if installed('p00f/clangd_extensions.nvim') then

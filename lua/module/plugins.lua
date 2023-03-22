@@ -38,10 +38,10 @@ return {
   { 'qpkorr/vim-bufkill' },
   { 'moll/vim-bbye' },
   { 'kazhala/close-buffers.nvim' },
-  { 'numToStr/Comment.nvim', lazy = true, keys = { { "<leader>cc" }, { "<leader>cb" }, } },
   { 'nvim-lualine/lualine.nvim' },
-  { 'fedepujol/move.nvim' },
   { 'mrjones2014/legendary.nvim' },
+  { 'numToStr/Comment.nvim', lazy = true, keys = { { '<leader>cc' }, { '<leader>cb' }, } },
+  { 'fedepujol/move.nvim', lazy = true, cmd = { 'MoveLine', 'MoveBlock', 'MoveHChar', 'MoveHBlock' }, },
 
   -- Core Coding LSP/Complete
   { 'neovim/nvim-lspconfig' },
