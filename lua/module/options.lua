@@ -52,8 +52,8 @@ function M.setup()
     -- lazyredraw = true, -- no redraws in macros. Disabled for: https://github.com/neovim/neovim/issues/22674
     scrolloff = 4, -- Minimal number of screen lines to keep above and below the cursor.
     sidescrolloff = 8, -- The minimal number of screen columns to keep to the left and to the right of the cursor if 'nowrap' is set.
-    number = true, -- Print line number
-    signcolumn = 'auto:1',
+    number = false, -- Print line number
+    signcolumn = 'yes:1',
     termguicolors = true, -- True color support
     wrap = false, -- Disable line wrap
     tabstop = 2, -- length of an actual \t character

@@ -190,6 +190,7 @@ M.config = function(name)
       ['tanvirtin/vgit.nvim'] = function() require('vgit').setup() end,
       ['TimUntersberger/neogit'] = function() require('neogit').setup() end,
       ['glepnir/lspsaga.nvim'] = function() require('lspsaga').setup() end,
+      ['folke/trouble.nvim'] = function() require('trouble').setup() end,
     }
   end
   return M.cached[name]

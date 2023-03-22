@@ -163,7 +163,16 @@ M.wk = function(wk)
       f = { '<cmd>lua vim.lsp.buf.format{async=true}<cr>', 'Code Format' },
       l = {
         name = 'lspsaga',
-        l = { '<cmd>Lspsaga show_line_diagnostics<CR>', 'Show Line Diagnostics' },
+        l = { '<cmd>Lspsaga show_line_diagnostics<CR>', 'Lspsaga Show Line Diagnostics' },
+      },
+      d = {
+        name = 'Trouble Diagnostics',
+        x = { '<cmd>TroubleToggle<cr>', 'Trouble Toggle' },
+        w = { '<cmd>TroubleToggle workspace_diagnostics<cr>', 'Trouble Workspace Diagnostics' },
+        d = { '<cmd>TroubleToggle document_diagnostics<cr>', 'Trouble Document Diagnostics' },
+        l = { '<cmd>TroubleToggle loclist<cr>', 'Trouble Loclist' },
+        q = { '<cmd>TroubleToggle quickfix<cr>', 'Trouble Quickfix' },
+        r = { '<cmd>TroubleToggle lsp_references<cr>', 'Trouble LSP References' },
       },
     },
     g = {
