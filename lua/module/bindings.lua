@@ -96,8 +96,6 @@ M.wk = function(wk)
     })
     run:toggle()
   end
-  function _lazygit_toggle() _any_toggle('lazygit') end
-  function _gitui_toggle() _any_toggle('gitui') end
   -- stylua: ignore start
   local wk_ve = function()
     return {
@@ -165,8 +163,8 @@ M.wk = function(wk)
     },
     g = {
       name = 'Git',
-      l = { '<cmd>lua _lazygit_toggle()<cr>', 'Lazygit' },
-      g = { '<cmd>lua _gitui_toggle()<cr>', 'GitUI' },
+      l = { function() _any_toggle('lazygit') end, 'Lazygit' },
+      g = { function() _any_toggle('gitui') end, 'GitUI' },
       n = { '<cmd>Neogit<cr>', 'Neogit' },
       v = {
         name = 'VGit',
@@ -181,8 +179,8 @@ M.wk = function(wk)
         d = { [[<cmd>lua require('vgit').project_diff_preview()<cr>]], 'Project Diff Preview' },
         q = { [[<cmd>lua require('vgit').project_hunks_qf()<cr>]], 'Project Hunks QF' },
         x = { [[<cmd>lua require('vgit').toggle_diff_preference()<cr>]], 'Toggle Diff Preference' },
-        l = { [[<cmd>lua require('vgit').buffer_hunks_preview()<cr>]], 'Buffer Hunks Preview'},
-        m = { [[<cmd>lua require('vgit').project_hunks_staged_preview()<cr>]], 'Project Hunks Staged Preview'},
+        l = { [[<cmd>lua require('vgit').buffer_hunks_preview()<cr>]], 'Buffer Hunks Preview' },
+        m = { [[<cmd>lua require('vgit').project_hunks_staged_preview()<cr>]], 'Project Hunks Staged Preview' },
       },
     },
     t = {
