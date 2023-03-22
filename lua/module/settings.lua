@@ -128,10 +128,6 @@ M.config = function(name)
         require('fidget').setup({ text = { done = ' ' }, window = { blend = 0 } })
       end,
       ['ray-x/lsp_signature.nvim'] = function() require('lsp_signature').setup({ hint_prefix = ' ' }) end,
-      -- ['williamboman/mason.nvim'] = function()
-      --   require('mason').setup()
-      --   require('mason-lspconfig').setup({ ensure_installed = { 'lua_ls' } })
-      -- end,
       ['hrsh7th/nvim-cmp'] = function()
         local cmp = require('cmp')
         local opts = {
