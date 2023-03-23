@@ -19,8 +19,8 @@ return {
   --- Completion
   { 'hrsh7th/nvim-cmp', event = 'BufReadPost', config = config('hrsh7th/nvim-cmp') },
   { 'hrsh7th/cmp-cmdline', event = { 'CmdlineEnter', 'InsertEnter' } },
-  { 'hrsh7th/cmp-buffer', event = { 'CmdlineEnter', 'InsertEnter' } },
-  { 'hrsh7th/cmp-path', event = { 'CmdlineEnter', 'InsertEnter' } },
+  { 'hrsh7th/cmp-buffer', event = { 'InsertEnter' } },
+  { 'hrsh7th/cmp-path', event = { 'InsertEnter' } },
   { 'hrsh7th/cmp-nvim-lsp' },
   { 'L3MON4D3/LuaSnip' },
   { 'saadparwaiz1/cmp_luasnip' },
