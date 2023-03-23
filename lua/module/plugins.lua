@@ -41,13 +41,15 @@ return {
   --- Key Management
   { 'folke/which-key.nvim', keys = { { ',' }, { 'g' } }, config = config('folke/which-key.nvim') },
   { 'mrjones2014/legendary.nvim', event = 'VeryLazy', config = config('mrjones2014/legendary.nvim') },
-  --- UI
+  --- Appearance
   { 'j-hui/fidget.nvim', config = config('j-hui/fidget.nvim') },
   { 'nvim-lualine/lualine.nvim', event = 'VeryLazy', config = config('nvim-lualine/lualine.nvim') },
   { 'nvim-tree/nvim-tree.lua', cmd = { 'NvimTreeToggle', 'NvimTreeFindFile' }, config = config('nvim-tree/nvim-tree.lua') },
   { 'nvim-neo-tree/neo-tree.nvim', cmd = { 'Neotree' }, config = config('nvim-neo-tree/neo-tree.nvim') },
   { 'akinsho/toggleterm.nvim', cmd = { 'ToggleTerm' }, config = config('akinsho/toggleterm.nvim') },
-  { 'nvim-tree/nvim-web-devicons' },
+  { 'nvim-tree/nvim-web-devicons', enabled = false },
+  { 'gosukiwi/vim-atom-dark' },
+  { 'habamax/vim-habamax' },
   --- CmdLine
   { 'VonHeikemen/fine-cmdline.nvim', config = config('VonHeikemen/fine-cmdline.nvim'), cmd = { 'FineCmdline' } },
   { 'gelguy/wilder.nvim', keys = { { '?' } }, config = config('gelguy/wilder.nvim') },

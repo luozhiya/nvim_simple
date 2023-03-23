@@ -124,6 +124,7 @@ https://github.com/neovim/neovim/issues/18997
 map colon semicolon in neovim lua
 https://stackoverflow.com/questions/73738932/remapped-colon-key-not-show-command-line-mode-immediately
 https://stackoverflow.com/questions/9001337/vim-split-bar-styling
+https://vi.stackexchange.com/questions/11025/passing-visual-range-to-a-command-as-its-argument
 
 Lua
 ---

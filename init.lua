@@ -16,4 +16,5 @@ require('lazy').setup('module.plugins', {
   root = opt.root,
   concurrency = 2,
   defaults = { lazy = true },
+  readme = { enabled = false },
 })

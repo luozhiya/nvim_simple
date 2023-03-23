@@ -49,7 +49,7 @@ M.config = function(name)
           sync_root_with_cwd = true,
           respect_buf_cwd = true,
           hijack_directories = { enable = false },
-          update_focused_file = { enable = false, update_root = true },
+          update_focused_file = { enable = enable, update_root = true },
           actions = { open_file = { resize_window = false } },
           view = {
             adaptive_size = false,
@@ -175,14 +175,15 @@ M.config = function(name)
       end,
       ['kkharji/sqlite.lua'] = function()
         if require('base').is_windows() then
-          vim.g.sqlite_clib_path = 'C:/Windows/sqlite3.dll'
+          local nvim = 'nvim.exe'
+          vim.g.sqlite_clib_path = string.sub(vim.loop.exepath(nvim), 1, -(#nvim + 1)) .. 'sqlite3.dll'
         end
       end,
       ['nvim-neo-tree/neo-tree.nvim'] = function()
         vim.g.neo_tree_remove_legacy_commands = 1
         local opts = {
           close_if_last_window = true,
-          source_selector = { winbar = true, statusline = false },
+          source_selector = { winbar = false, statusline = false },
         }
         opts = vim.tbl_deep_extend('error', opts, bindings.neotree())
         require('neo-tree').setup(opts)
