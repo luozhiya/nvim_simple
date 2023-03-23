@@ -23,6 +23,7 @@ function M.open(uri)
   local cmd
   if vim.fn.has('win32') == 1 then
     cmd = { 'explorer', uri }
+    cmd = table.concat(cmd, ' '):gsub('/', '\\')
   elseif vim.fn.has('macunix') == 1 then
     cmd = { 'open', uri }
   else
@@ -34,11 +35,7 @@ function M.open(uri)
       cmd = { 'open', uri }
     end
   end
-  local x = table.concat(cmd, ' ')
-  if vim.fn.has('win32') == 1 then
-    x = x:gsub('/', '\\')
-  end
-  local ret = vim.fn.jobstart(x, { detach = true })
+  local ret = vim.fn.jobstart(cmd, { detach = true })
   if ret <= 0 then
     local msg = {
       'Failed to open uri',
