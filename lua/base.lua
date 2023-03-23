@@ -49,4 +49,18 @@ function M.open(uri)
   end
 end
 
+M.copy_content = function() end
+
+M.copy_path = function() end
+
+M.copy_relative_path = function() end
+
+M.copy_name = function() end
+
+M.copy_name_ext = function() end
+
+M.reveal_in_file_explorer = function() end
+
+M.reveal_in_tree = function() end
+
 return M

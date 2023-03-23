@@ -1,8 +1,7 @@
 local config = require('module.settings').config
 return {
-  -- Framework
+  -- Foundation
   { 'nvim-lua/plenary.nvim' },
-  { 'folke/tokyonight.nvim', lazy = false, priority = 1000, config = config('folke/tokyonight.nvim') },
   --- Treesitter
   { 'nvim-treesitter/nvim-treesitter', event = 'BufReadPost', config = config('nvim-treesitter/nvim-treesitter') },
   --- Telescope
@@ -17,7 +16,7 @@ return {
   { 'stevearc/aerial.nvim', event = 'BufReadPost', config = config('stevearc/aerial.nvim') },
   { 'ahmedkhalf/project.nvim', event = 'BufReadPost', config = config('ahmedkhalf/project.nvim') },
   --- Completion
-  { 'hrsh7th/nvim-cmp', event = 'BufReadPost', config = config('hrsh7th/nvim-cmp') },
+  { 'hrsh7th/nvim-cmp', event = 'BufReadPost', config = config('hrsh7th/nvim-cmp'), dependencies = { 'hrsh7th/cmp-cmdline', 'hrsh7th/cmp-buffer', 'hrsh7th/cmp-path', 'hrsh7th/cmp-nvim-lsp' } },
   { 'hrsh7th/cmp-cmdline' },
   { 'hrsh7th/cmp-buffer' },
   { 'hrsh7th/cmp-path' },
@@ -48,6 +47,7 @@ return {
   { 'nvim-neo-tree/neo-tree.nvim', cmd = { 'Neotree' }, config = config('nvim-neo-tree/neo-tree.nvim') },
   { 'akinsho/toggleterm.nvim', cmd = { 'ToggleTerm' }, config = config('akinsho/toggleterm.nvim') },
   { 'nvim-tree/nvim-web-devicons', enabled = false },
+  { 'folke/tokyonight.nvim', lazy = false, priority = 1000, config = config('folke/tokyonight.nvim') },
   { 'gosukiwi/vim-atom-dark' },
   { 'habamax/vim-habamax' },
   --- CmdLine
