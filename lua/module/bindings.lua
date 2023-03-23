@@ -9,6 +9,7 @@ end
 M.setup_leader = function()
   vim.g.mapleader = ','
   vim.g.maplocalleader = ','
+  M.map('n', ';', ':', { silent = false })
 end
 
 M.lsp = {
@@ -389,7 +390,6 @@ end
 --   command -nargs=+ LspHover lua vim.lsp.buf.hover()
 --   set keywordprg=:LspHover
 -- ]])
-M.map('n', ';', ':', { silent = false })
 
 M.legendary = function()
   return {
