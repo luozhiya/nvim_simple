@@ -15,6 +15,7 @@ M.lsp = {
   { 'gd', vim.lsp.buf.definition, desc = 'Goto Definition' },
   { 'gh', vim.lsp.buf.hover, desc = 'Hover' },
   { 'K', vim.lsp.buf.hover, desc = 'Hover' },
+  { 'L', '<cmd>Lspsaga show_line_diagnostics<CR>', 'Show Line Diagnostics' },
   { 'gn', vim.lsp.buf.rename, desc = 'Rename' },
   { 'ga', vim.lsp.buf.code_action, desc = 'Code Action' },
   { '[d', vim.diagnostic.goto_prev, desc = 'Goto Diagnostic Prev' },
@@ -81,17 +82,21 @@ M.toggleterm = function()
   }
 end
 
-M.toggleterm_float_run = function()
-  return {
-    on_open = function(term)
-      vim.cmd('startinsert!')
-      M.map('n', 'q', '<cmd>close<cr>', { noremap = true, silent = true, buffer = term.bufnr })
-    end,
-    on_close = function(term) vim.cmd('startinsert!') end,
-  }
-end
-
 M.wk = function(wk)
+  function _any_toggle(cmd)
+    local run = require('toggleterm.terminal').Terminal:new({
+      cmd = cmd,
+      dir = 'git_dir',
+      direction = 'float',
+      float_opts = { border = 'double' },
+      on_open = function(term)
+        vim.cmd('startinsert!')
+        M.map('n', 'q', '<cmd>close<CR>', { noremap = true, silent = true, buffer = term.bufnr })
+      end,
+      on_close = function(term) vim.cmd('startinsert!') end,
+    })
+    run:toggle()
+  end
   -- stylua: ignore start
   local wk_ve = function()
     return {
@@ -151,19 +156,46 @@ M.wk = function(wk)
     l = {
       name = 'LSP',
       i = { '<cmd>LspInfo<cr>', 'Info' },
-    },
-    c = {
-      name = 'Code',
       a = { '<cmd>ClangAST<cr>', 'Clang AST' },
       t = { '<cmd>ClangdTypeHierarchy<cr>', 'Clang Type Hierarchy' },
       h = { '<cmd>ClangdSwitchSourceHeader<cr>', 'Switch C/C++ header/source' },
       m = { '<cmd>ClangdMemoryUsage<cr>', 'Clangd Memory Usage' },
       f = { '<cmd>lua vim.lsp.buf.format{async=true}<cr>', 'Code Format' },
+      l = {
+        name = 'lspsaga',
+        l = { '<cmd>Lspsaga show_line_diagnostics<CR>', 'Lspsaga Show Line Diagnostics' },
+      },
+      d = {
+        name = 'Trouble Diagnostics',
+        x = { '<cmd>TroubleToggle<cr>', 'Trouble Toggle' },
+        w = { '<cmd>TroubleToggle workspace_diagnostics<cr>', 'Trouble Workspace Diagnostics' },
+        d = { '<cmd>TroubleToggle document_diagnostics<cr>', 'Trouble Document Diagnostics' },
+        l = { '<cmd>TroubleToggle loclist<cr>', 'Trouble Loclist' },
+        q = { '<cmd>TroubleToggle quickfix<cr>', 'Trouble Quickfix' },
+        r = { '<cmd>TroubleToggle lsp_references<cr>', 'Trouble LSP References' },
+      },
     },
     g = {
       name = 'Git',
-      l = { '<cmd>ToggleTerminalLazyGit<cr>', 'Lazygit' },
-      g = { '<cmd>ToggleTerminalGitUI<cr>', 'GitUI' },
+      l = { function() _any_toggle('lazygit') end, 'Lazygit' },
+      g = { function() _any_toggle('gitui') end, 'GitUI' },
+      n = { '<cmd>Neogit<cr>', 'Neogit' },
+      v = {
+        name = 'VGit',
+        s = { [[<cmd>lua require('vgit').buffer_hunk_stage()<cr>]], 'Buffer Hunk Stage' },
+        r = { [[<cmd>lua require('vgit').buffer_hunk_reset()<cr>]], 'Buffer Hunk Reset' },
+        p = { [[<cmd>lua require('vgit').buffer_hunk_preview()<cr>]], 'Buffer Hunk Preview' },
+        b = { [[<cmd>lua require('vgit').buffer_blame_preview()<cr>]], 'Buffer Blame Preview' },
+        f = { [[<cmd>lua require('vgit').buffer_diff_preview()<cr>]], 'Buffer Diff Preview' },
+        h = { [[<cmd>lua require('vgit').buffer_history_preview()<cr>]], 'Buffer History Preview' },
+        u = { [[<cmd>lua require('vgit').buffer_reset()<cr>]], 'Buffer Reset' },
+        g = { [[<cmd>lua require('vgit').buffer_gutter_blame_preview()<cr>]], 'Buffer Gutter Blame Preview' },
+        d = { [[<cmd>lua require('vgit').project_diff_preview()<cr>]], 'Project Diff Preview' },
+        q = { [[<cmd>lua require('vgit').project_hunks_qf()<cr>]], 'Project Hunks QF' },
+        x = { [[<cmd>lua require('vgit').toggle_diff_preference()<cr>]], 'Toggle Diff Preference' },
+        l = { [[<cmd>lua require('vgit').buffer_hunks_preview()<cr>]], 'Buffer Hunks Preview' },
+        m = { [[<cmd>lua require('vgit').project_hunks_staged_preview()<cr>]], 'Project Hunks Staged Preview' },
+      },
     },
     t = {
       name = 'Telescope',
@@ -187,6 +219,7 @@ M.wk = function(wk)
     },
     r = {
       name = 'rrr Tree',
+      r = { '<cmd>Neotree source=filesystem reveal=true position=left<cr>', 'Neo Tree' },
       e = { '<cmd>NvimTreeToggle<cr>', 'Tree Explorer' },
       f = { '<cmd>NvimTreeFindFile<cr>', 'Tree Find' },
     },
@@ -196,10 +229,14 @@ M.wk = function(wk)
         name = 'Copy',
         c = { '', 'Copy Content' },
         n = { '', 'Copy File Name' },
+        e = { '', 'Copy File Name With Ext' },
         p = { '', 'Copy Path' },
-        P = { '', 'Copy Relative Path' },
+        r = { '', 'Copy Relative Path' },
+      },
+      f = {
+        name = 'File',
         r = { '', 'Reveal In File Explorer' },
-        R = { '', 'Reveal In New Vim' },
+        v = { '', 'Reveal In New Vim' },
       },
     },
   }
@@ -227,47 +264,35 @@ M.telescope = function(telescope)
   }
 end
 
-local launch_telescope_ontree = function(action, opts)
-  local actions = require('telescope.actions')
-  local node = require('nvim-tree.lib').get_node_at_cursor()
-  if node == nil then
-    return
-  end
-  local is_folder = node.fs_stat and node.fs_stat.type == 'directory' or false
-  local basedir = is_folder and node.absolute_path or vim.fn.fnamemodify(node.absolute_path, ':h')
-  if node.name == '..' and TreeExplorer ~= nil then
-    basedir = TreeExplorer.cwd
-  end
-  opts = opts or {}
-  opts.cwd = basedir
-  opts.search_dirs = { basedir }
-  opts.attach_mappings = function(prompt_bufnr, map)
-    actions.select_default:replace(function()
-      actions.close(prompt_bufnr)
-      local selection = require('telescope.actions.state').get_selected_entry()
-      local filename = selection.filename
-      if filename == nil then
-        filename = selection[1]
-      end
-      require('nvim-tree.actions.node.open-file').fn('preview', filename)
-    end)
-    return true
-  end
-  return require('telescope.builtin')[action](opts)
-end
-
-local terminal_float_run = function(cmd, dir)
-  local opts = {
-    cmd = cmd,
-    dir = dir,
-    direction = 'float',
-    float_opts = { border = 'double' },
-  }
-  opts = vim.tbl_deep_extend('error', opts, M.toggleterm_float_run())
-  return require('toggleterm.terminal').Terminal:new(opts)
-end
-
 M.nvim_tree = function()
+  local launch_telescope_ontree = function(action, opts)
+    local actions = require('telescope.actions')
+    local node = require('nvim-tree.lib').get_node_at_cursor()
+    if node == nil then
+      return
+    end
+    local is_folder = node.fs_stat and node.fs_stat.type == 'directory' or false
+    local basedir = is_folder and node.absolute_path or vim.fn.fnamemodify(node.absolute_path, ':h')
+    if node.name == '..' and TreeExplorer ~= nil then
+      basedir = TreeExplorer.cwd
+    end
+    opts = opts or {}
+    opts.cwd = basedir
+    opts.search_dirs = { basedir }
+    opts.attach_mappings = function(prompt_bufnr, map)
+      actions.select_default:replace(function()
+        actions.close(prompt_bufnr)
+        local selection = require('telescope.actions.state').get_selected_entry()
+        local filename = selection.filename
+        if filename == nil then
+          filename = selection[1]
+        end
+        require('nvim-tree.actions.node.open-file').fn('preview', filename)
+      end)
+      return true
+    end
+    return require('telescope.builtin')[action](opts)
+  end
   return { view = { mappings = { list = {
     { key = '<c-f>', action_cb = function() return launch_telescope_ontree('find_files') end },
     { key = '<c-g>', action_cb = function() return launch_telescope_ontree('live_grep') end },
@@ -296,6 +321,65 @@ M.nvim_tree_hydra = function()
       { 'n', require('nvim-tree.api').fs.create, { silent = true } },
       { 'h', require('nvim-tree.api').tree.toggle_hidden_filter, { silent = true } },
       { '?', require('nvim-tree.api').tree.toggle_help, { silent = true } },
+    },
+  }
+end
+
+M.neotree = function()
+  local function getTelescopeOpts(state, path)
+    return {
+      cwd = path,
+      search_dirs = { path },
+      attach_mappings = function(prompt_bufnr, map)
+        local actions = require('telescope.actions')
+        actions.select_default:replace(function()
+          actions.close(prompt_bufnr)
+          local action_state = require('telescope.actions.state')
+          local selection = action_state.get_selected_entry()
+          local filename = selection.filename
+          if filename == nil then
+            filename = selection[1]
+          end
+          require('neo-tree.sources.filesystem').navigate(state, state.path, filename)
+        end)
+        return true
+      end,
+    }
+  end
+  return {
+    window = {
+      mappings = {
+        ['e'] = function() vim.api.nvim_exec('Neotree focus filesystem left', true) end,
+        ['b'] = function() vim.api.nvim_exec('Neotree focus buffers left', true) end,
+        ['g'] = function() vim.api.nvim_exec('Neotree focus git_status left', true) end,
+      },
+    },
+    filesystem = {
+      window = {
+        mappings = {
+          ['O'] = 'system_open',
+          ['tf'] = 'telescope_find',
+          ['tg'] = 'telescope_grep',
+        },
+      },
+      commands = {
+        system_open = function(state)
+          local node = state.tree:get_node()
+          local path = node:get_id()
+          vim.api.nvim_command(string.format("silent !xdg-open '%s'", path))
+          vim.api.nvim_command('silent !start ' .. path)
+        end,
+        telescope_find = function(state)
+          local node = state.tree:get_node()
+          local path = node:get_id()
+          require('telescope.builtin').find_files(getTelescopeOpts(state, path))
+        end,
+        telescope_grep = function(state)
+          local node = state.tree:get_node()
+          local path = node:get_id()
+          require('telescope.builtin').live_grep(getTelescopeOpts(state, path))
+        end,
+      },
     },
   }
 end
@@ -388,26 +472,6 @@ M.legendary = function()
         ':BufferCloseOthers',
         function() require('close_buffers').wipe({ type = 'other' }) end,
         description = 'Close Others',
-      },
-      {
-        ':TelescopeFindInTreeNode',
-        function() launch_telescope_ontree('find_files') end,
-        description = 'Find In Folder...',
-      },
-      {
-        ':TelescopeLiveGrepInTreeNode',
-        function() launch_telescope_ontree('live_grep') end,
-        description = 'Grep In Folder...',
-      },
-      {
-        ':ToggleTerminalGitUI',
-        function() terminal_float_run('gitui', 'git_dir'):toggle() end,
-        description = 'Toggle Terminal GitUI...',
-      },
-      {
-        ':ToggleTerminalLazyGit',
-        function() terminal_float_run('lazygit', 'git_dir'):toggle() end,
-        description = 'Toggle Terminal LazyGit...',
       },
       {
         ':ToggleFocusMode',

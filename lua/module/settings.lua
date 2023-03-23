@@ -8,7 +8,7 @@ M.config = function(name)
     M.cached = {
       ['VonHeikemen/fine-cmdline.nvim'] = function() require('fine-cmdline').setup({ cmdline = { prompt = ' > ' } }) end,
       ['folke/tokyonight.nvim'] = function() vim.cmd([[colorscheme tokyonight]]) end,
-      ['nvim-treesitter/nvim-treesitter'] = function() require('nvim-treesitter.configs').setup({ ensure_installed = { 'cpp', 'c', 'lua', 'cmake' } }) end,
+      ['nvim-treesitter/nvim-treesitter'] = function() require('nvim-treesitter.configs').setup({ ensure_installed = { 'cpp', 'c', 'lua', 'cmake', 'markdown', 'markdown_inline' } }) end,
       ['stevearc/aerial.nvim'] = function()
         local opts = {
           backends = { 'treesitter', 'lsp' },
@@ -99,11 +99,11 @@ M.config = function(name)
         wilder.set_option('use_python_remote_plugin', 0)
         wilder.set_option('renderer', wilder.popupmenu_renderer(wilder.popupmenu_border_theme()))
       end,
-      ['kazhala/close-buffers.nvim'] = function() require('close_buffers').setup() end,
+      ['kazhala/close-buffers.nvim'] = function() require('close_buffers').setup({}) end,
       ['nvim-lualine/lualine.nvim'] = function()
         local function lsp_active()
           local names = {}
-          for _, client in pairs(vim.lsp.buf_get_clients()) do
+          for _, client in pairs(vim.lsp.get_active_clients()) do
             table.insert(names, client.name)
           end
           return 'LSP<' .. table.concat(names, ', ') .. '>'
@@ -178,6 +178,19 @@ M.config = function(name)
           vim.g.sqlite_clib_path = 'C:/Windows/sqlite3.dll'
         end
       end,
+      ['nvim-neo-tree/neo-tree.nvim'] = function()
+        vim.g.neo_tree_remove_legacy_commands = 1
+        local opts = {
+          close_if_last_window = true,
+          source_selector = { winbar = true, statusline = false },
+        }
+        opts = vim.tbl_deep_extend('error', opts, bindings.neotree())
+        require('neo-tree').setup(opts)
+      end,
+      ['tanvirtin/vgit.nvim'] = function() require('vgit').setup() end,
+      ['TimUntersberger/neogit'] = function() require('neogit').setup() end,
+      ['glepnir/lspsaga.nvim'] = function() require('lspsaga').setup() end,
+      ['folke/trouble.nvim'] = function() require('trouble').setup() end,
     }
   end
   return M.cached[name]

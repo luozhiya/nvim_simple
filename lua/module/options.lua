@@ -26,7 +26,7 @@ function M.setup()
     'netrwPlugin',
     'netrw',
   }
-  for i, v in ipairs(disabled_built_ins) do
+  for _, v in ipairs(disabled_built_ins) do
     vim.g['loaded_' .. v] = 1
   end
 
@@ -52,8 +52,8 @@ function M.setup()
     -- lazyredraw = true, -- no redraws in macros. Disabled for: https://github.com/neovim/neovim/issues/22674
     scrolloff = 4, -- Minimal number of screen lines to keep above and below the cursor.
     sidescrolloff = 8, -- The minimal number of screen columns to keep to the left and to the right of the cursor if 'nowrap' is set.
-    number = true, -- Print line number
-    signcolumn = 'auto:1',
+    number = false, -- Print line number
+    signcolumn = 'yes:1',
     termguicolors = true, -- True color support
     wrap = false, -- Disable line wrap
     tabstop = 2, -- length of an actual \t character
@@ -70,10 +70,12 @@ function M.setup()
     completeopt = { 'menuone', 'noselect', 'noinsert' },
     autoread = true, -- When a file has been detected to have been changed outside of Vim and it has not been changed inside of Vim, automatically read it again.
     guifont = font(),
-    shortmess = acIW, -- See https://neovim.io/doc/user/options.html#'shortmess'
+    shortmess = 'IFW', -- See https://neovim.io/doc/user/options.html#'shortmess'
     timeout = true, -- Limit the time searching for suggestions to {millisec} milli seconds.
     timeoutlen = 500, -- the timeout when WhichKey opens is controlled by the vim setting timeoutlen.
     wildmode = 'full',
+    updatetime = 300,
+    incsearch = false,
   }
   for k, v in pairs(opts) do
     vim.opt[k] = v
