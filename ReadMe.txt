@@ -123,6 +123,7 @@ https://github.com/lewis6991/hover.nvim/issues/1
 https://github.com/neovim/neovim/issues/18997
 map colon semicolon in neovim lua
 https://stackoverflow.com/questions/73738932/remapped-colon-key-not-show-command-line-mode-immediately
+https://stackoverflow.com/questions/9001337/vim-split-bar-styling
 
 Lua
 ---
