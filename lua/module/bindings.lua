@@ -368,8 +368,7 @@ M.neotree = function()
         system_open = function(state)
           local node = state.tree:get_node()
           local path = node:get_id()
-          vim.api.nvim_command(string.format("silent !xdg-open '%s'", path))
-          vim.api.nvim_command('silent !start ' .. path)
+          require('base').open(path)
         end,
         telescope_find = function(state)
           local node = state.tree:get_node()
@@ -405,6 +404,10 @@ M.legendary = function()
           { '<C-k>', '15gk', description = 'Move Up 15 Lines', opts = { noremap = true } },
           { '<', '<gv', description = 'deIndent Continuously', opts = { noremap = true }, mode = { 'v' } },
           { '>', '>gv', description = 'Indent Continuously', opts = { noremap = true }, mode = { 'v' } },
+          { '<left>', '<C-w>h', description = 'Jump Left' },
+          { '<down>', '<C-w>j', description = 'Jump Down' },
+          { '<up>', '<C-w>k', description = 'Jump Up' },
+          { '<right>', '<C-w>l', description = 'Jump Right' },
         },
       },
       {
