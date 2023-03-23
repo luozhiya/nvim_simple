@@ -76,6 +76,7 @@ function M.setup()
     wildmode = 'full',
     updatetime = 300,
     incsearch = false,
+    fillchars = vim.opt.fillchars:append('vert: '),
   }
   for k, v in pairs(opts) do
     vim.opt[k] = v
