@@ -231,6 +231,7 @@ M.config = function(name)
           url = 'https://godbolt.org', -- can be changed to a different godbolt instance
         })
       end,
+      ['glepnir/flybuf.nvim'] = function() require('flybuf').setup({}) end,
     }
   end
   return M.cached[name]

@@ -153,6 +153,7 @@ M.wk = function(wk)
       d = { '<cmd>BD<cr>', 'Delete' },
       o = { '<cmd>BufferCloseOthers<cr>', 'Only, Close Others' },
       a = { '', 'CloseAll' },
+      f = { '<cmd>FlyBuf<cr>', 'Show All Buffers' },
     },
     v = {
       name = 'Vim',

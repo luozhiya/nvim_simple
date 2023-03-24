@@ -33,6 +33,7 @@ return {
   { 'qpkorr/vim-bufkill', cmd = { 'BD' } },
   { 'moll/vim-bbye', cmd = { 'Bdelete' } },
   { 'kazhala/close-buffers.nvim', cmd = { 'BufferCloseOthers' }, config = config('kazhala/close-buffers.nvim') },
+  { 'glepnir/flybuf.nvim', cmd = 'FlyBuf', config = config('glepnir/flybuf.nvim') },
   -- Key Management
   { 'folke/which-key.nvim', keys = { { ',' }, { 'g' } }, config = config('folke/which-key.nvim') },
   { 'mrjones2014/legendary.nvim', event = 'VeryLazy', config = config('mrjones2014/legendary.nvim'), dependencies = { 'folke/which-key.nvim' } },
