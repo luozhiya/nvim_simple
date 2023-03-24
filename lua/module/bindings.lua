@@ -480,6 +480,12 @@ M.legendary = function()
           { '<c-p>', '<cmd>Telescope buffers show_all_buffers=true theme=get_dropdown previewer=false<cr>', description = 'Go To File... (telescope.nvim)', mode = { 'n' }, opts = { noremap = true } },
         },
       },
+      {
+        itemgroup = 'Terminal',
+        keymaps = {
+          { [[<c-\>]], '<cmd>ToggleTerm<cr>', description = 'Toggle Terminal' },
+        },
+      },
     },
     commands = {
       {
