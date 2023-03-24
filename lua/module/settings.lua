@@ -93,9 +93,10 @@ M.config = function(name)
       end,
       ['ahmedkhalf/project.nvim'] = function() require('project_nvim').setup() end,
       ['gelguy/wilder.nvim'] = function()
+        bindings.semicolon_to_colon()
         local wilder = require('wilder')
-        -- wilder.setup({ modes = { ':', '/', '?' } })
-        wilder.setup({ modes = { '?' } })
+        wilder.setup({ modes = { ':', '/', '?' } })
+        -- wilder.setup({ modes = { '?' } })
         wilder.set_option('use_python_remote_plugin', 0)
         wilder.set_option('renderer', wilder.popupmenu_renderer(wilder.popupmenu_border_theme()))
       end,
@@ -161,17 +162,17 @@ M.config = function(name)
         require('luasnip.loaders.from_vscode').load()
         require('nvim-autopairs').setup()
         cmp.event:on('confirm_done', require('nvim-autopairs.completion.cmp').on_confirm_done({ map_char = { tex = '' } }))
-        cmp.setup.cmdline('/', {
-          mapping = cmp.mapping.preset.cmdline(),
-          sources = { { name = 'buffer' } },
-        })
-        cmp.setup.cmdline(':', {
-          mapping = cmp.mapping.preset.cmdline(),
-          sources = cmp.config.sources({
-            { name = 'path' },
-            { name = 'cmdline', option = { ignore_cmds = { 'Man', '!' } } },
-          }),
-        })
+        -- cmp.setup.cmdline('/', {
+        --   mapping = cmp.mapping.preset.cmdline(),
+        --   sources = { { name = 'buffer' } },
+        -- })
+        -- cmp.setup.cmdline(':', {
+        --   mapping = cmp.mapping.preset.cmdline(),
+        --   sources = cmp.config.sources({
+        --     { name = 'path' },
+        --     { name = 'cmdline', option = { ignore_cmds = { 'Man', '!' } } },
+        --   }),
+        -- })
       end,
       ['kkharji/sqlite.lua'] = function()
         if require('base').is_windows() then
@@ -192,6 +193,7 @@ M.config = function(name)
       ['TimUntersberger/neogit'] = function() require('neogit').setup() end,
       ['glepnir/lspsaga.nvim'] = function() require('lspsaga').setup() end,
       ['folke/trouble.nvim'] = function() require('trouble').setup() end,
+      ['lukas-reineke/indent-blankline.nvim'] = function() require('indent_blankline').setup() end,
     }
   end
   return M.cached[name]

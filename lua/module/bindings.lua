@@ -9,7 +9,16 @@ end
 M.setup_leader = function()
   vim.g.mapleader = ','
   vim.g.maplocalleader = ','
-  M.map('n', ';', ':', { silent = false })
+end
+
+M.semicolon_to_colon = function()
+  vim.cmd([[
+    nnoremap ; :
+    nnoremap : ;
+    vnoremap ; :
+    vnoremap : ;
+  ]])
+  -- M.map('n', ';', ':', { silent = false })
 end
 
 M.lsp = {

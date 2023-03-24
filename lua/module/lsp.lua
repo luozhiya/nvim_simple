@@ -1,7 +1,12 @@
 local bindings = require('module.bindings')
 
 local M = {}
-M.setup = function()
+M.mason = function()
+  require('mason').setup()
+  require('mason-lspconfig').setup({ ensure_installed = { 'lua_ls' } })
+end
+
+M.lsp = function()
   vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, {
     border = 'rounded',
     width = 60,
@@ -12,8 +17,6 @@ M.setup = function()
     update_in_insert = false,
     underline = true,
   })
-  require('mason').setup()
-  require('mason-lspconfig').setup({ ensure_installed = { 'lua_ls' } })
   local lsp_on_attach = function(client, buffer)
     for _, keys in pairs(bindings.lsp) do
       bindings.map(keys.mode or 'n', keys[1], keys[2], { noremap = true, silent = true, buffer = buffer })
@@ -28,6 +31,12 @@ M.setup = function()
   require('clangd_extensions').setup({ server = { filetypes = { 'c', 'cpp' }, on_attach = lsp_on_attach, capabilities = lsp_capabilities } })
   require('neodev').setup()
   require('lspconfig').lua_ls.setup({ on_attach = lsp_on_attach, capabilities = lsp_capabilities })
+end
+
+-- It's important that you set up the plugins in the following order:
+M.setup = function()
+  M.mason()
+  M.lsp()
 end
 
 return M
