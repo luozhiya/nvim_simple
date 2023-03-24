@@ -22,3 +22,6 @@ async run lua script
 
 disable snippet
 textDocument.completion.completionItem.snippetSupport = true
+
+curl https://godbolt.org/api/compiler/g63/compile?options=-Wall --data-binary "int foo() { return 1; }"
+curl https://godbolt.org/api/compiler/g122/compile --data-binary @godbolt_request_asm.json --header "Accept: application/json" --header "Content-Type: application/json" --output godbolt_response_asm.json

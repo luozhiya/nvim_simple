@@ -417,6 +417,7 @@ M.legendary = function()
           { '<down>', '<C-w>j', description = 'Jump Down' },
           { '<up>', '<C-w>k', description = 'Jump Up' },
           { '<right>', '<C-w>l', description = 'Jump Right' },
+          { '<a-q>', '<cmd>ToggleWrap<cr>', description = 'Toggle Wrap' },
         },
       },
       {
@@ -493,6 +494,11 @@ M.legendary = function()
           vim.opt.number = vim.opt.number._value == false
         end,
         description = 'Toggle Focus Mode',
+      },
+      {
+        ':ToggleWrap',
+        function() vim.opt.wrap = vim.opt.wrap._value == false end,
+        description = 'Toggle Wrap',
       },
     },
     funcs = {},
