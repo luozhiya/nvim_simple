@@ -14,6 +14,12 @@ Key
   <C-> = Ctrl
   <S-> = Shift
 
+event
+-----
+CmdlineEnter
+InsertEnter
+BufReadPost
+
 stdpath()
 ---------
 https://github.com/neovim/neovim/blob/master/src/nvim/os/stdpaths.c
