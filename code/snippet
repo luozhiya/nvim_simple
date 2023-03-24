@@ -19,3 +19,6 @@ require('lazy').setup('module.plugins', {
 async run lua script
 -- vim.api.nvim_command('echomsg "test"')
 -- require('plenary.async').run(function() require('luasnip.loaders.from_vscode').load() end)
+
+disable snippet
+textDocument.completion.completionItem.snippetSupport = true

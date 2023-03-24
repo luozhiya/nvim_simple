@@ -183,6 +183,7 @@ M.config = function(name)
             { name = 'cmdline', option = { ignore_cmds = { 'Man', '!' } } },
           }),
         })
+        -- sync load luasnip cust ~600ms
         vim.loop.new_timer():start(3000, 0, vim.schedule_wrap(function() require('luasnip.loaders.from_vscode').load() end))
       end,
       ['kkharji/sqlite.lua'] = function()
