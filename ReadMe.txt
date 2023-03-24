@@ -16,6 +16,7 @@ Key
 
 event
 -----
+VeryLazy
 CmdlineEnter
 InsertEnter
 BufReadPost

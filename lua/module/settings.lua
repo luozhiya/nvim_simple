@@ -169,20 +169,22 @@ M.config = function(name)
         opts = vim.tbl_deep_extend('error', opts, bindings.cmp(cmp))
         cmp.setup(opts)
         require('luasnip').config.set_config({ history = true, updateevents = 'TextChanged, TextChangedI' })
-        require('luasnip.loaders.from_vscode').load()
         require('nvim-autopairs').setup()
         cmp.event:on('confirm_done', require('nvim-autopairs.completion.cmp').on_confirm_done({ map_char = { tex = '' } }))
-        -- cmp.setup.cmdline('/', {
-        --   mapping = cmp.mapping.preset.cmdline(),
-        --   sources = { { name = 'buffer' } },
-        -- })
-        -- cmp.setup.cmdline(':', {
-        --   mapping = cmp.mapping.preset.cmdline(),
-        --   sources = cmp.config.sources({
-        --     { name = 'path' },
-        --     { name = 'cmdline', option = { ignore_cmds = { 'Man', '!' } } },
-        --   }),
-        -- })
+        require('wilder').setup({ modes = {} })
+        cmp.setup.cmdline('/', {
+          mapping = cmp.mapping.preset.cmdline(),
+          sources = { { name = 'buffer' } },
+        })
+        cmp.setup.cmdline(':', {
+          mapping = cmp.mapping.preset.cmdline(),
+          sources = cmp.config.sources({
+            { name = 'path' },
+            { name = 'cmdline', option = { ignore_cmds = { 'Man', '!' } } },
+          }),
+        })
+        -- require('luasnip.loaders.from_vscode').load()
+        -- require('plenary.async').run(function() require('luasnip.loaders.from_vscode').load() end)
       end,
       ['kkharji/sqlite.lua'] = function()
         if require('base').is_windows() then
