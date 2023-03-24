@@ -202,7 +202,7 @@ M.config = function(name)
       end,
       ['tanvirtin/vgit.nvim'] = function() require('vgit').setup() end,
       ['TimUntersberger/neogit'] = function() require('neogit').setup() end,
-      ['glepnir/lspsaga.nvim'] = function() require('lspsaga').setup() end,
+      ['glepnir/lspsaga.nvim'] = function() require('lspsaga').setup({ ui = { diagnostic = ' ' } }) end,
       ['folke/trouble.nvim'] = function() require('trouble').setup() end,
       ['lukas-reineke/indent-blankline.nvim'] = function() require('indent_blankline').setup() end,
       ['HiPhish/nvim-ts-rainbow2'] = function()
