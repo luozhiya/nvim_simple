@@ -61,6 +61,7 @@ return {
   { 'glepnir/lspsaga.nvim', cmd = { 'Lspsaga' }, config = config('glepnir/lspsaga.nvim') },
   { 'folke/trouble.nvim', cmd = { 'TroubleToggle' }, config = config('folke/trouble.nvim') },
   { 'lukas-reineke/indent-blankline.nvim', event = { 'BufRead', 'BufNewFile' }, config = config('lukas-reineke/indent-blankline.nvim') },
+  { 'HiPhish/nvim-ts-rainbow2', event = 'BufReadPost', config = config('HiPhish/nvim-ts-rainbow2') },
 
   -- LSP Core
   { 'neovim/nvim-lspconfig', event = 'InsertEnter', ft = { 'c', 'cpp', 'lua' }, config = require('module.lsp').setup, dependencies = { 'j-hui/fidget.nvim', 'ray-x/lsp_signature.nvim' } },

@@ -206,6 +206,15 @@ M.config = function(name)
       ['glepnir/lspsaga.nvim'] = function() require('lspsaga').setup() end,
       ['folke/trouble.nvim'] = function() require('trouble').setup() end,
       ['lukas-reineke/indent-blankline.nvim'] = function() require('indent_blankline').setup() end,
+      ['HiPhish/nvim-ts-rainbow2'] = function()
+        require('nvim-treesitter.configs').setup({
+          rainbow = {
+            enable = { 'c', 'cpp' },
+            query = 'rainbow-parens',
+            strategy = require('ts-rainbow').strategy['local'],
+          },
+        })
+      end,
     }
   end
   return M.cached[name]
