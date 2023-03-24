@@ -20,6 +20,7 @@ VeryLazy
 CmdlineEnter
 InsertEnter
 BufReadPost
+BufRead
 
 stdpath()
 ---------
@@ -139,3 +140,7 @@ Lua
 https://github.com/neovim/neovim/blob/master/runtime/lua/vim/shared.lua#L324
 https://shanekrolikowski.com/blog/love2d-merge-tables/
 https://stackoverflow.com/questions/42228712/lua-function-to-convert-windows-paths-to-unix-paths
+
+Loop
+----
+https://neovim.io/doc/user/lua.html#lua-loop

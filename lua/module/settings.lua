@@ -183,8 +183,7 @@ M.config = function(name)
             { name = 'cmdline', option = { ignore_cmds = { 'Man', '!' } } },
           }),
         })
-        -- require('luasnip.loaders.from_vscode').load()
-        -- require('plenary.async').run(function() require('luasnip.loaders.from_vscode').load() end)
+        vim.loop.new_timer():start(3000, 0, vim.schedule_wrap(function() require('luasnip.loaders.from_vscode').load() end))
       end,
       ['kkharji/sqlite.lua'] = function()
         if require('base').is_windows() then
