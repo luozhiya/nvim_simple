@@ -1,3 +1,7 @@
+-- Neovim default
+-- vim.cmd([[filetype plugin indent on]]) -- use language‐specific plugins for indenting (better):
+-- autoindent = true, -- neovim default true -- reproduce the indentation of the previous line
+
 local M = {}
 
 M.lazy = vim.fn.stdpath('config') .. '/lazy/lazy.nvim'

@@ -215,6 +215,22 @@ M.config = function(name)
           },
         })
       end,
+      ['p00f/godbolt.nvim'] = function()
+        -- https://godbolt.org/api/compilers/
+        -- https://godbolt.org/api/libraries/
+        require('godbolt').setup({
+          languages = {
+            cpp = { compiler = 'g122', options = {} },
+            c = { compiler = 'cg122', options = {} },
+            -- any_additional_filetype = { compiler = ..., options = ... },
+          },
+          quickfix = {
+            enable = false, -- whether to populate the quickfix list in case of errors
+            auto_open = false, -- whether to open the quickfix list in case of errors
+          },
+          url = 'https://godbolt.org', -- can be changed to a different godbolt instance
+        })
+      end,
     }
   end
   return M.cached[name]

@@ -3,9 +3,9 @@ return {
   -- Foundation
   { 'nvim-lua/plenary.nvim' },
   { 'kkharji/sqlite.lua', config = config('kkharji/sqlite.lua') },
-  --- Treesitter
+  -- Treesitter
   { 'nvim-treesitter/nvim-treesitter', cmd = { 'TSInstall', 'TSBufEnable', 'TSBufDisable', 'TSModuleInfo' }, build = ':TSUpdate', config = config('nvim-treesitter/nvim-treesitter') },
-  --- Telescope
+  -- Telescope
   { 'nvim-telescope/telescope.nvim', cmd = { 'Telescope' }, config = config('nvim-telescope/telescope.nvim') },
   { 'nvim-telescope/telescope-ui-select.nvim' },
   { 'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' },
@@ -16,7 +16,7 @@ return {
   { 'jonarrien/telescope-cmdline.nvim' },
   { 'stevearc/aerial.nvim', event = 'BufReadPost', config = config('stevearc/aerial.nvim') },
   { 'ahmedkhalf/project.nvim', event = 'BufReadPost', config = config('ahmedkhalf/project.nvim') },
-  --- Completion
+  -- Completion
   { 'hrsh7th/nvim-cmp', event = 'InsertEnter', config = config('hrsh7th/nvim-cmp'), dependencies = { 'hrsh7th/cmp-cmdline', 'hrsh7th/cmp-buffer', 'hrsh7th/cmp-path', 'hrsh7th/cmp-nvim-lsp' } },
   { 'hrsh7th/cmp-cmdline' },
   { 'hrsh7th/cmp-buffer' },
@@ -25,18 +25,18 @@ return {
   { 'L3MON4D3/LuaSnip', dependencies = { 'saadparwaiz1/cmp_luasnip', 'rafamadriz/friendly-snippets' } },
   { 'saadparwaiz1/cmp_luasnip' },
   { 'rafamadriz/friendly-snippets' },
-  --- Git
+  -- Git
   { 'lewis6991/gitsigns.nvim', event = 'BufReadPost', config = config('lewis6991/gitsigns.nvim') },
   { 'tanvirtin/vgit.nvim', config = config('tanvirtin/vgit.nvim') },
   { 'TimUntersberger/neogit', cmd = { 'Neogit' }, config = config('TimUntersberger/neogit') },
-  --- Buffer
+  -- Buffer
   { 'qpkorr/vim-bufkill', cmd = { 'BD' } },
   { 'moll/vim-bbye', cmd = { 'Bdelete' } },
   { 'kazhala/close-buffers.nvim', cmd = { 'BufferCloseOthers' }, config = config('kazhala/close-buffers.nvim') },
-  --- Key Management
+  -- Key Management
   { 'folke/which-key.nvim', config = config('folke/which-key.nvim') },
   { 'mrjones2014/legendary.nvim', keys = { { ',' }, { 'g' } }, config = config('mrjones2014/legendary.nvim'), dependencies = { 'folke/which-key.nvim' } },
-  --- Appearance
+  -- Appearance
   { 'anuvyklack/hydra.nvim' },
   { 'MunifTanjim/nui.nvim' },
   { 'stevearc/dressing.nvim', config = config('stevearc/dressing.nvim') },
@@ -49,10 +49,10 @@ return {
   { 'folke/tokyonight.nvim', lazy = false, priority = 1000, config = config('folke/tokyonight.nvim') },
   { 'gosukiwi/vim-atom-dark' },
   { 'habamax/vim-habamax' },
-  --- CmdLine
+  -- CmdLine
   { 'VonHeikemen/fine-cmdline.nvim', config = config('VonHeikemen/fine-cmdline.nvim'), cmd = { 'FineCmdline' } },
   { 'gelguy/wilder.nvim', keys = { { ';' }, { '/' }, { '?' } }, config = config('gelguy/wilder.nvim') },
-  --- Edit
+  -- Edit
   { 'tpope/vim-obsession', cmd = { 'Obsession' } },
   { 'windwp/nvim-autopairs' },
   { 'numToStr/Comment.nvim', keys = { { '<leader>cc' }, { '<leader>cb' } } },
@@ -62,7 +62,7 @@ return {
   { 'folke/trouble.nvim', cmd = { 'TroubleToggle' }, config = config('folke/trouble.nvim') },
   { 'lukas-reineke/indent-blankline.nvim', event = { 'BufReadPost', 'BufNewFile' }, config = config('lukas-reineke/indent-blankline.nvim') },
   { 'HiPhish/nvim-ts-rainbow2', event = 'BufReadPost', config = config('HiPhish/nvim-ts-rainbow2') },
-
+  { 'p00f/godbolt.nvim', ft = { 'c', 'cpp' }, config = config('p00f/godbolt.nvim') },
   -- LSP Core
   { 'neovim/nvim-lspconfig', event = 'InsertEnter', ft = { 'c', 'cpp', 'lua' }, config = require('module.lsp').setup, dependencies = { 'j-hui/fidget.nvim', 'ray-x/lsp_signature.nvim' } },
   { 'williamboman/mason.nvim' },
