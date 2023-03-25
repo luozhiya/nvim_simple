@@ -24,7 +24,7 @@ M.config = function(name)
       end,
       ['nvim-telescope/telescope.nvim'] = function()
         local telescope = require('telescope')
-        local opts = { extensions = { file_browser = { hijack_netrw = true } } }
+        local opts = { extensions = { file_browser = { hijack_netrw = false } } }
         opts = vim.tbl_deep_extend('error', opts, bindings.telescope(telescope))
         telescope.setup(opts)
         telescope.load_extension('ui-select')
@@ -48,7 +48,7 @@ M.config = function(name)
           sort_by = 'case_sensitive',
           sync_root_with_cwd = true,
           respect_buf_cwd = true,
-          hijack_directories = { enable = false },
+          hijack_directories = { enable = true },
           update_focused_file = { enable = enable, update_root = true },
           actions = { open_file = { resize_window = false } },
           view = {
@@ -231,7 +231,7 @@ M.config = function(name)
           url = 'https://godbolt.org', -- can be changed to a different godbolt instance
         })
       end,
-      ['glepnir/flybuf.nvim'] = function() require('flybuf').setup() end,
+      ['glepnir/flybuf.nvim'] = function() require('flybuf').setup({}) end,
       ['sindrets/diffview.nvim'] = function() require('diffview').setup() end,
     }
   end
