@@ -191,6 +191,7 @@ M.wk = function(wk)
       l = { function() _any_toggle('lazygit') end, 'Lazygit' },
       g = { function() _any_toggle('gitui') end, 'GitUI' },
       n = { '<cmd>Neogit<cr>', 'Neogit' },
+      s = { '<cmd>SublimeMerge<cr>', 'Sublime Merge' },
       v = {
         name = 'VGit',
         s = { [[<cmd>lua require('vgit').buffer_hunk_stage()<cr>]], 'Buffer Hunk Stage' },
@@ -506,6 +507,17 @@ M.legendary = function()
         ':ToggleWrap',
         function() vim.opt.wrap = vim.opt.wrap._value == false end,
         description = 'Toggle Wrap',
+      },
+      {
+        ':SublimeMerge',
+        function()
+          local Job = require('plenary.job')
+          Job:new({
+            command = 'sublime_merge',
+            args = { '-n', vim.fn.getcwd() },
+          }):start() -- or start()
+        end,
+        description = 'Sublime Merge',
       },
     },
     funcs = {},
