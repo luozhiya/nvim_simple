@@ -25,3 +25,27 @@ textDocument.completion.completionItem.snippetSupport = true
 
 curl https://godbolt.org/api/compiler/g63/compile?options=-Wall --data-binary "int foo() { return 1; }"
 curl https://godbolt.org/api/compiler/g122/compile --data-binary @godbolt_request_asm.json --header "Accept: application/json" --header "Content-Type: application/json" --output godbolt_response_asm.json
+
+OS platform test
+-- vim.loop.os_uname().version:match('Windows')
+if jit then
+  return string.lower(jit.os) ~= 'windows' and M.sep() or M.nt_sep()
+if vim.fn.has('win32') == 1 then
+  cmd = { 'explorer', uri }
+  cmd = table.concat(cmd, ' '):gsub(M.kernel_sep(), M.nt_sep())
+elseif vim.fn.has('macunix') == 1 then
+  cmd = { 'open', uri }
+else  
+  M.is_windows = function() return vim.loop.os_uname().sysname == 'Windows_NT' end
+M.is_linux = function() return vim.loop.os_uname().sysname == 'Linux' end
+
+M.cached = cached
+M.installed = function(name)
+  -- if vim.tbl_isempty(cached) then
+  -- for _, plugin in pairs(require('module.plugins')) do
+  -- table.insert(cached, plugin[1])
+  -- end
+  -- end
+  -- return vim.tbl_contains(cached, name)
+  return true
+end

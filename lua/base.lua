@@ -1,38 +1,36 @@
+-- cf. lazy.nvim util
+-- cf. lua/nvim-tree/actions/fs/copy-paste.lua
+-- cf. plenary.nvim/lua/plenary/path.lua
+
 local M = {}
 
 local cached = {}
-M.cached = cached
-M.installed = function(name)
-  -- if vim.tbl_isempty(cached) then
-  -- for _, plugin in pairs(require('module.plugins')) do
-  -- table.insert(cached, plugin[1])
-  -- end
-  -- end
-  -- return vim.tbl_contains(cached, name)
-  return true
-end
 
 M.is_windows = function() return vim.loop.os_uname().sysname == 'Windows_NT' end
 M.is_linux = function() return vim.loop.os_uname().sysname == 'Linux' end
+M.nt_sep = function() return '\\' end
+M.kernel_sep = function() return '/' end
+M.os_sep = function() return package.config:sub(1, 1) end
+M.nvim_sep = function() return (M.is_windows() and vim.opt.shellslash._value == 0) and M.nt_sep() or M.kernel_sep() end
+M.to_nt = function(s) return s:gsub(M.kernel_sep(), M.nt_sep()) end
+M.shellslash_safe = function(s) return M.nvim_sep() == M.kernel_sep() and s:gsub(M.nt_sep(), M.kernel_sep()) or s end
+M.is_uri = function(path) return path:match('^%w+://') ~= nil end
+M.file_exists = function(file) return vim.loop.fs_stat(file) ~= nil end
+M.home = function() return vim.loop.os_homedir() end
+M.root = function() return M.is_windows() and M.shellslash_safe(string.sub(vim.loop.cwd(), 1, 1) .. ':' .. M.nt_sep()) or M.kernel_sep() end
+M.concat_paths = function(...) return table.concat({ ... }, M.nvim_sep()) end
 
--- cp from lazy.nvim util
-function M.file_exists(file) return vim.loop.fs_stat(file) ~= nil end
-
--- cp from lazy.nvim util
 function M.open(uri)
+  if uri == nil then
+    return vim.notify('Open nil URI', vim.log.levels.INFO)
+  end
   local cmd
-  if vim.fn.has('win32') == 1 then
+  if M.is_windows() then
     cmd = { 'explorer', uri }
-    cmd = table.concat(cmd, ' '):gsub('/', '\\')
-  elseif vim.fn.has('macunix') == 1 then
-    cmd = { 'open', uri }
+    cmd = M.to_nt(table.concat(cmd, ' '))
   else
     if vim.fn.executable('xdg-open') == 1 then
       cmd = { 'xdg-open', uri }
-    elseif vim.fn.executable('wslview') == 1 then
-      cmd = { 'wslview', uri }
-    else
-      cmd = { 'open', uri }
     end
   end
   local ret = vim.fn.jobstart(cmd, { detach = true })
@@ -46,56 +44,50 @@ function M.open(uri)
   end
 end
 
-M.open_with_default_app = function()
-  local has_name, name = M.get_current_buffer_name()
-  if has_name then
-    M.open(name)
-  end
-end
-
--- cf. lua/nvim-tree/actions/fs/copy-paste.lua
 M.copy_to_clipboard = function(content)
   vim.fn.setreg('+', content)
   vim.fn.setreg('"', content)
   return vim.notify(string.format('Copied %s to system clipboard!', content), vim.log.levels.INFO)
 end
 
-M.copy_content = function()
-  local text = vim.api.nvim_buf_get_text(0, 0, 0, -1, -1, {})
-  return M.copy_to_clipboard(text)
-end
-
-M.get_current_buffer_name = function()
-  local bufnr = vim.api.nvim_get_current_buf()
-  local bufname = vim.api.nvim_buf_get_name(bufnr)
-  if bufname == '' then
-    return false, '[No Name]'
+M.is_root = function(path)
+  if M.is_windows() then
+    if M.nvim_sep() == M.kernel_sep() then
+      return string.match(path, '^[A-Z]:/?$')
+    else
+      return string.match(path, '^[A-Z]:\\?$')
+    end
   end
-  return true, bufname
+  return path == M.kernel_sep()
 end
 
-M.copy_path = function()
-  local _, absolute_path = M.get_current_buffer_name()
-  return M.copy_to_clipboard(absolute_path)
-end
-
-M.path_separator = function()
-  local sep = vim.loop.os_uname().version:match('Windows') and '\\' or '/'
-  if vim.fn.has('shellslash') == 1 then
-    sep = '\\'
+M.is_absolute = function(path)
+  if M.is_windows() then
+    if M.nvim_sep() == M.kernel_sep() then
+      return string.match(path, '^[%a]:/.*$')
+    else
+      return string.match(path, '^[%a]:\\.*$')
+    end
   end
-  return sep
+  return string.sub(path, 1, 1) == M.kernel_sep()
+end
+
+M.rfind = function(s, sub)
+  return (function()
+    local r = { string.find(string.reverse(s), sub, 1, true) }
+    return r[2]
+  end)()
 end
 
 M.path_add_trailing = function(path)
-  if path:sub(-1) == M.path_separator() then
+  if path:sub(-1) == M.nvim_sep() then
     return path
   end
-  return path .. M.path_separator()
+  return path .. M.nvim_sep()
 end
 
 M.path_relative = function(path, relative_to)
-  local _, r = path:find(M.path_add_trailing(relative_to), 1, true)
+  local _, r = string.find(path, M.path_add_trailing(relative_to), 1, true)
   local p = path
   if r then
     -- take the relative path starting after '/'
@@ -106,57 +98,43 @@ M.path_relative = function(path, relative_to)
   return p
 end
 
-M.copy_relative_path = function()
-  local has_name, absolute_path = M.get_current_buffer_name()
-  if not has_name then
-    return M.copy_to_clipboard(content)
-  end
-  local relative_path = M.path_relative(absolute_path, vim.fn.getcwd())
-  return M.copy_to_clipboard(relative_path)
+M.get_content = function() return vim.api.nvim_buf_get_text(0, 0, 0, -1, -1, {}) end
+M.get_path = function() return M.get_current_buffer_name() end
+M.get_relative_path = function() return M.path_relative(M.get_current_buffer_name(), vim.fn.getcwd()) end
+
+M.get_current_buffer_name = function()
+  local name = vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())
+  return name ~= '' and name or '[No Name]'
 end
 
 M.name = function()
-  local has_name, absolute_path = M.get_current_buffer_name()
-  if not has_name then
-    return M.copy_to_clipboard(absolute_path)
-  end
-  local ts = string.reverse(absolute_path)
-  local _, i = string.find(ts, '/')
-  local fn = string.sub(absolute_path, -i + 1, -1)
-  return fn
+  local path = M.get_current_buffer_name()
+  local i = M.rfind(path, M.nvim_sep())
+  return i and string.sub(path, -i + 1, -1) or path
 end
 
-M.copy_name = function() return M.copy_to_clipboard(M.name()) end
-
-M.copy_name_without_ext = function()
+M.get_name_without_ext = function()
   local name = M.name()
-  local ts = string.reverse(name)
-  local _, i = string.find(ts, '.', 1, true)
-  local fn = string.sub(name, 1, i)
-  return M.copy_to_clipboard(fn)
+  local i = M.rfind(name, '.')
+  return i and string.sub(name, 1, i) or name
 end
 
-M.copy_contain_directory = function()
-  local _, absolute_path = M.get_current_buffer_name()
-  local ts = string.reverse(absolute_path)
-  local _, i = string.find(ts, M.path_separator())
-  local fn = string.sub(absolute_path, 1, #ts - i + 1)
-  return M.copy_to_clipboard(fn)
+M.get_contain_directory = function()
+  local path = M.get_current_buffer_name()
+  local i = M.rfind(path, M.nvim_sep())
+  return i and string.sub(path, 1, #path - i + 1) or nil
 end
+
+M.copy_content = function() return M.copy_to_clipboard(M.get_content()) end
+M.copy_path = function() return M.copy_to_clipboard(M.get_path()) end
+M.copy_relative_path = function() return M.copy_to_clipboard(M.get_relative_path()) end
+M.copy_name = function() return M.copy_to_clipboard(M.name()) end
+M.copy_name_without_ext = function() return M.copy_to_clipboard(M.get_name_without_ext()) end
+M.copy_contain_directory = function() return M.copy_to_clipboard(M.get_contain_directory()) end
 
 M.reveal_cwd_in_file_explorer = function() M.open(vim.fn.getcwd()) end
-
-M.reveal_file_in_file_explorer = function()
-  local has_name, absolute_path = M.get_current_buffer_name()
-  if has_name then
-    local _, absolute_path = M.get_current_buffer_name()
-    local ts = string.reverse(absolute_path)
-    local _, i = string.find(ts, M.path_separator())
-    local fn = string.sub(absolute_path, 1, #ts - i + 1)
-    M.open(fn)
-  end
-end
-
+M.reveal_file_in_file_explorer = function() M.open(M.get_contain_directory()) end
 M.reveal_in_tree = function() require('nvim-tree.api').tree.find_file({ open = true, update_root = true }) end
+M.open_with_default_app = function() M.open(M.get_current_buffer_name()) end
 
 return M
