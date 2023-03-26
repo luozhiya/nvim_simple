@@ -121,6 +121,9 @@ https://neovim.io/doc/user/options.html
 https://github.com/nvim-telescope/telescope.nvim/issues/new?assignees=&labels=bug&template=bug_report.yml
 nvim\site\pack\packer\opt\nvim-cmp\lua\cmp\utils\misc.lua
 site\pack\packer\opt\nvim-lspconfig\lua\lspconfig\util.lua
+-- cf. lazy.nvim util
+-- cf. lua/nvim-tree/actions/fs/copy-paste.lua
+-- cf. plenary.nvim/lua/plenary/path.lua
 
 Vim
 ---

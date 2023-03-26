@@ -400,11 +400,6 @@ M.neotree = function()
   }
 end
 
--- vim.cmd([[
---   command -nargs=+ LspHover lua vim.lsp.buf.hover()
---   set keywordprg=:LspHover
--- ]])
-
 M.legendary = function()
   return {
     keymaps = {
@@ -482,15 +477,11 @@ M.legendary = function()
       },
       {
         itemgroup = 'Go',
-        keymaps = {
-          { '<c-p>', '<cmd>Telescope buffers show_all_buffers=true theme=get_dropdown previewer=false<cr>', description = 'Go To File... (telescope.nvim)', mode = { 'n' }, opts = { noremap = true } },
-        },
+        keymaps = { { '<c-p>', '<cmd>Telescope buffers show_all_buffers=true theme=get_dropdown previewer=false<cr>', description = 'Go To File... (telescope.nvim)', mode = { 'n' }, opts = { noremap = true } } },
       },
       {
         itemgroup = 'Terminal',
-        keymaps = {
-          { [[<c-\>]], '<cmd>ToggleTerm<cr>', description = 'Toggle Terminal' },
-        },
+        keymaps = { { [[<c-\>]], '<cmd>ToggleTerm<cr>', description = 'Toggle Terminal' } },
       },
     },
     commands = {
@@ -525,7 +516,22 @@ M.legendary = function()
       },
     },
     funcs = {},
-    autocmds = {},
+    autocmds = {
+      {
+        'BufEnter',
+        function(args)
+          local info = vim.loop.fs_stat(args.file)
+          if info and info.type == 'directory' then
+            -- require('module.settings').config('nvim-neo-tree/neo-tree.nvim')()
+            -- vim.cmd('Neotree position=current ' .. args.file)
+            require('module.settings').config('nvim-tree/nvim-tree.lua')()
+            require('nvim-tree.api').tree.toggle({ path = args.file, find_file = true })
+          end
+        end,
+        opts = { pattern = { '*' } },
+        description = 'Hijack Directories',
+      },
+    },
   }
 end
 

@@ -1,7 +1,3 @@
--- cf. lazy.nvim util
--- cf. lua/nvim-tree/actions/fs/copy-paste.lua
--- cf. plenary.nvim/lua/plenary/path.lua
-
 local M = {}
 
 local cached = {}

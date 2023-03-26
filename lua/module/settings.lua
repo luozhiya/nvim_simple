@@ -10,10 +10,7 @@ M.config = function(name)
       ['folke/tokyonight.nvim'] = function() vim.cmd([[colorscheme tokyonight]]) end,
       ['nvim-treesitter/nvim-treesitter'] = function() require('nvim-treesitter.configs').setup({ ensure_installed = { 'cpp', 'c', 'lua', 'cmake', 'markdown', 'markdown_inline' } }) end,
       ['stevearc/aerial.nvim'] = function()
-        local opts = {
-          backends = { 'treesitter', 'lsp' },
-          layout = { max_width = { 60, 0.4 } },
-        }
+        local opts = { backends = { 'treesitter', 'lsp' }, layout = { max_width = { 60, 0.4 } } }
         opts = vim.tbl_deep_extend('error', opts, bindings.aerial())
         require('aerial').setup(opts)
       end,
@@ -51,10 +48,7 @@ M.config = function(name)
           hijack_directories = { enable = true },
           update_focused_file = { enable = enable, update_root = true },
           actions = { open_file = { resize_window = false } },
-          view = {
-            adaptive_size = false,
-            preserve_window_proportions = true,
-          },
+          view = { adaptive_size = false, preserve_window_proportions = true },
         }
         opts = vim.tbl_deep_extend('error', opts, bindings.nvim_tree())
         require('nvim-tree').setup(opts)
@@ -140,12 +134,7 @@ M.config = function(name)
       ['hrsh7th/nvim-cmp'] = function()
         local cmp = require('cmp')
         local opts = {
-          sources = {
-            { name = 'nvim_lsp' },
-            { name = 'buffer' },
-            { name = 'path' },
-            { name = 'luasnip' },
-          },
+          sources = { { name = 'nvim_lsp' }, { name = 'buffer' }, { name = 'path' }, { name = 'luasnip' } },
           formatting = {
             fields = { 'kind', 'abbr', 'menu' },
             format = function(entry, vim_item)
@@ -160,9 +149,7 @@ M.config = function(name)
               return vim_item
             end,
           },
-          snippet = {
-            expand = function(args) require('luasnip').lsp_expand(args.body) end,
-          },
+          snippet = { expand = function(args) require('luasnip').lsp_expand(args.body) end },
           completion = { completeopt = 'menuone, noinsert, noselect' },
           experimental = { ghost_text = true },
         }
@@ -172,10 +159,7 @@ M.config = function(name)
         require('nvim-autopairs').setup()
         cmp.event:on('confirm_done', require('nvim-autopairs.completion.cmp').on_confirm_done({ map_char = { tex = '' } }))
         require('wilder').setup({ modes = {} })
-        cmp.setup.cmdline('/', {
-          mapping = cmp.mapping.preset.cmdline(),
-          sources = { { name = 'buffer' } },
-        })
+        cmp.setup.cmdline('/', { mapping = cmp.mapping.preset.cmdline(), sources = { { name = 'buffer' } } })
         cmp.setup.cmdline(':', {
           mapping = cmp.mapping.preset.cmdline(),
           sources = cmp.config.sources({
@@ -194,10 +178,7 @@ M.config = function(name)
       end,
       ['nvim-neo-tree/neo-tree.nvim'] = function()
         vim.g.neo_tree_remove_legacy_commands = 1
-        local opts = {
-          close_if_last_window = true,
-          source_selector = { winbar = false, statusline = false },
-        }
+        local opts = { close_if_last_window = true, source_selector = { winbar = false, statusline = false } }
         opts = vim.tbl_deep_extend('error', opts, bindings.neotree())
         require('neo-tree').setup(opts)
       end,
@@ -206,15 +187,7 @@ M.config = function(name)
       ['glepnir/lspsaga.nvim'] = function() require('lspsaga').setup({ ui = { diagnostic = ' ' } }) end,
       ['folke/trouble.nvim'] = function() require('trouble').setup() end,
       ['lukas-reineke/indent-blankline.nvim'] = function() require('indent_blankline').setup() end,
-      ['HiPhish/nvim-ts-rainbow2'] = function()
-        require('nvim-treesitter.configs').setup({
-          rainbow = {
-            enable = { 'c', 'cpp' },
-            query = 'rainbow-parens',
-            strategy = require('ts-rainbow').strategy['local'],
-          },
-        })
-      end,
+      ['HiPhish/nvim-ts-rainbow2'] = function() require('nvim-treesitter.configs').setup({ rainbow = { enable = { 'c', 'cpp' }, query = 'rainbow-parens', strategy = require('ts-rainbow').strategy['local'] } }) end,
       ['p00f/godbolt.nvim'] = function()
         -- https://godbolt.org/api/compilers/
         -- https://godbolt.org/api/libraries/
