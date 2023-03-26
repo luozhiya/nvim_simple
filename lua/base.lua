@@ -46,6 +46,13 @@ function M.open(uri)
   end
 end
 
+M.open_with_default_app = function()
+  local has_name, name = M.get_current_buffer_name()
+  if has_name then
+    M.open(name)
+  end
+end
+
 -- cf. lua/nvim-tree/actions/fs/copy-paste.lua
 M.copy_to_clipboard = function(content)
   vim.fn.setreg('+', content)

@@ -249,6 +249,7 @@ M.wk = function(wk)
       },
       f = {
         name = 'File',
+        o = { function() require('base').open_with_default_app() end, 'Open With Default APP' },
         c = { function() require('base').reveal_cwd_in_file_explorer() end, 'Reveal CWD In File Explorer' },
         e = { function() require('base').reveal_file_in_file_explorer() end, 'Reveal In File Explorer' },
         t = { function() require('base').reveal_in_tree() end, 'Reveal In Tree' },
