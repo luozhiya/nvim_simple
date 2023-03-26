@@ -281,9 +281,30 @@ M.telescope = function(telescope)
   }
 end
 
+local function get_telescope_opts(path, tree, any)
+  return {
+    cwd = path,
+    search_dirs = { path },
+    attach_mappings = function(prompt_bufnr, map)
+      local actions = require('telescope.actions')
+      actions.select_default:replace(function()
+        actions.close(prompt_bufnr)
+        local selection = require('telescope.actions.state').get_selected_entry()
+        local filename = selection.filename
+        if filename == nil then
+          filename = selection[1]
+        end
+        tree(filename, any)
+      end)
+      return true
+    end,
+  }
+end
+
 M.nvim_tree = function()
-  local launch_telescope_ontree = function(action, opts)
-    local actions = require('telescope.actions')
+  local telescope = require('telescope.builtin')
+  local fs = require('nvim-tree.actions.node.open-file')
+  local path = function()
     local node = require('nvim-tree.lib').get_node_at_cursor()
     if node == nil then
       return
@@ -293,27 +314,28 @@ M.nvim_tree = function()
     if node.name == '..' and TreeExplorer ~= nil then
       basedir = TreeExplorer.cwd
     end
-    opts = opts or {}
-    opts.cwd = basedir
-    opts.search_dirs = { basedir }
-    opts.attach_mappings = function(prompt_bufnr, map)
-      actions.select_default:replace(function()
-        actions.close(prompt_bufnr)
-        local selection = require('telescope.actions.state').get_selected_entry()
-        local filename = selection.filename
-        if filename == nil then
-          filename = selection[1]
-        end
-        require('nvim-tree.actions.node.open-file').fn('preview', filename)
-      end)
-      return true
-    end
-    return require('telescope.builtin')[action](opts)
+    return basedir
   end
-  return { view = { mappings = { list = {
-    { key = '<c-f>', action_cb = function() return launch_telescope_ontree('find_files') end },
-    { key = '<c-g>', action_cb = function() return launch_telescope_ontree('live_grep') end },
-  } } } }
+  return {
+    view = {
+      mappings = {
+        list = {
+          {
+            key = '<c-f>',
+            action_cb = function()
+              telescope.find_files(get_telescope_opts(path(), function(name) fs.fn('preview', name) end))
+            end,
+          },
+          {
+            key = '<c-g>',
+            action_cb = function()
+              telescope.live_grep(get_telescope_opts(path(), function(name) fs.fn('preview', name) end))
+            end,
+          },
+        },
+      },
+    },
+  }
 end
 
 M.nvim_tree_hydra = function()
@@ -343,26 +365,8 @@ M.nvim_tree_hydra = function()
 end
 
 M.neotree = function()
-  local function getTelescopeOpts(state, path)
-    return {
-      cwd = path,
-      search_dirs = { path },
-      attach_mappings = function(prompt_bufnr, map)
-        local actions = require('telescope.actions')
-        actions.select_default:replace(function()
-          actions.close(prompt_bufnr)
-          local action_state = require('telescope.actions.state')
-          local selection = action_state.get_selected_entry()
-          local filename = selection.filename
-          if filename == nil then
-            filename = selection[1]
-          end
-          require('neo-tree.sources.filesystem').navigate(state, state.path, filename)
-        end)
-        return true
-      end,
-    }
-  end
+  local telescope = require('telescope.builtin')
+  local fs = require('neo-tree.sources.filesystem')
   return {
     window = {
       mappings = {
@@ -381,19 +385,16 @@ M.neotree = function()
       },
       commands = {
         system_open = function(state)
-          local node = state.tree:get_node()
-          local path = node:get_id()
+          local path = state.tree:get_node():get_id()
           require('base').open(path)
         end,
         telescope_find = function(state)
-          local node = state.tree:get_node()
-          local path = node:get_id()
-          require('telescope.builtin').find_files(getTelescopeOpts(state, path))
+          local path = state.tree:get_node():get_id()
+          telescope.find_files(get_telescope_opts(path, function(name, state) fs.navigate(state, state.path, name) end, state))
         end,
         telescope_grep = function(state)
-          local node = state.tree:get_node()
-          local path = node:get_id()
-          require('telescope.builtin').live_grep(getTelescopeOpts(state, path))
+          local path = state.tree:get_node():get_id()
+          telescope.live_grep(get_telescope_opts(path, function(name, state) fs.navigate(state, state.path, name) end, state))
         end,
       },
     },
