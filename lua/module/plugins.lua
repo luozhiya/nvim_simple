@@ -17,8 +17,8 @@ return {
   { 'stevearc/aerial.nvim', event = 'BufReadPost', config = config('stevearc/aerial.nvim') },
   { 'ahmedkhalf/project.nvim', event = 'BufReadPost', config = config('ahmedkhalf/project.nvim') },
   -- Completion
-  { 'hrsh7th/nvim-cmp', event = 'InsertEnter', config = config('hrsh7th/nvim-cmp'), dependencies = { 'hrsh7th/cmp-cmdline', 'hrsh7th/cmp-buffer', 'hrsh7th/cmp-path', 'hrsh7th/cmp-nvim-lsp' } },
-  { 'hrsh7th/cmp-cmdline' },
+  { 'hrsh7th/nvim-cmp', event = { 'InsertEnter', 'CmdlineEnter' }, config = config('hrsh7th/nvim-cmp'), dependencies = { 'hrsh7th/cmp-cmdline', 'hrsh7th/cmp-buffer', 'hrsh7th/cmp-path', 'hrsh7th/cmp-nvim-lsp' } },
+  { 'hrsh7th/cmp-cmdline', event = { 'CmdlineEnter' } },
   { 'hrsh7th/cmp-buffer' },
   { 'hrsh7th/cmp-path' },
   { 'hrsh7th/cmp-nvim-lsp' },
@@ -51,12 +51,11 @@ return {
   { 'folke/tokyonight.nvim', lazy = false, priority = 1000, config = config('folke/tokyonight.nvim') },
   { 'gosukiwi/vim-atom-dark' },
   { 'habamax/vim-habamax' },
-  { 'goolord/alpha-nvim', lazy = false, config = config('goolord/alpha-nvim') },
-  { 'rcarriga/nvim-notify', lazy = false, config = config('rcarriga/nvim-notify') },
-  { 'folke/noice.nvim', lazy = false, config = config('folke/noice.nvim') },
+  { 'goolord/alpha-nvim', event = 'VeryLazy', lazy = false, config = config('goolord/alpha-nvim') },
+  { 'rcarriga/nvim-notify', event = 'VeryLazy', config = config('rcarriga/nvim-notify') },
+  { 'folke/noice.nvim', event = 'VeryLazy', config = config('folke/noice.nvim') },
   -- CmdLine
   { 'VonHeikemen/fine-cmdline.nvim', config = config('VonHeikemen/fine-cmdline.nvim'), cmd = { 'FineCmdline' } },
-  { 'gelguy/wilder.nvim', keys = { { ';' }, { '/' }, { '?' } }, config = config('gelguy/wilder.nvim') },
   -- Edit
   { 'tpope/vim-obsession', cmd = { 'Obsession' } },
   { 'windwp/nvim-autopairs' },
