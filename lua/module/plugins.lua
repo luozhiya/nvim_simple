@@ -6,8 +6,8 @@ return {
   -- Treesitter
   { 'nvim-treesitter/nvim-treesitter', cmd = { 'TSInstall', 'TSBufEnable', 'TSBufDisable', 'TSModuleInfo' }, build = ':TSUpdate', config = config('nvim-treesitter/nvim-treesitter') },
   -- Telescope
-  { 'nvim-telescope/telescope.nvim', cmd = { 'Telescope' }, config = config('nvim-telescope/telescope.nvim') },
-  { 'nvim-telescope/telescope-ui-select.nvim' },
+  { 'nvim-telescope/telescope.nvim', event = 'VeryLazy', cmd = { 'Telescope' }, config = config('nvim-telescope/telescope.nvim'), dependencies = { 'nvim-telescope/telescope-ui-select.nvim' } },
+  { 'nvim-telescope/telescope-ui-select.nvim', event = 'VeryLazy' },
   { 'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' },
   { 'debugloop/telescope-undo.nvim' },
   { 'nvim-telescope/telescope-frecency.nvim' },
@@ -61,7 +61,7 @@ return {
   { 'windwp/nvim-autopairs' },
   { 'numToStr/Comment.nvim', keys = { { '<leader>cc' }, { '<leader>cb' } } },
   { 'fedepujol/move.nvim', cmd = { 'MoveLine', 'MoveBlock', 'MoveHChar', 'MoveHBlock' } },
-  { 'ray-x/lsp_signature.nvim', config = config('ray-x/lsp_signature.nvim') },
+  { 'ray-x/lsp_signature.nvim', enabled = false, config = config('ray-x/lsp_signature.nvim') },
   { 'glepnir/lspsaga.nvim', cmd = { 'Lspsaga' }, config = config('glepnir/lspsaga.nvim') },
   { 'folke/trouble.nvim', cmd = { 'TroubleToggle' }, config = config('folke/trouble.nvim') },
   { 'lukas-reineke/indent-blankline.nvim', event = { 'BufReadPost', 'BufNewFile' }, config = config('lukas-reineke/indent-blankline.nvim') },
