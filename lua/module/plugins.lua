@@ -52,6 +52,7 @@ return {
   { 'gosukiwi/vim-atom-dark' },
   { 'habamax/vim-habamax' },
   { 'goolord/alpha-nvim', lazy = false, config = config('goolord/alpha-nvim') },
+  { 'rcarriga/nvim-notify', lazy = false, config = config('rcarriga/nvim-notify') },
   -- CmdLine
   { 'VonHeikemen/fine-cmdline.nvim', config = config('VonHeikemen/fine-cmdline.nvim'), cmd = { 'FineCmdline' } },
   { 'gelguy/wilder.nvim', keys = { { ';' }, { '/' }, { '?' } }, config = config('gelguy/wilder.nvim') },

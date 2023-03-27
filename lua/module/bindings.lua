@@ -401,6 +401,17 @@ M.neotree = function()
   }
 end
 
+M.alpha_val = function(button)
+  return {
+    button('e', '  New file', '<cmd>ene <cr>'),
+    button('f', '  Find file', '<cmd>Telescope find_files <cr>'),
+    button('p', '  Find project', '<cmd>Telescope projects <cr>'),
+    button('r', '  Recently used files', '<cmd>Telescope oldfiles <cr>'),
+    button('s', '  Find text', '<cmd>Telescope live_grep <cr>'),
+    button('q', '  Quit Neovim', '<cmd>qa<cr>'),
+  }
+end
+
 M.legendary = function()
   return {
     keymaps = {
@@ -501,7 +512,14 @@ M.legendary = function()
       },
       {
         ':ToggleWrap',
-        function() vim.opt.wrap = vim.opt.wrap._value == false end,
+        function()
+          vim.opt.wrap = vim.opt.wrap._value == false
+          if vim.opt.wrap._value == true then
+            vim.notify('vim opt wrap Enable.')
+          else
+            vim.notify('vim opt wrap Disable.')
+          end
+        end,
         description = 'Toggle Wrap',
       },
       {
