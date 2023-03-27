@@ -178,7 +178,7 @@ M.config = function(name)
       end,
       ['nvim-neo-tree/neo-tree.nvim'] = function()
         vim.g.neo_tree_remove_legacy_commands = 1
-        local opts = { async_directory_scan = 'never', log_level = "trace", log_to_file = true, close_if_last_window = true, source_selector = { winbar = false, statusline = false } }
+        local opts = { async_directory_scan = 'never', log_level = 'trace', log_to_file = true, close_if_last_window = true, source_selector = { winbar = false, statusline = false } }
         opts = vim.tbl_deep_extend('error', opts, bindings.neotree())
         require('neo-tree').setup(opts)
       end,
@@ -206,6 +206,7 @@ M.config = function(name)
       end,
       ['glepnir/flybuf.nvim'] = function() require('flybuf').setup({}) end,
       ['sindrets/diffview.nvim'] = function() require('diffview').setup() end,
+      ['goolord/alpha-nvim'] = function() require('alpha').setup(require('alpha.themes.dashboard').config) end,
     }
   end
   return M.cached[name]

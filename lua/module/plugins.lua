@@ -51,6 +51,7 @@ return {
   { 'folke/tokyonight.nvim', lazy = false, priority = 1000, config = config('folke/tokyonight.nvim') },
   { 'gosukiwi/vim-atom-dark' },
   { 'habamax/vim-habamax' },
+  { 'goolord/alpha-nvim', lazy = false, config = config('goolord/alpha-nvim') },
   -- CmdLine
   { 'VonHeikemen/fine-cmdline.nvim', config = config('VonHeikemen/fine-cmdline.nvim'), cmd = { 'FineCmdline' } },
   { 'gelguy/wilder.nvim', keys = { { ';' }, { '/' }, { '?' } }, config = config('gelguy/wilder.nvim') },
