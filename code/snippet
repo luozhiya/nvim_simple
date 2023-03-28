@@ -276,3 +276,7 @@ v = {
 { 'L', '<cmd>Lspsaga show_line_diagnostics<cr>', 'Show Line Diagnostics' },
 l = { '<cmd>Lspsaga show_line_diagnostics<cr>', 'Lspsaga Show Line Diagnostics' },
 ['glepnir/lspsaga.nvim'] = function() require('lspsaga').setup({ ui = { diagnostic = ' ' } }) end,
+
+{ 'TimUntersberger/neogit', cmd = { 'Neogit' }, config = config('TimUntersberger/neogit') },
+['TimUntersberger/neogit'] = function() require('neogit').setup() end,
+n = { '<cmd>Neogit<cr>', 'Neogit' },

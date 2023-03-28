@@ -187,7 +187,6 @@ M.wk = function(wk)
       name = 'Git',
       l = { function() _any_toggle('lazygit') end, 'Lazygit' },
       g = { function() _any_toggle('gitui') end, 'GitUI' },
-      n = { '<cmd>Neogit<cr>', 'Neogit' },
       s = { '<cmd>SublimeMerge<cr>', 'Sublime Merge' },
     },
     t = {
