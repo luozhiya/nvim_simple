@@ -19,7 +19,9 @@ M.config = function(name)
       end,
       ['nvim-telescope/telescope.nvim'] = function()
         local telescope = require('telescope')
-        telescope.setup()
+        local opts = {}
+        opts = vim.tbl_deep_extend('error', opts, bindings.telescope())
+        telescope.setup(opts)
         telescope.load_extension('undo')
         telescope.load_extension('fzf')
         telescope.load_extension('frecency')

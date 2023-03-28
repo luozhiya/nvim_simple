@@ -84,6 +84,15 @@ M.toggleterm = function()
   }
 end
 
+M.telescope = function()
+  local actions = require('telescope.actions')
+  -- stylua: ignore start
+  return { defaults = { mappings = { i = {
+          ['<esc>'] = actions.close,
+        }, }, }, }
+  -- stylua: ignore end
+end
+
 M.wk = function(wk)
   function _any_toggle(cmd)
     local run = require('toggleterm.terminal').Terminal:new({
