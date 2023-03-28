@@ -338,7 +338,7 @@ M.setup_comands = function()
     local Job = require('plenary.job')
     Job:new({
       command = 'sublime_merge',
-      args = { '-n', vim.fn.getcwd() },
+      args = { '-n', require('base').to_native(vim.fn.getcwd()) },
     }):start()
   end, { desc = 'Sublime Merge' })
 end

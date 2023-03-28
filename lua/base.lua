@@ -9,6 +9,8 @@ M.kernel_sep = function() return '/' end
 M.os_sep = function() return package.config:sub(1, 1) end
 M.nvim_sep = function() return (M.is_windows() and vim.opt.shellslash._value == 0) and M.nt_sep() or M.kernel_sep() end
 M.to_nt = function(s) return s:gsub(M.kernel_sep(), M.nt_sep()) end
+M.to_kernel = function(s) return s:gsub(M.nt_sep(), M.kernel_sep()) end
+M.to_native = function(s) return M.is_windows() and M.to_nt(s) or M.to_kernel(s) end
 M.shellslash_safe = function(s) return M.nvim_sep() == M.kernel_sep() and s:gsub(M.nt_sep(), M.kernel_sep()) or s end
 M.is_uri = function(path) return path:match('^%w+://') ~= nil end
 M.file_exists = function(file) return vim.loop.fs_stat(file) ~= nil end
