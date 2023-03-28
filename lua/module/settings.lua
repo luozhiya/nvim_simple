@@ -106,9 +106,7 @@ M.config = function(name)
           vim.g.sqlite_clib_path = string.sub(vim.loop.exepath(nvim), 1, -(#nvim + 1)) .. 'sqlite3.dll'
         end
       end,
-      ['tanvirtin/vgit.nvim'] = function() require('vgit').setup() end,
       ['TimUntersberger/neogit'] = function() require('neogit').setup() end,
-      ['glepnir/lspsaga.nvim'] = function() require('lspsaga').setup({ ui = { diagnostic = ' ' } }) end,
       ['folke/trouble.nvim'] = function() require('trouble').setup() end,
       ['lukas-reineke/indent-blankline.nvim'] = function() require('indent_blankline').setup() end,
       ['HiPhish/nvim-ts-rainbow2'] = function() require('nvim-treesitter.configs').setup({ rainbow = { enable = { 'c', 'cpp' }, query = 'rainbow-parens', strategy = require('ts-rainbow').strategy['local'] } }) end,

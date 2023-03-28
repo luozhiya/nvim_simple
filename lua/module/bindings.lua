@@ -17,7 +17,6 @@ M.lsp = {
   { 'gd', vim.lsp.buf.definition, desc = 'Goto Definition' },
   { 'gh', vim.lsp.buf.hover, desc = 'Hover' },
   { 'K', vim.lsp.buf.hover, desc = 'Hover' },
-  { 'L', '<cmd>Lspsaga show_line_diagnostics<cr>', 'Show Line Diagnostics' },
   { 'gn', vim.lsp.buf.rename, desc = 'Rename' },
   { 'ga', '<cmd>CodeActionMenu<cr>', desc = 'Code Action' },
   { '[d', vim.diagnostic.goto_prev, desc = 'Goto Diagnostic Prev' },
@@ -173,7 +172,6 @@ M.wk = function(wk)
       h = { '<cmd>ClangdSwitchSourceHeader<cr>', 'Switch C/C++ header/source' },
       m = { '<cmd>ClangdMemoryUsage<cr>', 'Clangd Memory Usage' },
       f = { '<cmd>lua vim.lsp.buf.format{async=true}<cr>', 'Code Format' },
-      l = { '<cmd>Lspsaga show_line_diagnostics<cr>', 'Lspsaga Show Line Diagnostics' },
       o = { '<cmd>AerialToggle<cr>', 'Outline' },
     },
     d = {

@@ -253,6 +253,7 @@ shortmess = {
   -- W = true, -- Don't show [w] or written when writing
 },
 
+['tanvirtin/vgit.nvim'] = function() require('vgit').setup() end,
 { 'tanvirtin/vgit.nvim', config = config('tanvirtin/vgit.nvim') },
 v = {
   name = 'VGit',
@@ -270,3 +271,8 @@ v = {
   l = { [[<cmd>lua require('vgit').buffer_hunks_preview()<cr>]], 'Buffer Hunks Preview' },
   m = { [[<cmd>lua require('vgit').project_hunks_staged_preview()<cr>]], 'Project Hunks Staged Preview' },
 },
+
+{ 'glepnir/lspsaga.nvim', cmd = { 'Lspsaga' }, config = config('glepnir/lspsaga.nvim') },
+{ 'L', '<cmd>Lspsaga show_line_diagnostics<cr>', 'Show Line Diagnostics' },
+l = { '<cmd>Lspsaga show_line_diagnostics<cr>', 'Lspsaga Show Line Diagnostics' },
+['glepnir/lspsaga.nvim'] = function() require('lspsaga').setup({ ui = { diagnostic = ' ' } }) end,
