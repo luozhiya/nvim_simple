@@ -42,9 +42,7 @@ return {
   { 'nvim-lualine/lualine.nvim', enabled = false, event = 'VeryLazy', config = config('nvim-lualine/lualine.nvim') },
   { 'nvim-tree/nvim-tree.lua', cmd = { 'NvimTreeToggle', 'NvimTreeFindFile' }, config = config('nvim-tree/nvim-tree.lua') },
   { 'akinsho/toggleterm.nvim', cmd = { 'ToggleTerm' }, config = config('akinsho/toggleterm.nvim') },
-  { 'folke/tokyonight.nvim', lazy = false, priority = 1000, config = config('folke/tokyonight.nvim') },
-  { 'gosukiwi/vim-atom-dark' },
-  { 'habamax/vim-habamax' },
+  { 'folke/tokyonight.nvim', lazy = false, priority = 1000 },
   { 'rcarriga/nvim-notify', config = config('rcarriga/nvim-notify') },
   { 'folke/noice.nvim', config = config('folke/noice.nvim') },
   -- CmdLine

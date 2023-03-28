@@ -7,7 +7,7 @@ local M = {}
 M.lazy = vim.fn.stdpath('config') .. '/lazy/lazy.nvim'
 M.root = vim.fn.stdpath('config') .. '/lazy'
 
-function M.setup()
+function M.preset()
   vim.g.neovide_remember_window_size = true
   vim.g.neovide_refresh_rate_idle = 240
   vim.g.neovide_no_idle = true
@@ -92,5 +92,7 @@ function M.setup()
     vim.opt[k] = v
   end
 end
+
+M.postset = function() vim.cmd([[colorscheme tokyonight]]) end
 
 return M

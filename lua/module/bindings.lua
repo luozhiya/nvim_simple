@@ -12,13 +12,7 @@ M.setup_leader = function()
 end
 
 M.semicolon_to_colon = function()
-  vim.cmd([[
-    nnoremap ; :
-    nnoremap : ;
-    vnoremap ; :
-    vnoremap : ;
-  ]])
-  -- M.map('n', ';', ':', { silent = false })
+  M.map('n', ';', ':', { silent = false })
 end
 
 M.lsp = {
@@ -257,7 +251,7 @@ M.wk = function(wk)
 end
 
 M.nvim_tree = function()
-  local function get_telescope_opts(path, tree, any)
+  local ts_opts = function(path, tree, any)
     return {
       cwd = path,
       search_dirs = { path },
@@ -275,7 +269,7 @@ M.nvim_tree = function()
         return true
       end,
     }
-  end  
+  end
   local telescope = require('telescope.builtin')
   local fs = require('nvim-tree.actions.node.open-file')
   local path = function()
@@ -290,26 +284,12 @@ M.nvim_tree = function()
     end
     return basedir
   end
-  return {
-    view = {
-      mappings = {
-        list = {
-          {
-            key = '<c-f>',
-            action_cb = function()
-              telescope.find_files(get_telescope_opts(path(), function(name) fs.fn('preview', name) end))
-            end,
-          },
-          {
-            key = '<c-g>',
-            action_cb = function()
-              telescope.live_grep(get_telescope_opts(path(), function(name) fs.fn('preview', name) end))
-            end,
-          },
-        },
-      },
-    },
-  }
+-- stylua: ignore start  
+  return { view = { mappings = { list = {
+          { key = '<c-f>', action_cb = function() telescope.find_files(ts_opts(path(), function(name) fs.fn('preview', name) end)) end, },
+          { key = '<c-g>', action_cb = function() telescope.live_grep(ts_opts(path(), function(name) fs.fn('preview', name) end)) end, },
+        }, }, }, }
+  -- stylua: ignore end
 end
 
 M.setup_code = function()
@@ -363,10 +343,7 @@ end
 M.setup_comands = function()
   vim.api.nvim_create_user_command('BufferCloseOthers', function() require('close_buffers').wipe({ type = 'other' }) end, { desc = 'Close Others' })
   vim.api.nvim_create_user_command('ToggleWrap', function() vim.opt.wrap = vim.opt.wrap._value == false end, { desc = 'Toggle Wrap' })
-  vim.api.nvim_create_user_command('ToggleFocusMode', function()
-    vim.opt.laststatus = vim.opt.laststatus._value == 0 and 3 or 0
-    vim.opt.number = vim.opt.number._value == false
-  end, { desc = 'Toggle Focus Mode' })
+  vim.api.nvim_create_user_command('ToggleFocusMode', function() vim.opt.laststatus = vim.opt.laststatus._value == 0 and 3 or 0 end, { desc = 'Toggle Focus Mode' })
   vim.api.nvim_create_user_command('SublimeMerge', function()
     local Job = require('plenary.job')
     Job:new({

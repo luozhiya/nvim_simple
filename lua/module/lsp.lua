@@ -7,12 +7,7 @@ M.mason = function()
 end
 
 M.lsp = function()
-  vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-    virtual_text = false,
-    signs = false,
-    update_in_insert = false,
-    underline = true,
-  })
+  vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, { virtual_text = false, signs = false, update_in_insert = false, underline = true })
   local lsp_on_attach = function(client, buffer)
     for _, keys in pairs(bindings.lsp) do
       bindings.map(keys.mode or 'n', keys[1], keys[2], { noremap = true, silent = true, buffer = buffer })

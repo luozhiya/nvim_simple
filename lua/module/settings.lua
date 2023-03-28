@@ -7,7 +7,7 @@ M.config = function(name)
   if vim.tbl_isempty(M.cached) then
     M.cached = {
       ['VonHeikemen/fine-cmdline.nvim'] = function() require('fine-cmdline').setup({ cmdline = { prompt = ' > ' } }) end,
-      ['folke/tokyonight.nvim'] = function() vim.cmd([[colorscheme tokyonight]]) end,
+      -- ['folke/tokyonight.nvim'] = function() vim.cmd([[colorscheme tokyonight]]) end,
       ['nvim-treesitter/nvim-treesitter'] = function() require('nvim-treesitter.configs').setup({ ensure_installed = { 'cpp', 'c', 'lua', 'cmake', 'markdown', 'markdown_inline' } }) end,
       ['stevearc/aerial.nvim'] = function()
         local opts = { backends = { 'treesitter', 'lsp' }, layout = { max_width = { 60, 0.4 } } }
