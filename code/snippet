@@ -49,3 +49,9 @@ M.installed = function(name)
   -- return vim.tbl_contains(cached, name)
   return true
 end
+
+['mrjones2014/legendary.nvim'] = function()
+  local opts = { which_key = { auto_register = true } }
+  opts = vim.tbl_deep_extend('error', opts, bindings.legendary())
+  require('legendary').setup(opts)
+end,

@@ -97,11 +97,6 @@ M.config = function(name)
           lualine_z = { location },
         } })
       end,
-      ['mrjones2014/legendary.nvim'] = function()
-        local opts = { which_key = { auto_register = true } }
-        opts = vim.tbl_deep_extend('error', opts, bindings.legendary())
-        require('legendary').setup(opts)
-      end,
       ['j-hui/fidget.nvim'] = function()
         vim.cmd([[highlight FidgetTitle ctermfg=110 guifg=#0887c7]])
         vim.cmd([[highlight FidgetTask ctermfg=110 guifg=#0887c7]])

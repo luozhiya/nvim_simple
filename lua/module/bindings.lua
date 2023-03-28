@@ -9,7 +9,6 @@ end
 M.setup_leader = function()
   vim.g.mapleader = ','
   vim.g.maplocalleader = ','
-  M.semicolon_to_colon()
 end
 
 M.semicolon_to_colon = function()
@@ -377,146 +376,86 @@ M.neotree = function()
   }
 end
 
-M.legendary = function()
-  return {
-    keymaps = {
-      {
-        itemgroup = 'Core',
-        keymaps = {
-          -- { ';', ':', opts = { silent = false } },
-          { 'j', "v:count == 0 ? 'gj' : 'j'", opts = { expr = true, noremap = true } },
-          { 'k', "v:count == 0 ? 'gk' : 'k'", opts = { expr = true, noremap = true } },
-          { '<esc>', '<cmd>noh<cr><esc>', description = 'Escape And Clear hlsearch', opts = { noremap = true }, mode = { 'i', 'n' } },
-          { '<C-j>', '15gj', description = 'Move Down 15 Lines', opts = { noremap = true } },
-          { '<C-k>', '15gk', description = 'Move Up 15 Lines', opts = { noremap = true } },
-          { '<', '<gv', description = 'deIndent Continuously', opts = { noremap = true }, mode = { 'v' } },
-          { '>', '>gv', description = 'Indent Continuously', opts = { noremap = true }, mode = { 'v' } },
-          { '<left>', '<C-w>h', description = 'Jump Left' },
-          { '<down>', '<C-w>j', description = 'Jump Down' },
-          { '<up>', '<C-w>k', description = 'Jump Up' },
-          { '<right>', '<C-w>l', description = 'Jump Right' },
-          { '<a-q>', '<cmd>ToggleWrap<cr>', description = 'Toggle Wrap' },
-        },
-      },
-      {
-        itemgroup = 'Edit',
-        keymaps = {
-          {
-            '<leader>cc',
-            {
-              n = { function() require('Comment.api').toggle.linewise.current() end },
-              x = {
-                function()
-                  local esc = vim.api.nvim_replace_termcodes('<ESC>', true, false, true)
-                  vim.api.nvim_feedkeys(esc, 'nx', false)
-                  require('Comment.api').toggle.linewise(vim.fn.visualmode())
-                end,
-              },
-            },
-            description = 'Comment Line (Comment.nvim)',
-          },
-          {
-            '<leader>cb',
-            {
-              n = { function() require('Comment.api').toggle.blockwise.current() end },
-              x = {
-                function()
-                  local esc = vim.api.nvim_replace_termcodes('<ESC>', true, false, true)
-                  vim.api.nvim_feedkeys(esc, 'nx', false)
-                  require('Comment.api').toggle.blockwise(vim.fn.visualmode())
-                end,
-              },
-            },
-            description = 'Comment Block (Comment.nvim)',
-          },
-        },
-      },
-      {
-        itemgroup = 'Selection',
-        keymaps = {
-          { '<A-j>', '<cmd>MoveLine(1)<cr>', description = 'Line: Move Up (move.nvim)', mode = { 'n' }, opts = { noremap = true } },
-          { '<A-k>', '<cmd>MoveLine(-1)<cr>', description = 'Line: Move Down (move.nvim)', mode = { 'n' }, opts = { noremap = true } },
-          { '<A-h>', '<cmd>MoveHChar(-1)<cr>', description = 'Line: Move Left (move.nvim)', mode = { 'n' }, opts = { noremap = true } },
-          { '<A-l>', '<cmd>MoveHChar(1)<cr>', description = 'Line: Move Right (move.nvim)', mode = { 'n' }, opts = { noremap = true } },
-          { '<A-j>', '<cmd>MoveBlock(1)<cr>', description = 'Block: Move Up (move.nvim)', mode = { 'v' }, opts = { noremap = true } },
-          { '<A-k>', '<cmd>MoveBlock(-1)<cr>', description = 'Block: Move Down (move.nvim)', mode = { 'v' }, opts = { noremap = true } },
-          { '<A-h>', '<cmd>MoveHBlock(-1)<cr>', description = 'Block: Move Left (move.nvim)', mode = { 'v' }, opts = { noremap = true } },
-          { '<A-l>', '<cmd>MoveHBlock(1)<cr>', description = 'Block: Move Right (move.nvim)', mode = { 'v' }, opts = { noremap = true } },
-        },
-      },
-      {
-        itemgroup = 'View',
-        keymaps = {
-          { '<M-cr>', '<cmd>FineCmdline<cr>', description = 'Fine Cmdline... (fine-cmdline.nvim)', opts = { noremap = true } },
-          { [[\]], '<cmd>Telescope cmdline<cr>', description = 'Cmdline... (telescope-cmdline.nvim)', opts = { noremap = true } },
-          { '<c-s-p>', '<cmd>Telescope commands<cr>', description = 'Command Palette... (telescope.nvim)', mode = { 'n' }, opts = { noremap = true } },
-        },
-      },
-      {
-        itemgroup = 'Go',
-        keymaps = { { '<c-p>', '<cmd>Telescope buffers show_all_buffers=true theme=get_dropdown previewer=false<cr>', description = 'Go To File... (telescope.nvim)', mode = { 'n' }, opts = { noremap = true } } },
-      },
-      {
-        itemgroup = 'Terminal',
-        keymaps = { { [[<c-\>]], '<cmd>ToggleTerm<cr>', description = 'Toggle Terminal' } },
-      },
-    },
-    commands = {
-      {
-        ':BufferCloseOthers',
-        function() require('close_buffers').wipe({ type = 'other' }) end,
-        description = 'Close Others',
-      },
-      {
-        ':ToggleFocusMode',
-        function()
-          vim.opt.laststatus = vim.opt.laststatus._value == 0 and 3 or 0
-          vim.opt.number = vim.opt.number._value == false
-        end,
-        description = 'Toggle Focus Mode',
-      },
-      {
-        ':ToggleWrap',
-        function()
-          vim.opt.wrap = vim.opt.wrap._value == false
-          if vim.opt.wrap._value == true then
-            vim.notify('vim opt wrap Enable.')
-          else
-            vim.notify('vim opt wrap Disable.')
-          end
-        end,
-        description = 'Toggle Wrap',
-      },
-      {
-        ':SublimeMerge',
-        function()
-          local Job = require('plenary.job')
-          Job:new({
-            command = 'sublime_merge',
-            args = { '-n', vim.fn.getcwd() },
-          }):start() -- or start()
-        end,
-        description = 'Sublime Merge',
-      },
-    },
-    funcs = {},
-    autocmds = {
-      {
-        'BufEnter',
-        function(args)
-          local info = vim.loop.fs_stat(args.file)
-          if info and info.type == 'directory' then
-            -- require('module.settings').config('nvim-neo-tree/neo-tree.nvim')()
-            -- vim.cmd('Neotree position=current ' .. args.file)
-            require('module.settings').config('nvim-tree/nvim-tree.lua')()
-            require('nvim-tree.api').tree.toggle({ path = args.file, find_file = true })
-          end
-        end,
-        opts = { pattern = { '*' } },
-        description = 'Hijack Directories',
-      },
-    },
-  }
+M.setup_code = function()
+  -- Core
+  M.semicolon_to_colon()
+  M.map('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, noremap = true })
+  M.map('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, noremap = true })
+  M.map({ 'i', 'n' }, '<esc>', '<cmd>noh<cr><esc>', { noremap = true, desc = 'Escape And Clear hlsearch' })
+  M.map('n', '<C-j>', '15gj', { noremap = true, desc = 'Move Down 15 Lines' })
+  M.map('n', '<C-k>', '15gk', { noremap = true, desc = 'Move Up 15 Lines' })
+  M.map('n', '<left>', '<C-w>h', { desc = 'Jump Left' })
+  M.map('n', '<down>', '<C-w>j', { desc = 'Jump Down' })
+  M.map('n', '<up>', '<C-w>k', { desc = 'Jump Up' })
+  M.map('n', '<right>', '<C-w>l', { desc = 'Jump Right' })
+  M.map('n', '<a-q>', '<cmd>ToggleWrap<cr>', { desc = 'Toggle Wrap' })
+  M.map('v', '<', '<gv', { noremap = true, desc = 'deIndent Continuously' })
+  M.map('v', '>', '>gv', { noremap = true, desc = 'Indent Continuously' })
+  -- Edit
+  M.map('n', '<leader>cc', function() require('Comment.api').toggle.linewise.current() end, { desc = 'Comment Line (Comment.nvim)' })
+  M.map('x', '<leader>cc', function()
+    local esc = vim.api.nvim_replace_termcodes('<ESC>', true, false, true)
+    vim.api.nvim_feedkeys(esc, 'nx', false)
+    require('Comment.api').toggle.linewise(vim.fn.visualmode())
+  end, { desc = 'Comment Line (Comment.nvim)' })
+  M.map('n', '<leader>cb', function() require('Comment.api').toggle.blockwise.current() end, { desc = 'Comment Line (Comment.nvim)' })
+  M.map('x', '<leader>cb', function()
+    local esc = vim.api.nvim_replace_termcodes('<ESC>', true, false, true)
+    vim.api.nvim_feedkeys(esc, 'nx', false)
+    require('Comment.api').toggle.blockwise(vim.fn.visualmode())
+  end, { desc = 'Comment Block (Comment.nvim)' })
+  -- Selection
+  M.map('n', '<A-j>', '<cmd>MoveLine(1)<cr>', { noremap = true, desc = 'Line: Move Up (move.nvim)' })
+  M.map('n', '<A-k>', '<cmd>MoveLine(-1)<cr>', { noremap = true, desc = 'Line: Move Down (move.nvim)' })
+  M.map('n', '<A-h>', '<cmd>MoveHChar(-1)<cr>', { noremap = true, desc = 'Line: Move Left (move.nvim)' })
+  M.map('n', '<A-l>', '<cmd>MoveHChar(1)<cr>', { noremap = true, desc = 'Line: Move Right (move.nvim)' })
+  M.map('v', '<A-j>', '<cmd>MoveBlock(1)<cr>', { noremap = true, desc = 'Block: Move Up (move.nvim)' })
+  M.map('v', '<A-k>', '<cmd>MoveBlock(-1)<cr>', { noremap = true, desc = 'Block: Move Down (move.nvim)' })
+  M.map('v', '<A-h>', '<cmd>MoveHBlock(-1)<cr>', { noremap = true, desc = 'Block: Move Left (move.nvim)' })
+  M.map('v', '<A-l>', '<cmd>MoveHBlock(1)<cr>', { noremap = true, desc = 'Block: Move Right (move.nvim)' })
+  -- View
+  M.map('n', '<M-cr>', '<cmd>FineCmdline<cr>', { noremap = true, desc = 'Fine Cmdline... (fine-cmdline.nvim)' })
+  M.map('n', [[\]], '<cmd>Telescope cmdline<cr>', { noremap = true, desc = 'Cmdline... (telescope-cmdline.nvim)' })
+  M.map('n', '<c-s-p>', '<cmd>Telescope commands<cr>', { noremap = true, desc = 'Command Palette... (telescope.nvim)' })
+  -- Go
+  M.map('n', '<c-p>', '<cmd>Telescope buffers show_all_buffers=true theme=get_dropdown previewer=false<cr>', { noremap = true, desc = 'Go To File... (telescope.nvim)' })
+  -- Run
+  -- Terminal
+  M.map('n', [[<c-\>]], '<cmd>ToggleTerm<cr>', { desc = 'Toggle Terminal' })
+end
+
+M.setup_comands = function()
+  vim.api.nvim_create_user_command('BufferCloseOthers', function() require('close_buffers').wipe({ type = 'other' }) end, { desc = 'Close Others' })
+  vim.api.nvim_create_user_command('ToggleWrap', function() vim.opt.wrap = vim.opt.wrap._value == false end, { desc = 'Toggle Wrap' })
+  vim.api.nvim_create_user_command('ToggleFocusMode', function()
+    vim.opt.laststatus = vim.opt.laststatus._value == 0 and 3 or 0
+    vim.opt.number = vim.opt.number._value == false
+  end, { desc = 'Toggle Focus Mode' })
+  vim.api.nvim_create_user_command('SublimeMerge', function()
+    local Job = require('plenary.job')
+    Job:new({
+      command = 'sublime_merge',
+      args = { '-n', vim.fn.getcwd() },
+    }):start()
+  end, { desc = 'Sublime Merge' })
+end
+
+M.setup_autocmd = function()
+  local augroup = vim.api.nvim_create_augroup('bindings.lua', {})
+  vim.api.nvim_create_autocmd('BufEnter', {
+    group = augroup,
+    pattern = '*',
+    callback = function(args)
+      local info = vim.loop.fs_stat(args.file)
+      if info and info.type == 'directory' then
+        -- require('module.settings').config('nvim-neo-tree/neo-tree.nvim')()
+        -- vim.cmd('Neotree position=current ' .. args.file)
+        require('module.settings').config('nvim-tree/nvim-tree.lua')()
+        require('nvim-tree.api').tree.toggle({ path = args.file, find_file = true })
+      end
+    end,
+    desc = 'Hijack Directories',
+  })
 end
 
 return M

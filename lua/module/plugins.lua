@@ -35,7 +35,6 @@ return {
   { 'glepnir/flybuf.nvim', cmd = 'FlyBuf', config = config('glepnir/flybuf.nvim') },
   -- Key Management
   { 'folke/which-key.nvim', keys = { { ',' }, { 'g' } }, config = config('folke/which-key.nvim') },
-  { 'mrjones2014/legendary.nvim', lazy = false, event = 'VeryLazy', config = config('mrjones2014/legendary.nvim'), dependencies = { 'folke/which-key.nvim' } },
   -- Appearance
   { 'anuvyklack/hydra.nvim' },
   { 'MunifTanjim/nui.nvim' },
