@@ -55,3 +55,62 @@ end
   opts = vim.tbl_deep_extend('error', opts, bindings.legendary())
   require('legendary').setup(opts)
 end,
+
+{ 'nvim-neo-tree/neo-tree.nvim', cmd = { 'Neotree' }, config = config('nvim-neo-tree/neo-tree.nvim') },
+['nvim-neo-tree/neo-tree.nvim'] = function()
+  vim.g.neo_tree_remove_legacy_commands = 1
+  local opts = { async_directory_scan = 'never', log_level = 'trace', log_to_file = true, close_if_last_window = true, source_selector = { winbar = false, statusline = false } }
+  opts = vim.tbl_deep_extend('error', opts, bindings.neotree())
+  require('neo-tree').setup(opts)
+end,
+M.setup_autocmd = function()
+  local augroup = vim.api.nvim_create_augroup('bindings.lua', {})
+  vim.api.nvim_create_autocmd('BufEnter', {
+    group = augroup,
+    pattern = '*',
+    callback = function(args)
+      local info = vim.loop.fs_stat(args.file)
+      if info and info.type == 'directory' then
+        require('module.settings').config('nvim-neo-tree/neo-tree.nvim')()
+        vim.cmd('Neotree position=current ' .. args.file)
+      end
+    end,
+    desc = 'Hijack Directories',
+  })
+end
+M.neotree = function()
+  local telescope = require('telescope.builtin')
+  local fs = require('neo-tree.sources.filesystem')
+  return {
+    window = {
+      mappings = {
+        ['e'] = function() vim.api.nvim_exec('Neotree focus filesystem left', true) end,
+        ['b'] = function() vim.api.nvim_exec('Neotree focus buffers left', true) end,
+        ['g'] = function() vim.api.nvim_exec('Neotree focus git_status left', true) end,
+      },
+    },
+    filesystem = {
+      window = {
+        mappings = {
+          ['O'] = 'system_open',
+          ['tf'] = 'telescope_find',
+          ['tg'] = 'telescope_grep',
+        },
+      },
+      commands = {
+        system_open = function(state)
+          local path = state.tree:get_node():get_id()
+          require('base').open(path)
+        end,
+        telescope_find = function(state)
+          local path = state.tree:get_node():get_id()
+          telescope.find_files(get_telescope_opts(path, function(name, state) fs.navigate(state, state.path, name) end, state))
+        end,
+        telescope_grep = function(state)
+          local path = state.tree:get_node():get_id()
+          telescope.live_grep(get_telescope_opts(path, function(name, state) fs.navigate(state, state.path, name) end, state))
+        end,
+      },
+    },
+  }
+end

@@ -339,43 +339,6 @@ M.nvim_tree_hydra = function()
   }
 end
 
-M.neotree = function()
-  local telescope = require('telescope.builtin')
-  local fs = require('neo-tree.sources.filesystem')
-  return {
-    window = {
-      mappings = {
-        ['e'] = function() vim.api.nvim_exec('Neotree focus filesystem left', true) end,
-        ['b'] = function() vim.api.nvim_exec('Neotree focus buffers left', true) end,
-        ['g'] = function() vim.api.nvim_exec('Neotree focus git_status left', true) end,
-      },
-    },
-    filesystem = {
-      window = {
-        mappings = {
-          ['O'] = 'system_open',
-          ['tf'] = 'telescope_find',
-          ['tg'] = 'telescope_grep',
-        },
-      },
-      commands = {
-        system_open = function(state)
-          local path = state.tree:get_node():get_id()
-          require('base').open(path)
-        end,
-        telescope_find = function(state)
-          local path = state.tree:get_node():get_id()
-          telescope.find_files(get_telescope_opts(path, function(name, state) fs.navigate(state, state.path, name) end, state))
-        end,
-        telescope_grep = function(state)
-          local path = state.tree:get_node():get_id()
-          telescope.live_grep(get_telescope_opts(path, function(name, state) fs.navigate(state, state.path, name) end, state))
-        end,
-      },
-    },
-  }
-end
-
 M.setup_code = function()
   -- Core
   M.semicolon_to_colon()
@@ -448,8 +411,6 @@ M.setup_autocmd = function()
     callback = function(args)
       local info = vim.loop.fs_stat(args.file)
       if info and info.type == 'directory' then
-        -- require('module.settings').config('nvim-neo-tree/neo-tree.nvim')()
-        -- vim.cmd('Neotree position=current ' .. args.file)
         require('module.settings').config('nvim-tree/nvim-tree.lua')()
         require('nvim-tree.api').tree.toggle({ path = args.file, find_file = true })
       end
