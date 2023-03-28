@@ -19,6 +19,6 @@ require('lazy').setup('module.plugins', {
   readme = { enabled = false },
 })
 opt.after()
-bindings.setup_code()
-bindings.setup_comands()
 bindings.setup_autocmd()
+bindings.setup_comands()
+bindings.setup_code()

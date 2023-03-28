@@ -219,3 +219,36 @@ end,
 { 'VonHeikemen/fine-cmdline.nvim', config = config('VonHeikemen/fine-cmdline.nvim'), cmd = { 'FineCmdline' } },
 ['VonHeikemen/fine-cmdline.nvim'] = function() require('fine-cmdline').setup({ cmdline = { prompt = ' > ' } }) end,
 M.map('n', '<M-cr>', '<cmd>FineCmdline<cr>', { noremap = true, desc = 'Fine Cmdline... (fine-cmdline.nvim)' })
+
+{ 'nvim-lualine/lualine.nvim', enabled = false, event = 'VeryLazy', config = config('nvim-lualine/lualine.nvim') },
+['nvim-lualine/lualine.nvim'] = function()
+  local function lsp_active()
+    local names = {}
+    for _, client in pairs(vim.lsp.get_active_clients()) do
+      table.insert(names, client.name)
+    end
+    return 'LSP<' .. table.concat(names, ', ') .. '>'
+  end
+  local function location() return string.format('%3d:%-2d ', vim.fn.line('.'), vim.fn.virtcol('.')) end
+  local fileformat = { 'fileformat', icons_enabled = false }
+  require('lualine').setup({ sections = {
+    lualine_x = { lsp_active, 'encoding', fileformat, 'filetype' },
+    lualine_z = { location },
+  } })
+end,
+
+{ 'glepnir/flybuf.nvim', cmd = 'FlyBuf', config = config('glepnir/flybuf.nvim') },
+['glepnir/flybuf.nvim'] = function() require('flybuf').setup({}) end,
+
+shortmess = {
+  -- t = true, -- truncate file messages at start
+  -- A = true, -- ignore annoying swap file messages
+  o = true, -- file-read message overwrites previous
+  O = true, -- file-read message overwrites previous
+  -- T = true, -- truncate non-file messages in middle
+  -- f = true, -- (file x of x) instead of just (x of x
+  -- F = true, -- Don't give file info when editing a file, NOTE: this breaks autocommand messages
+  -- s = true,
+  -- c = true,
+  -- W = true, -- Don't show [w] or written when writing
+},

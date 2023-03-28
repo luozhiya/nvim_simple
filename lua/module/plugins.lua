@@ -32,13 +32,11 @@ return {
   { 'qpkorr/vim-bufkill', cmd = { 'BD' } },
   { 'moll/vim-bbye', cmd = { 'Bdelete' } },
   { 'kazhala/close-buffers.nvim', cmd = { 'BufferCloseOthers' }, config = config('kazhala/close-buffers.nvim') },
-  { 'glepnir/flybuf.nvim', cmd = 'FlyBuf', config = config('glepnir/flybuf.nvim') },
   -- Key Management
   { 'folke/which-key.nvim', keys = { { ',' }, { 'g' } }, config = config('folke/which-key.nvim') },
   -- Appearance
   { 'stevearc/dressing.nvim', event = { 'VeryLazy' }, config = config('stevearc/dressing.nvim') },
   { 'j-hui/fidget.nvim', config = config('j-hui/fidget.nvim') },
-  { 'nvim-lualine/lualine.nvim', enabled = false, event = 'VeryLazy', config = config('nvim-lualine/lualine.nvim') },
   { 'nvim-tree/nvim-tree.lua', cmd = { 'NvimTreeToggle', 'NvimTreeFindFile' }, config = config('nvim-tree/nvim-tree.lua') },
   { 'akinsho/toggleterm.nvim', cmd = { 'ToggleTerm' }, config = config('akinsho/toggleterm.nvim') },
   { 'folke/tokyonight.nvim', lazy = false, priority = 1000 },

@@ -56,21 +56,6 @@ M.config = function(name)
       end,
       ['ahmedkhalf/project.nvim'] = function() require('project_nvim').setup() end,
       ['kazhala/close-buffers.nvim'] = function() require('close_buffers').setup({}) end,
-      ['nvim-lualine/lualine.nvim'] = function()
-        local function lsp_active()
-          local names = {}
-          for _, client in pairs(vim.lsp.get_active_clients()) do
-            table.insert(names, client.name)
-          end
-          return 'LSP<' .. table.concat(names, ', ') .. '>'
-        end
-        local function location() return string.format('%3d:%-2d ', vim.fn.line('.'), vim.fn.virtcol('.')) end
-        local fileformat = { 'fileformat', icons_enabled = false }
-        require('lualine').setup({ sections = {
-          lualine_x = { lsp_active, 'encoding', fileformat, 'filetype' },
-          lualine_z = { location },
-        } })
-      end,
       ['j-hui/fidget.nvim'] = function()
         vim.cmd([[highlight FidgetTitle ctermfg=110 guifg=#0887c7]])
         vim.cmd([[highlight FidgetTask ctermfg=110 guifg=#0887c7]])
@@ -143,7 +128,6 @@ M.config = function(name)
           url = 'https://godbolt.org', -- can be changed to a different godbolt instance
         })
       end,
-      ['glepnir/flybuf.nvim'] = function() require('flybuf').setup({}) end,
       ['sindrets/diffview.nvim'] = function() require('diffview').setup() end,
       ['weilbith/nvim-code-action-menu'] = function() vim.g.code_action_menu_window_border = 'single' end,
     }
