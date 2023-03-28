@@ -46,7 +46,6 @@ return {
   { 'lukas-reineke/indent-blankline.nvim', event = { 'BufReadPost', 'BufNewFile' }, config = config('lukas-reineke/indent-blankline.nvim') },
   { 'HiPhish/nvim-ts-rainbow2', event = 'BufReadPost', config = config('HiPhish/nvim-ts-rainbow2') },
   { 'p00f/godbolt.nvim', ft = { 'c', 'cpp' }, config = config('p00f/godbolt.nvim') },
-  { 'weilbith/nvim-code-action-menu', cmd = { 'CodeActionMenu' }, ft = { 'c', 'cpp' }, config = config('weilbith/nvim-code-action-menu') },
   -- LSP Core
   { 'neovim/nvim-lspconfig', event = 'InsertEnter', ft = { 'c', 'cpp', 'lua' }, config = require('module.lsp').setup, dependencies = { 'j-hui/fidget.nvim', 'ray-x/lsp_signature.nvim' } },
   { 'williamboman/mason.nvim' },
