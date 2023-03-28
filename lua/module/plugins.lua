@@ -6,8 +6,8 @@ return {
   -- Treesitter
   { 'nvim-treesitter/nvim-treesitter', cmd = { 'TSInstall', 'TSBufEnable', 'TSBufDisable', 'TSModuleInfo' }, build = ':TSUpdate', config = config('nvim-treesitter/nvim-treesitter') },
   -- Telescope
-  { 'nvim-telescope/telescope.nvim', event = 'VeryLazy', cmd = { 'Telescope' }, config = config('nvim-telescope/telescope.nvim'), dependencies = { 'nvim-telescope/telescope-ui-select.nvim' } },
-  { 'nvim-telescope/telescope-ui-select.nvim', event = 'VeryLazy' },
+  { 'nvim-telescope/telescope.nvim', cmd = { 'Telescope' }, config = config('nvim-telescope/telescope.nvim'), dependencies = { 'nvim-telescope/telescope-ui-select.nvim' } },
+  { 'nvim-telescope/telescope-ui-select.nvim' },
   { 'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' },
   { 'debugloop/telescope-undo.nvim' },
   { 'nvim-telescope/telescope-frecency.nvim' },
@@ -17,8 +17,8 @@ return {
   { 'stevearc/aerial.nvim', event = 'BufReadPost', config = config('stevearc/aerial.nvim') },
   { 'ahmedkhalf/project.nvim', event = 'BufReadPost', config = config('ahmedkhalf/project.nvim') },
   -- Completion
-  { 'hrsh7th/nvim-cmp', event = { 'InsertEnter', 'CmdlineEnter' }, config = config('hrsh7th/nvim-cmp'), dependencies = { 'hrsh7th/cmp-cmdline', 'hrsh7th/cmp-buffer', 'hrsh7th/cmp-path', 'hrsh7th/cmp-nvim-lsp' } },
-  { 'hrsh7th/cmp-cmdline', event = { 'CmdlineEnter' } },
+  { 'hrsh7th/nvim-cmp', event = { 'InsertEnter' }, config = config('hrsh7th/nvim-cmp'), dependencies = { 'hrsh7th/cmp-cmdline', 'hrsh7th/cmp-buffer', 'hrsh7th/cmp-path', 'hrsh7th/cmp-nvim-lsp' } },
+  { 'hrsh7th/cmp-cmdline' },
   { 'hrsh7th/cmp-buffer' },
   { 'hrsh7th/cmp-path' },
   { 'hrsh7th/cmp-nvim-lsp' },
@@ -43,17 +43,16 @@ return {
   { 'MunifTanjim/nui.nvim' },
   { 'stevearc/dressing.nvim', config = config('stevearc/dressing.nvim') },
   { 'j-hui/fidget.nvim', config = config('j-hui/fidget.nvim') },
-  { 'nvim-lualine/lualine.nvim', event = 'VeryLazy', config = config('nvim-lualine/lualine.nvim') },
+  { 'nvim-lualine/lualine.nvim', enabled = false, event = 'VeryLazy', config = config('nvim-lualine/lualine.nvim') },
   { 'nvim-tree/nvim-tree.lua', cmd = { 'NvimTreeToggle', 'NvimTreeFindFile' }, config = config('nvim-tree/nvim-tree.lua') },
   { 'nvim-neo-tree/neo-tree.nvim', cmd = { 'Neotree' }, config = config('nvim-neo-tree/neo-tree.nvim') },
   { 'akinsho/toggleterm.nvim', cmd = { 'ToggleTerm' }, config = config('akinsho/toggleterm.nvim') },
-  { 'nvim-tree/nvim-web-devicons', enabled = false },
   { 'folke/tokyonight.nvim', lazy = false, priority = 1000, config = config('folke/tokyonight.nvim') },
   { 'gosukiwi/vim-atom-dark' },
   { 'habamax/vim-habamax' },
-  { 'goolord/alpha-nvim', event = 'VeryLazy', lazy = false, config = config('goolord/alpha-nvim') },
-  { 'rcarriga/nvim-notify', event = 'VeryLazy', config = config('rcarriga/nvim-notify') },
-  { 'folke/noice.nvim', event = 'VeryLazy', config = config('folke/noice.nvim') },
+  { 'goolord/alpha-nvim', config = config('goolord/alpha-nvim') },
+  { 'rcarriga/nvim-notify', config = config('rcarriga/nvim-notify') },
+  { 'folke/noice.nvim', config = config('folke/noice.nvim') },
   -- CmdLine
   { 'VonHeikemen/fine-cmdline.nvim', config = config('VonHeikemen/fine-cmdline.nvim'), cmd = { 'FineCmdline' } },
   -- Edit
