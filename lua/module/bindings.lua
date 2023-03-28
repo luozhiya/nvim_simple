@@ -123,7 +123,7 @@ M.wk = function(wk)
   -- stylua: ignore end
   local n = {
     q = {
-      name = 'Session',
+      name = 'Quit Session',
       q = { '<cmd>qa<cr>', 'Quit All' },
       w = { '<cmd>wqall<cr>', 'Quit And Save Everything' },
       f = { '<cmd>q!<cr>', 'Quit Force' },
@@ -161,14 +161,11 @@ M.wk = function(wk)
       m = { '<cmd>ClangdMemoryUsage<cr>', 'Clangd Memory Usage' },
       f = { '<cmd>lua vim.lsp.buf.format{async=true}<cr>', 'Code Format' },
       o = { '<cmd>AerialToggle<cr>', 'Outline' },
-    },
-    d = {
-      name = 'Trouble Diagnostics',
       x = { '<cmd>TroubleToggle<cr>', 'Trouble Toggle' },
       w = { '<cmd>TroubleToggle workspace_diagnostics<cr>', 'Trouble Workspace Diagnostics' },
       d = { '<cmd>TroubleToggle document_diagnostics<cr>', 'Trouble Document Diagnostics' },
-      l = { '<cmd>TroubleToggle loclist<cr>', 'Trouble Loclist' },
       q = { '<cmd>TroubleToggle quickfix<cr>', 'Trouble Quickfix' },
+      l = { '<cmd>TroubleToggle loclist<cr>', 'Trouble Loclist' },
       r = { '<cmd>TroubleToggle lsp_references<cr>', 'Trouble LSP References' },
     },
     g = {
@@ -178,7 +175,13 @@ M.wk = function(wk)
       s = { '<cmd>SublimeMerge<cr>', 'Sublime Merge' },
     },
     t = {
-      name = 'Telescope',
+      name = 'Command Terminal',
+      h = { '<cmd>ToggleTerm direction=horizontal<cr>', 'Terminal Horizontal' },
+      f = { '<cmd>ToggleTerm direction=float<cr>', 'Terminal Floating' },
+    },
+    r = {
+      name = 'rrr Tree',
+      e = { '<cmd>NvimTreeFindFile<cr>', 'Tree Explorer' },
       c = { '<cmd>Telescope registers<cr>', 'Register Cached' },
       d = { '<cmd>Telescope diagnostics bufnr=0<cr>', 'Document Diagnostics' },
       f = { '<cmd>Telescope find_files theme=get_dropdown previewer=false<cr>', 'Find files' },
@@ -190,17 +193,6 @@ M.wk = function(wk)
       s = { '<cmd>Telescope lsp_document_symbols<cr>', 'Document Symbols' },
       S = { '<cmd>Telescope lsp_dynamic_workspace_symbols<cr>', 'Workspace Symbols' },
       u = { '<cmd>Telescope undo bufnr=0<cr>', 'Undo Tree' },
-    },
-    c = {
-      name = 'Command Terminal',
-      h = { '<cmd>ToggleTerm direction=horizontal<cr>', 'Terminal Horizontal' },
-      f = { '<cmd>ToggleTerm direction=float<cr>', 'Terminal Floating' },
-    },
-    r = {
-      name = 'rrr Tree',
-      r = { '<cmd>Neotree source=filesystem reveal=true position=left<cr>', 'Neo Tree' },
-      e = { '<cmd>NvimTreeToggle<cr>', 'Tree Explorer' },
-      f = { '<cmd>NvimTreeFindFile<cr>', 'Tree Find' },
     },
     e = {
       name = 'Edit',
