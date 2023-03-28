@@ -143,18 +143,6 @@ M.wk = function(wk)
       i = { '<cmd>split<cr><esc>', 'Split Up' },
       o = { '<cmd>vsplit<cr><C-w>l<esc>', 'Split Right' },
     },
-    b = {
-      name = 'Buffer',
-      b = { '<cmd>Buffers<cr>', 'Buffers' },
-      h = { '<cmd>bprevious<cr>', 'Previous' },
-      l = { '<cmd>bnext<cr>', 'Next' },
-      k = { '<cmd>bfirst<cr>', 'First' },
-      j = { '<cmd>blast<cr>', 'Last' },
-      d = { '<cmd>BD<cr>', 'Delete' },
-      o = { '<cmd>BufferCloseOthers<cr>', 'Only, Close Others' },
-      a = { '', 'CloseAll' },
-      f = { '<cmd>FlyBuf<cr>', 'Show All Buffers' },
-    },
     v = {
       name = 'Vim',
       i = { '<cmd>Lazy<cr>', 'Lazy Dashboard' },

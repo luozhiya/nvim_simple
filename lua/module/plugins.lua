@@ -27,8 +27,6 @@ return {
   { 'lewis6991/gitsigns.nvim', event = 'BufReadPost', config = config('lewis6991/gitsigns.nvim') },
   { 'sindrets/diffview.nvim', cmd = { 'DiffviewOpen' }, config = config('sindrets/diffview.nvim') },
   -- Buffer
-  { 'qpkorr/vim-bufkill', cmd = { 'BD' } },
-  { 'moll/vim-bbye', cmd = { 'Bdelete' } },
   { 'kazhala/close-buffers.nvim', cmd = { 'BufferCloseOthers' }, config = config('kazhala/close-buffers.nvim') },
   -- Key Management
   { 'folke/which-key.nvim', keys = { { ',' }, { 'g' } }, config = config('folke/which-key.nvim') },
