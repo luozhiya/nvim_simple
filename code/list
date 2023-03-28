@@ -6,6 +6,12 @@ https://github.com/tanvirtin/vgit.nvim
 https://github.com/TimUntersberger/neogit
 https://github.com/gelguy/wilder.nvim
 
+Telescope
+---------
+https://github.com/nvim-telescope/telescope-ui-select.nvim
+https://github.com/nvim-telescope/telescope-file-browser.nvim
+https://github.com/jonarrien/telescope-cmdline.nvim
+
 Appearance
 ----------
 https://github.com/nvim-tree/nvim-web-devicons

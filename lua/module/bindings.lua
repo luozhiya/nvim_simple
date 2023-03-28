@@ -174,7 +174,7 @@ M.wk = function(wk)
       m = { '<cmd>ClangdMemoryUsage<cr>', 'Clangd Memory Usage' },
       f = { '<cmd>lua vim.lsp.buf.format{async=true}<cr>', 'Code Format' },
       l = { '<cmd>Lspsaga show_line_diagnostics<cr>', 'Lspsaga Show Line Diagnostics' },
-      o = { '<cmd>AerialToggle<cr>', 'Outline'}
+      o = { '<cmd>AerialToggle<cr>', 'Outline' },
     },
     d = {
       name = 'Trouble Diagnostics',
@@ -210,10 +210,8 @@ M.wk = function(wk)
     },
     t = {
       name = 'Telescope',
-      a = { '<cmd>Telescope aerial bufnr=0<cr>', 'Document Aerial Outline' },
       c = { '<cmd>Telescope registers<cr>', 'Register Cached' },
       d = { '<cmd>Telescope diagnostics bufnr=0<cr>', 'Document Diagnostics' },
-      e = { '<cmd>Telescope file_browser<cr>', 'File Explorer' },
       f = { '<cmd>Telescope find_files theme=get_dropdown previewer=false<cr>', 'Find files' },
       l = { '<cmd>Telescope live_grep<cr>', 'Find Text' },
       L = { '<cmd>Telescope live_grep_args<cr>', 'Find Text Args' },
@@ -257,27 +255,6 @@ M.wk = function(wk)
     },
   }
   wk.register(n, { mode = 'n', prefix = '<leader>' })
-end
-
-M.telescope = function(telescope)
-  local actions = telescope.extensions.file_browser.actions
-  return {
-    extensions = {
-      file_browser = {
-        mappings = {
-          i = {
-            ['<c-n>'] = actions.create,
-            ['<c-r>'] = actions.rename,
-            ['<c-h>'] = actions.toggle_hidden,
-            ['<c-x>'] = actions.remove,
-            ['<c-p>'] = actions.move,
-            ['<c-y>'] = actions.copy,
-            ['<c-a>'] = actions.select_all,
-          },
-        },
-      },
-    },
-  }
 end
 
 local function get_telescope_opts(path, tree, any)

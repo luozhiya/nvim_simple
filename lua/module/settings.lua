@@ -21,17 +21,12 @@ M.config = function(name)
       end,
       ['nvim-telescope/telescope.nvim'] = function()
         local telescope = require('telescope')
-        local opts = { extensions = { file_browser = { hijack_netrw = false } } }
-        opts = vim.tbl_deep_extend('error', opts, bindings.telescope(telescope))
-        telescope.setup(opts)
-        telescope.load_extension('ui-select')
+        telescope.setup()
         telescope.load_extension('undo')
         telescope.load_extension('fzf')
         telescope.load_extension('frecency')
         telescope.load_extension('live_grep_args')
-        telescope.load_extension('file_browser')
         telescope.load_extension('cmdline')
-        telescope.load_extension('aerial')
         telescope.load_extension('projects')
       end,
       ['lewis6991/gitsigns.nvim'] = function() require('gitsigns').setup() end,
