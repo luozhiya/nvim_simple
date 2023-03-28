@@ -7,7 +7,7 @@ local M = {}
 M.lazy = vim.fn.stdpath('config') .. '/lazy/lazy.nvim'
 M.root = vim.fn.stdpath('config') .. '/lazy'
 
-function M.preset()
+function M.before()
   vim.g.neovide_remember_window_size = true
   vim.g.neovide_refresh_rate_idle = 240
   vim.g.neovide_no_idle = true
@@ -34,11 +34,6 @@ function M.preset()
     vim.g['loaded_' .. v] = 1
   end
 
-  -- vim.cmd([[
-  --   command -nargs=+ LspHover lua vim.lsp.buf.hover()
-  --   set keywordprg=:LspHover
-  -- ]])
-
   vim.cmd([[
     silent! autocmd! FileExplorer *
     autocmd Filetype log if getfsize(@%) > 1000000 | setlocal syntax=OFF | endif
@@ -47,12 +42,6 @@ function M.preset()
     aunmenu PopUp.-1-
   ]])
 
-  local font = function()
-    if require('base').is_linux() then
-      return 'InconsolataGo Nerd Font:h12'
-    end
-    return 'InconsolataGo Nerd Font:h16'
-  end
   local opts = {
     runtimepath = vim.opt.runtimepath:append(M.lazy),
     shellslash = true, -- A forward slash is used when expanding file names.
@@ -79,7 +68,7 @@ function M.preset()
     clipboard = 'unnamedplus', -- allows neovim to access the system clipboard
     completeopt = { 'menuone', 'noselect', 'noinsert' },
     autoread = true, -- When a file has been detected to have been changed outside of Vim and it has not been changed inside of Vim, automatically read it again.
-    guifont = font(),
+    guifont = 'InconsolataGo Nerd Font:h15',
     shortmess = 'IFW', -- See https://neovim.io/doc/user/options.html#'shortmess'
     timeout = true, -- Limit the time searching for suggestions to {millisec} milli seconds.
     timeoutlen = 500, -- the timeout when WhichKey opens is controlled by the vim setting timeoutlen.
@@ -93,6 +82,6 @@ function M.preset()
   end
 end
 
-M.postset = function() vim.cmd([[colorscheme tokyonight]]) end
+M.after = function() vim.cmd([[colorscheme tokyonight]]) end
 
 return M

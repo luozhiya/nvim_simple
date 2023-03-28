@@ -5,6 +5,7 @@ https://github.com/nvim-neo-tree/neo-tree.nvim
 https://github.com/tanvirtin/vgit.nvim
 https://github.com/TimUntersberger/neogit
 https://github.com/gelguy/wilder.nvim
+https://github.com/VonHeikemen/fine-cmdline.nvim
 
 Key Management
 --------------
@@ -23,3 +24,6 @@ https://github.com/nvim-neo-tree/neo-tree.nvim
 https://github.com/anuvyklack/hydra.nvim
 https://github.com/gosukiwi/vim-atom-dark
 https://github.com/habamax/vim-habamax
+https://github.com/folke/noice.nvim
+https://github.com/MunifTanjim/nui.nvim
+https://github.com/rcarriga/nvim-notify

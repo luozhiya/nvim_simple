@@ -6,8 +6,6 @@ M.cached = {}
 M.config = function(name)
   if vim.tbl_isempty(M.cached) then
     M.cached = {
-      ['VonHeikemen/fine-cmdline.nvim'] = function() require('fine-cmdline').setup({ cmdline = { prompt = ' > ' } }) end,
-      -- ['folke/tokyonight.nvim'] = function() vim.cmd([[colorscheme tokyonight]]) end,
       ['nvim-treesitter/nvim-treesitter'] = function() require('nvim-treesitter.configs').setup({ ensure_installed = { 'cpp', 'c', 'lua', 'cmake', 'markdown', 'markdown_inline' } }) end,
       ['stevearc/aerial.nvim'] = function()
         local opts = { backends = { 'treesitter', 'lsp' }, layout = { max_width = { 60, 0.4 } } }
@@ -145,30 +143,6 @@ M.config = function(name)
       end,
       ['glepnir/flybuf.nvim'] = function() require('flybuf').setup({}) end,
       ['sindrets/diffview.nvim'] = function() require('diffview').setup() end,
-      ['rcarriga/nvim-notify'] = function()
-        require('notify').setup()
-        vim.notify = require('notify')
-      end,
-      ['folke/noice.nvim'] = function()
-        require('noice').setup({
-          lsp = {
-            -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
-            override = {
-              ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
-              ['vim.lsp.util.stylize_markdown'] = true,
-              ['cmp.entry.get_documentation'] = true,
-            },
-          },
-          -- you can enable a preset for easier configuration
-          presets = {
-            bottom_search = true, -- use a classic bottom cmdline for search
-            command_palette = true, -- position the cmdline and popupmenu together
-            long_message_to_split = true, -- long messages will be sent to a split
-            inc_rename = false, -- enables an input dialog for inc-rename.nvim
-            lsp_doc_border = false, -- add a border to hover docs and signature help
-          },
-        })
-      end,
       ['weilbith/nvim-code-action-menu'] = function() vim.g.code_action_menu_window_border = 'single' end,
     }
   end

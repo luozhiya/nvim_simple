@@ -11,9 +11,7 @@ M.setup_leader = function()
   vim.g.maplocalleader = ','
 end
 
-M.semicolon_to_colon = function()
-  M.map('n', ';', ':', { silent = false })
-end
+M.semicolon_to_colon = function() M.map('n', ';', ':', { silent = false }) end
 
 M.lsp = {
   { 'gd', vim.lsp.buf.definition, desc = 'Goto Definition' },
@@ -330,7 +328,6 @@ M.setup_code = function()
   M.map('v', '<A-h>', '<cmd>MoveHBlock(-1)<cr>', { noremap = true, desc = 'Block: Move Left (move.nvim)' })
   M.map('v', '<A-l>', '<cmd>MoveHBlock(1)<cr>', { noremap = true, desc = 'Block: Move Right (move.nvim)' })
   -- View
-  M.map('n', '<M-cr>', '<cmd>FineCmdline<cr>', { noremap = true, desc = 'Fine Cmdline... (fine-cmdline.nvim)' })
   M.map('n', [[\]], '<cmd>Telescope cmdline<cr>', { noremap = true, desc = 'Cmdline... (telescope-cmdline.nvim)' })
   M.map('n', '<c-s-p>', '<cmd>Telescope commands<cr>', { noremap = true, desc = 'Command Palette... (telescope.nvim)' })
   -- Go

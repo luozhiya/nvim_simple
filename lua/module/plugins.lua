@@ -36,17 +36,12 @@ return {
   -- Key Management
   { 'folke/which-key.nvim', keys = { { ',' }, { 'g' } }, config = config('folke/which-key.nvim') },
   -- Appearance
-  { 'MunifTanjim/nui.nvim' },
-  { 'stevearc/dressing.nvim', config = config('stevearc/dressing.nvim') },
+  { 'stevearc/dressing.nvim', event = { 'VeryLazy' }, config = config('stevearc/dressing.nvim') },
   { 'j-hui/fidget.nvim', config = config('j-hui/fidget.nvim') },
   { 'nvim-lualine/lualine.nvim', enabled = false, event = 'VeryLazy', config = config('nvim-lualine/lualine.nvim') },
   { 'nvim-tree/nvim-tree.lua', cmd = { 'NvimTreeToggle', 'NvimTreeFindFile' }, config = config('nvim-tree/nvim-tree.lua') },
   { 'akinsho/toggleterm.nvim', cmd = { 'ToggleTerm' }, config = config('akinsho/toggleterm.nvim') },
   { 'folke/tokyonight.nvim', lazy = false, priority = 1000 },
-  { 'rcarriga/nvim-notify', config = config('rcarriga/nvim-notify') },
-  { 'folke/noice.nvim', config = config('folke/noice.nvim') },
-  -- CmdLine
-  { 'VonHeikemen/fine-cmdline.nvim', config = config('VonHeikemen/fine-cmdline.nvim'), cmd = { 'FineCmdline' } },
   -- Edit
   { 'tpope/vim-obsession', cmd = { 'Obsession' } },
   { 'windwp/nvim-autopairs' },
