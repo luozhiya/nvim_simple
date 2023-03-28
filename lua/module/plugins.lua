@@ -54,7 +54,7 @@ return {
   { 'windwp/nvim-autopairs' },
   { 'numToStr/Comment.nvim', keys = { { '<leader>cc' }, { '<leader>cb' } } },
   { 'fedepujol/move.nvim', cmd = { 'MoveLine', 'MoveBlock', 'MoveHChar', 'MoveHBlock' } },
-  { 'ray-x/lsp_signature.nvim', enabled = false, config = config('ray-x/lsp_signature.nvim') },
+  { 'ray-x/lsp_signature.nvim', config = config('ray-x/lsp_signature.nvim') },
   { 'glepnir/lspsaga.nvim', cmd = { 'Lspsaga' }, config = config('glepnir/lspsaga.nvim') },
   { 'folke/trouble.nvim', cmd = { 'TroubleToggle' }, config = config('folke/trouble.nvim') },
   { 'lukas-reineke/indent-blankline.nvim', event = { 'BufReadPost', 'BufNewFile' }, config = config('lukas-reineke/indent-blankline.nvim') },

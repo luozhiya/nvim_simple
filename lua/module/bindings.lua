@@ -256,27 +256,26 @@ M.wk = function(wk)
   wk.register(n, { mode = 'n', prefix = '<leader>' })
 end
 
-local function get_telescope_opts(path, tree, any)
-  return {
-    cwd = path,
-    search_dirs = { path },
-    attach_mappings = function(prompt_bufnr, map)
-      local actions = require('telescope.actions')
-      actions.select_default:replace(function()
-        actions.close(prompt_bufnr)
-        local selection = require('telescope.actions.state').get_selected_entry()
-        local filename = selection.filename
-        if filename == nil then
-          filename = selection[1]
-        end
-        tree(filename, any)
-      end)
-      return true
-    end,
-  }
-end
-
 M.nvim_tree = function()
+  local function get_telescope_opts(path, tree, any)
+    return {
+      cwd = path,
+      search_dirs = { path },
+      attach_mappings = function(prompt_bufnr, map)
+        local actions = require('telescope.actions')
+        actions.select_default:replace(function()
+          actions.close(prompt_bufnr)
+          local selection = require('telescope.actions.state').get_selected_entry()
+          local filename = selection.filename
+          if filename == nil then
+            filename = selection[1]
+          end
+          tree(filename, any)
+        end)
+        return true
+      end,
+    }
+  end  
   local telescope = require('telescope.builtin')
   local fs = require('nvim-tree.actions.node.open-file')
   local path = function()
