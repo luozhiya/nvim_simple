@@ -6,14 +6,13 @@ return {
   -- Treesitter
   { 'nvim-treesitter/nvim-treesitter', cmd = { 'TSInstall', 'TSBufEnable', 'TSBufDisable', 'TSModuleInfo' }, build = ':TSUpdate', config = config('nvim-treesitter/nvim-treesitter') },
   -- Telescope
-  { 'nvim-telescope/telescope.nvim', cmd = { 'Telescope' }, config = config('nvim-telescope/telescope.nvim'), dependencies = { 'jonarrien/telescope-cmdline.nvim' } },
+  { 'nvim-telescope/telescope.nvim', cmd = { 'Telescope' }, config = config('nvim-telescope/telescope.nvim') },
   { 'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' },
   { 'debugloop/telescope-undo.nvim' },
   { 'nvim-telescope/telescope-frecency.nvim' },
   { 'nvim-telescope/telescope-live-grep-args.nvim' },
-  { 'jonarrien/telescope-cmdline.nvim' },
   { 'stevearc/aerial.nvim', config = config('stevearc/aerial.nvim') },
-  { 'ahmedkhalf/project.nvim', event = 'BufReadPost', config = config('ahmedkhalf/project.nvim') },
+  { 'ahmedkhalf/project.nvim', config = config('ahmedkhalf/project.nvim') },
   -- Completion
   { 'hrsh7th/nvim-cmp', event = { 'InsertEnter' }, config = config('hrsh7th/nvim-cmp'), dependencies = { 'hrsh7th/cmp-cmdline', 'hrsh7th/cmp-buffer', 'hrsh7th/cmp-path', 'hrsh7th/cmp-nvim-lsp' } },
   { 'hrsh7th/cmp-cmdline' },

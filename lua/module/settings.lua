@@ -26,7 +26,6 @@ M.config = function(name)
         telescope.load_extension('fzf')
         telescope.load_extension('frecency')
         telescope.load_extension('live_grep_args')
-        telescope.load_extension('cmdline')
         telescope.load_extension('projects')
       end,
       ['lewis6991/gitsigns.nvim'] = function() require('gitsigns').setup() end,
@@ -41,7 +40,7 @@ M.config = function(name)
           sync_root_with_cwd = true,
           respect_buf_cwd = true,
           hijack_directories = { enable = false },
-          update_focused_file = { enable = enable, update_root = true },
+          update_focused_file = { enable = true, update_root = true },
           actions = { open_file = { resize_window = false } },
           view = { adaptive_size = false, preserve_window_proportions = true },
         }

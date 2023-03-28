@@ -298,7 +298,6 @@ M.setup_code = function()
   M.map('v', '<A-h>', '<cmd>MoveHBlock(-1)<cr>', { noremap = true, desc = 'Block: Move Left (move.nvim)' })
   M.map('v', '<A-l>', '<cmd>MoveHBlock(1)<cr>', { noremap = true, desc = 'Block: Move Right (move.nvim)' })
   -- View
-  M.map('n', [[\]], '<cmd>Telescope cmdline<cr>', { noremap = true, desc = 'Cmdline... (telescope-cmdline.nvim)' })
   M.map('n', '<c-s-p>', '<cmd>Telescope commands<cr>', { noremap = true, desc = 'Command Palette... (telescope.nvim)' })
   -- Go
   M.map('n', '<c-p>', '<cmd>Telescope buffers show_all_buffers=true theme=get_dropdown previewer=false<cr>', { noremap = true, desc = 'Go To File... (telescope.nvim)' })
