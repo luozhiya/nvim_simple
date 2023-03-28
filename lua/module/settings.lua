@@ -211,6 +211,7 @@ M.config = function(name)
           },
         })
       end,
+      ['weilbith/nvim-code-action-menu'] = function() vim.g.code_action_menu_window_border = 'single' end,
     }
   end
   return M.cached[name]

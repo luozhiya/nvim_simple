@@ -6,7 +6,7 @@ return {
   -- Treesitter
   { 'nvim-treesitter/nvim-treesitter', cmd = { 'TSInstall', 'TSBufEnable', 'TSBufDisable', 'TSModuleInfo' }, build = ':TSUpdate', config = config('nvim-treesitter/nvim-treesitter') },
   -- Telescope
-  { 'nvim-telescope/telescope.nvim', cmd = { 'Telescope' }, config = config('nvim-telescope/telescope.nvim'), dependencies = { 'nvim-telescope/telescope-ui-select.nvim' } },
+  { 'nvim-telescope/telescope.nvim', cmd = { 'Telescope' }, config = config('nvim-telescope/telescope.nvim'), dependencies = { 'nvim-telescope/telescope-ui-select.nvim', 'stevearc/aerial.nvim' } },
   { 'nvim-telescope/telescope-ui-select.nvim' },
   { 'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' },
   { 'debugloop/telescope-undo.nvim' },
@@ -14,7 +14,7 @@ return {
   { 'nvim-telescope/telescope-live-grep-args.nvim' },
   { 'nvim-telescope/telescope-file-browser.nvim' },
   { 'jonarrien/telescope-cmdline.nvim' },
-  { 'stevearc/aerial.nvim', event = 'BufReadPost', config = config('stevearc/aerial.nvim') },
+  { 'stevearc/aerial.nvim', config = config('stevearc/aerial.nvim') },
   { 'ahmedkhalf/project.nvim', event = 'BufReadPost', config = config('ahmedkhalf/project.nvim') },
   -- Completion
   { 'hrsh7th/nvim-cmp', event = { 'InsertEnter' }, config = config('hrsh7th/nvim-cmp'), dependencies = { 'hrsh7th/cmp-cmdline', 'hrsh7th/cmp-buffer', 'hrsh7th/cmp-path', 'hrsh7th/cmp-nvim-lsp' } },
@@ -65,6 +65,7 @@ return {
   { 'lukas-reineke/indent-blankline.nvim', event = { 'BufReadPost', 'BufNewFile' }, config = config('lukas-reineke/indent-blankline.nvim') },
   { 'HiPhish/nvim-ts-rainbow2', event = 'BufReadPost', config = config('HiPhish/nvim-ts-rainbow2') },
   { 'p00f/godbolt.nvim', ft = { 'c', 'cpp' }, config = config('p00f/godbolt.nvim') },
+  { 'weilbith/nvim-code-action-menu', cmd = { 'CodeActionMenu' }, ft = { 'c', 'cpp' }, config = config('weilbith/nvim-code-action-menu') },
   -- LSP Core
   { 'neovim/nvim-lspconfig', event = 'InsertEnter', ft = { 'c', 'cpp', 'lua' }, config = require('module.lsp').setup, dependencies = { 'j-hui/fidget.nvim', 'ray-x/lsp_signature.nvim' } },
   { 'williamboman/mason.nvim' },
