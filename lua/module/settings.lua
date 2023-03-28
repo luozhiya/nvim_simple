@@ -47,32 +47,6 @@ M.config = function(name)
         }
         opts = vim.tbl_deep_extend('error', opts, bindings.nvim_tree())
         require('nvim-tree').setup(opts)
-        -- local nvim_tree_hydra = nil
-        -- local nt_au_group = vim.api.nvim_create_augroup('NvimTreeHydraAu', { clear = true })
-        -- local function spawn_nvim_tree_hydra()
-        --   local hydraopts = {
-        --     name = 'NvimTree',
-        --     config = { color = 'pink', invoke_on_body = true, buffer = 0, hint = { position = 'bottom', border = 'rounded' } },
-        --     mode = 'n',
-        --     body = 'H',
-        --   }
-        --   hydraopts = vim.tbl_deep_extend('error', hydraopts, bindings.nvim_tree_hydra())
-        --   nvim_tree_hydra = require('hydra')(hydraopts)
-        --   nvim_tree_hydra:activate()
-        -- end
-        -- vim.api.nvim_create_autocmd({ 'BufEnter' }, {
-        --   pattern = '*',
-        --   callback = function(opts)
-        --     if vim.bo[opts.buf].filetype == 'NvimTree' then
-        --       spawn_nvim_tree_hydra()
-        --     else
-        --       if nvim_tree_hydra then
-        --         nvim_tree_hydra:exit()
-        --       end
-        --     end
-        --   end,
-        --   group = nt_au_group,
-        -- })
       end,
       ['stevearc/dressing.nvim'] = function()
         require('dressing').setup({

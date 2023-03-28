@@ -36,7 +36,6 @@ return {
   -- Key Management
   { 'folke/which-key.nvim', keys = { { ',' }, { 'g' } }, config = config('folke/which-key.nvim') },
   -- Appearance
-  { 'anuvyklack/hydra.nvim' },
   { 'MunifTanjim/nui.nvim' },
   { 'stevearc/dressing.nvim', config = config('stevearc/dressing.nvim') },
   { 'j-hui/fidget.nvim', config = config('j-hui/fidget.nvim') },

@@ -313,32 +313,6 @@ M.nvim_tree = function()
   }
 end
 
-M.nvim_tree_hydra = function()
-  local hint = [[
-    _w_: cd CWD   _c_: Path yank    _/_: Filter
-    _y_: Copy     _x_: Cut          _p_: Paste
-    _r_: Rename   _d_: Remove       _n_: New
-    _h_: Hidden   _?_: Help
-    ^
-    ]]
-  return {
-    hint = hint,
-    heads = {
-      { 'w', require('nvim-tree.api').tree.change_root(vim.fn.getcwd()), { silent = true } },
-      { 'c', require('nvim-tree.api').fs.copy.absolute_path, { silent = true } },
-      { '/', require('nvim-tree.api').live_filter.start, { silent = true } },
-      { 'y', require('nvim-tree.api').fs.copy.node, { silent = true } },
-      { 'x', require('nvim-tree.api').fs.cut, { exit = true, silent = true } },
-      { 'p', require('nvim-tree.api').fs.paste, { exit = true, silent = true } },
-      { 'r', require('nvim-tree.api').fs.rename, { silent = true } },
-      { 'd', require('nvim-tree.api').fs.remove, { silent = true } },
-      { 'n', require('nvim-tree.api').fs.create, { silent = true } },
-      { 'h', require('nvim-tree.api').tree.toggle_hidden_filter, { silent = true } },
-      { '?', require('nvim-tree.api').tree.toggle_help, { silent = true } },
-    },
-  }
-end
-
 M.setup_code = function()
   -- Core
   M.semicolon_to_colon()
