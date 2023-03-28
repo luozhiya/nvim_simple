@@ -187,16 +187,6 @@ M.config = function(name)
       end,
       ['glepnir/flybuf.nvim'] = function() require('flybuf').setup({}) end,
       ['sindrets/diffview.nvim'] = function() require('diffview').setup() end,
-      ['goolord/alpha-nvim'] = function()
-        local dashboard = require('alpha.themes.dashboard')
-        dashboard.section.header.val = {
-          [[----------------------------]],
-          [[        PALE BLUE DOT       ]],
-          [[----------------------------]],
-        }
-        dashboard.section.buttons.val = bindings.alpha_val(dashboard.button)
-        require('alpha').setup(dashboard.config)
-      end,
       ['rcarriga/nvim-notify'] = function()
         require('notify').setup()
         vim.notify = require('notify')

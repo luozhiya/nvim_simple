@@ -50,7 +50,6 @@ return {
   { 'folke/tokyonight.nvim', lazy = false, priority = 1000, config = config('folke/tokyonight.nvim') },
   { 'gosukiwi/vim-atom-dark' },
   { 'habamax/vim-habamax' },
-  { 'goolord/alpha-nvim', config = config('goolord/alpha-nvim') },
   { 'rcarriga/nvim-notify', config = config('rcarriga/nvim-notify') },
   { 'folke/noice.nvim', config = config('folke/noice.nvim') },
   -- CmdLine

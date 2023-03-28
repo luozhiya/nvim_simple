@@ -402,17 +402,6 @@ M.neotree = function()
   }
 end
 
-M.alpha_val = function(button)
-  return {
-    button('e', '  New file', '<cmd>ene <cr>'),
-    button('f', '  Find file', '<cmd>Telescope find_files <cr>'),
-    button('p', '  Find project', '<cmd>Telescope projects <cr>'),
-    button('r', '  Recently used files', '<cmd>Telescope oldfiles <cr>'),
-    button('s', '  Find text', '<cmd>Telescope live_grep <cr>'),
-    button('q', '  Quit Neovim', '<cmd>qa<cr>'),
-  }
-end
-
 M.legendary = function()
   return {
     keymaps = {
