@@ -40,7 +40,7 @@ M.config = function(name)
           sort_by = 'case_sensitive',
           sync_root_with_cwd = true,
           respect_buf_cwd = true,
-          hijack_directories = { enable = true },
+          hijack_directories = { enable = false },
           update_focused_file = { enable = enable, update_root = true },
           actions = { open_file = { resize_window = false } },
           view = { adaptive_size = false, preserve_window_proportions = true },

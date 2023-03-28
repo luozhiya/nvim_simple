@@ -122,7 +122,7 @@ M.wk = function(wk)
   end
   -- stylua: ignore end
   local n = {
-    s = {
+    q = {
       name = 'Session',
       q = { '<cmd>qa<cr>', 'Quit All' },
       w = { '<cmd>wqall<cr>', 'Quit And Save Everything' },
@@ -328,20 +328,6 @@ M.setup_comands = function()
   end, { desc = 'Sublime Merge' })
 end
 
-M.setup_autocmd = function()
-  local augroup = vim.api.nvim_create_augroup('bindings.lua', {})
-  vim.api.nvim_create_autocmd('BufEnter', {
-    group = augroup,
-    pattern = '*',
-    callback = function(args)
-      local info = vim.loop.fs_stat(args.file)
-      if info and info.type == 'directory' then
-        require('module.settings').config('nvim-tree/nvim-tree.lua')()
-        require('nvim-tree.api').tree.toggle({ path = args.file, find_file = true })
-      end
-    end,
-    desc = 'Hijack Directories',
-  })
-end
+M.setup_autocmd = function() end
 
 return M

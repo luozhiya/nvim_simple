@@ -295,3 +295,23 @@ b = {
   a = { '', 'CloseAll' },
   f = { '<cmd>FlyBuf<cr>', 'Show All Buffers' },
 },
+
+
+vim.cmd([[
+  silent! autocmd! FileExplorer *
+]])
+M.setup_autocmd = function()
+  local augroup = vim.api.nvim_create_augroup('bindings.lua', {})
+  vim.api.nvim_create_autocmd('BufEnter', {
+    group = augroup,
+    pattern = '*',
+    callback = function(args)
+      local info = vim.loop.fs_stat(args.file)
+      if info and info.type == 'directory' then
+        require('module.settings').config('nvim-tree/nvim-tree.lua')()
+        require('nvim-tree.api').tree.toggle({ path = args.file, find_file = true })
+      end
+    end,
+    desc = 'Hijack Directories',
+  })
+end
