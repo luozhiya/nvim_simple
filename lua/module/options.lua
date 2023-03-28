@@ -2,12 +2,16 @@
 -- vim.cmd([[filetype plugin indent on]]) -- use language‐specific plugins for indenting (better):
 -- autoindent = true, -- neovim default true -- reproduce the indentation of the previous line
 
+local bindings = require('module.bindings')
+
 local M = {}
 
 M.lazy = vim.fn.stdpath('config') .. '/lazy/lazy.nvim'
 M.root = vim.fn.stdpath('config') .. '/lazy'
 
 function M.before()
+  bindings.setup_leader()
+
   vim.g.neovide_remember_window_size = true
   vim.g.neovide_refresh_rate_idle = 240
   vim.g.neovide_no_idle = true
@@ -82,6 +86,11 @@ function M.before()
   end
 end
 
-M.after = function() vim.cmd([[colorscheme tokyonight]]) end
+M.after = function()
+  vim.cmd([[colorscheme tokyonight]])
+  bindings.setup_autocmd()
+  bindings.setup_comands()
+  bindings.setup_code()
+end
 
 return M
