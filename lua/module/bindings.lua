@@ -18,7 +18,7 @@ M.lsp = {
   { 'gh', vim.lsp.buf.hover, desc = 'Hover' },
   { 'K', vim.lsp.buf.hover, desc = 'Hover' },
   { 'gn', vim.lsp.buf.rename, desc = 'Rename' },
-  { 'ga', '<cmd>CodeActionMenu<cr>', desc = 'Code Action' },
+  { 'ga', vim.lsp.buf.code_action, desc = 'Code Action' },
   { '[d', vim.diagnostic.goto_prev, desc = 'Goto Diagnostic Prev' },
   { ']d', vim.diagnostic.goto_next, desc = 'Goto Diagnostic Next' },
 }
@@ -164,9 +164,12 @@ M.wk = function(wk)
       x = { '<cmd>TroubleToggle<cr>', 'Trouble Toggle' },
       w = { '<cmd>TroubleToggle workspace_diagnostics<cr>', 'Trouble Workspace Diagnostics' },
       d = { '<cmd>TroubleToggle document_diagnostics<cr>', 'Trouble Document Diagnostics' },
+      D = { '<cmd>Telescope diagnostics bufnr=0<cr>', 'Document Diagnostics' },
       q = { '<cmd>TroubleToggle quickfix<cr>', 'Trouble Quickfix' },
       l = { '<cmd>TroubleToggle loclist<cr>', 'Trouble Loclist' },
       r = { '<cmd>TroubleToggle lsp_references<cr>', 'Trouble LSP References' },
+      s = { '<cmd>Telescope lsp_document_symbols<cr>', 'Document Symbols' },
+      S = { '<cmd>Telescope lsp_dynamic_workspace_symbols<cr>', 'Workspace Symbols' },
     },
     g = {
       name = 'Git',
@@ -179,40 +182,30 @@ M.wk = function(wk)
       h = { '<cmd>ToggleTerm direction=horizontal<cr>', 'Terminal Horizontal' },
       f = { '<cmd>ToggleTerm direction=float<cr>', 'Terminal Floating' },
     },
-    r = {
-      name = 'rrr Tree',
+    f = {
+      name = 'File Explorer',
       e = { '<cmd>NvimTreeFindFile<cr>', 'Tree Explorer' },
       c = { '<cmd>Telescope registers<cr>', 'Register Cached' },
-      d = { '<cmd>Telescope diagnostics bufnr=0<cr>', 'Document Diagnostics' },
       f = { '<cmd>Telescope find_files theme=get_dropdown previewer=false<cr>', 'Find files' },
       l = { '<cmd>Telescope live_grep<cr>', 'Find Text' },
       L = { '<cmd>Telescope live_grep_args<cr>', 'Find Text Args' },
       p = { '<cmd>Telescope projects<cr>', 'Projects' },
       r = { '<cmd>Telescope oldfiles<cr>', 'Recently Used Files' },
       R = { '<cmd>Telescope frecency<cr>', 'Mozilla Frecency Algorithm' },
-      s = { '<cmd>Telescope lsp_document_symbols<cr>', 'Document Symbols' },
-      S = { '<cmd>Telescope lsp_dynamic_workspace_symbols<cr>', 'Workspace Symbols' },
       u = { '<cmd>Telescope undo bufnr=0<cr>', 'Undo Tree' },
+      o = { function() require('base').open_with_default_app() end, 'Open With Default APP' },
+      t = { function() require('base').reveal_in_tree() end, 'Reveal In Tree' },
+      E = { function() require('base').reveal_file_in_file_explorer() end, 'Reveal In File Explorer' },
+      C = { function() require('base').reveal_cwd_in_file_explorer() end, 'Reveal CWD In File Explorer' },
     },
-    e = {
-      name = 'Edit',
-      c = {
-        name = 'Copy',
-        c = { function() require('base').copy_content() end, 'Copy Content' },
-        n = { function() require('base').copy_name() end, 'Copy File Name' },
-        e = { function() require('base').copy_name_without_ext() end, 'Copy File Name Without Ext' },
-        d = { function() require('base').copy_contain_directory() end, 'Copy Contain Directory' },
-        p = { function() require('base').copy_path() end, 'Copy Path' },
-        r = { function() require('base').copy_relative_path() end, 'Copy Relative Path' },
-      },
-      f = {
-        name = 'File',
-        o = { function() require('base').open_with_default_app() end, 'Open With Default APP' },
-        c = { function() require('base').reveal_cwd_in_file_explorer() end, 'Reveal CWD In File Explorer' },
-        e = { function() require('base').reveal_file_in_file_explorer() end, 'Reveal In File Explorer' },
-        t = { function() require('base').reveal_in_tree() end, 'Reveal In Tree' },
-        v = { '', 'Open In New Vim' },
-      },
+    c = {
+      name = 'Copy',
+      c = { function() require('base').copy_content() end, 'Copy Content' },
+      n = { function() require('base').copy_name() end, 'Copy File Name' },
+      e = { function() require('base').copy_name_without_ext() end, 'Copy File Name Without Ext' },
+      d = { function() require('base').copy_contain_directory() end, 'Copy Contain Directory' },
+      p = { function() require('base').copy_path() end, 'Copy Path' },
+      r = { function() require('base').copy_relative_path() end, 'Copy Relative Path' },
     },
   }
   wk.register(n, { mode = 'n', prefix = '<leader>' })
@@ -276,14 +269,14 @@ M.setup_code = function()
   M.map('v', '<', '<gv', { noremap = true, desc = 'deIndent Continuously' })
   M.map('v', '>', '>gv', { noremap = true, desc = 'Indent Continuously' })
   -- Edit
-  M.map('n', '<leader>cc', function() require('Comment.api').toggle.linewise.current() end, { desc = 'Comment Line (Comment.nvim)' })
-  M.map('x', '<leader>cc', function()
+  M.map('n', 'cc', function() require('Comment.api').toggle.linewise.current() end, { desc = 'Comment Line (Comment.nvim)' })
+  M.map('x', 'cc', function()
     local esc = vim.api.nvim_replace_termcodes('<ESC>', true, false, true)
     vim.api.nvim_feedkeys(esc, 'nx', false)
     require('Comment.api').toggle.linewise(vim.fn.visualmode())
   end, { desc = 'Comment Line (Comment.nvim)' })
-  M.map('n', '<leader>cb', function() require('Comment.api').toggle.blockwise.current() end, { desc = 'Comment Line (Comment.nvim)' })
-  M.map('x', '<leader>cb', function()
+  M.map('n', 'cb', function() require('Comment.api').toggle.blockwise.current() end, { desc = 'Comment Line (Comment.nvim)' })
+  M.map('x', 'cb', function()
     local esc = vim.api.nvim_replace_termcodes('<ESC>', true, false, true)
     vim.api.nvim_feedkeys(esc, 'nx', false)
     require('Comment.api').toggle.blockwise(vim.fn.visualmode())
