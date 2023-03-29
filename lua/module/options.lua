@@ -71,7 +71,7 @@ function M.before()
     clipboard = 'unnamedplus', -- allows neovim to access the system clipboard
     completeopt = { 'menuone', 'noselect', 'noinsert' },
     autoread = true, -- When a file has been detected to have been changed outside of Vim and it has not been changed inside of Vim, automatically read it again.
-    guifont = 'InconsolataGo Nerd Font:h15',
+    guifont = 'InconsolataGo Nerd Font:h16',
     shortmess = 'oOcCIFW', -- See https://neovim.io/doc/user/options.html#'shortmess'
     timeout = true, -- Limit the time searching for suggestions to {millisec} milli seconds.
     timeoutlen = 500, -- the timeout when WhichKey opens is controlled by the vim setting timeoutlen.

@@ -371,3 +371,9 @@ local lsp_capabilities = (function()
   ex.textDocument.completion.completionItem.snippetSupport = true
   return ex
 end)()
+
+--- search windows lua runtime files
+require('mason').setup()
+require('mason-lspconfig').setup({ ensure_installed = { 'lua_ls' } })  
+{ 'williamboman/mason.nvim' },
+{ 'williamboman/mason-lspconfig.nvim' },  
