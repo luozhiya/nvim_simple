@@ -182,6 +182,7 @@ M.wk = function(wk)
       g = { function() _any_toggle('gitui') end, 'GitUI' },
       n = { function() _any_toggle('nnn') end, 'nnn' },
       b = { function() _any_toggle('btop') end, 'btop' },
+      t = { function() _any_toggle('htop') end, 'htop' },
       s = { '<cmd>SublimeMerge<cr>', 'Sublime Merge' },
     },
     s = {
