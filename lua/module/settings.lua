@@ -64,28 +64,11 @@ M.config = function(name)
       ['hrsh7th/nvim-cmp'] = function()
         local cmp = require('cmp')
         local opts = {
-          sources = { { name = 'nvim_lsp' }, { name = 'buffer' }, { name = 'path' }, { name = 'luasnip' } },
-          formatting = {
-            fields = { 'kind', 'abbr', 'menu' },
-            format = function(entry, vim_item)
-              vim_item.menu = ({ nvim_lsp = '[LSP]', buffer = '[Buffer]', path = '[Path]', luasnip = '[Snippet]' })[entry.source.name]
-              local max = 45
-              local content = vim_item.abbr
-              if #content > max then
-                vim_item.abbr = vim.fn.strcharpart(content, 0, max) .. '…'
-              else
-                vim_item.abbr = content .. (' '):rep(max - #content)
-              end
-              return vim_item
-            end,
-          },
+          sources = { { name = 'nvim_lsp' }, { name = 'buffer' }, { name = 'path' } },
           snippet = { expand = function(args) require('luasnip').lsp_expand(args.body) end },
-          completion = { completeopt = 'menuone, noinsert, noselect' },
-          experimental = { ghost_text = true },
         }
         opts = vim.tbl_deep_extend('error', opts, bindings.cmp(cmp))
         cmp.setup(opts)
-        require('luasnip').config.set_config({ history = true, updateevents = 'TextChanged, TextChangedI' })
         require('nvim-autopairs').setup()
         cmp.event:on('confirm_done', require('nvim-autopairs.completion.cmp').on_confirm_done({ map_char = { tex = '' } }))
         cmp.setup.cmdline('/', { mapping = cmp.mapping.preset.cmdline(), sources = { { name = 'buffer' } } })
@@ -96,8 +79,6 @@ M.config = function(name)
             { name = 'cmdline', option = { ignore_cmds = { 'Man', '!' } } },
           }),
         })
-        -- sync load luasnip cust ~600ms
-        vim.loop.new_timer():start(3000, 0, vim.schedule_wrap(function() require('luasnip.loaders.from_vscode').load() end))
       end,
       ['kkharji/sqlite.lua'] = function()
         if require('base').is_windows() then

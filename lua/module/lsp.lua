@@ -9,11 +9,7 @@ M.lsp = function()
       bindings.map(keys.mode or 'n', keys[1], keys[2], { noremap = true, silent = true, buffer = buffer })
     end
   end
-  local lsp_capabilities = (function()
-    local ex = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
-    ex.textDocument.completion.completionItem.snippetSupport = true
-    return ex
-  end)()
+  local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
   require('clangd_extensions').setup({ server = { filetypes = { 'c', 'cpp' }, on_attach = lsp_on_attach, capabilities = lsp_capabilities } })
   require('neodev').setup()
   require('lspconfig').lua_ls.setup({ on_attach = lsp_on_attach, capabilities = lsp_capabilities })

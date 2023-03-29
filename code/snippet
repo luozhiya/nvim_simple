@@ -340,3 +340,34 @@ local ex = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_cl
 ex.textDocument.completion.completionItem.snippetSupport = true
 ex.textDocument.completion.completionItem.resolveSupport = { properties = { 'documentation', 'detail', 'additionalTextEdits' } }
 return ex
+
+-- completion = { completeopt = 'menuone, noinsert, noselect' },
+-- { 'rafamadriz/friendly-snippets' },
+-- require('luasnip').config.set_config({ history = true, updateevents = 'TextChanged, TextChangedI' })
+-- sync load luasnip cust ~600ms
+-- vim.loop.new_timer():start(3000, 0, vim.schedule_wrap(function() require('luasnip.loaders.from_vscode').load() end))
+-- formatting = {
+--   fields = { 'kind', 'abbr', 'menu' },
+--   format = function(entry, vim_item)
+--     vim_item.menu = ({ nvim_lsp = '[LSP]', buffer = '[Buffer]', path = '[Path]', luasnip = '[Snippet]' })[entry.source.name]
+--     local max = 45
+--     local content = vim_item.abbr
+--     if #content > max then
+--       vim_item.abbr = vim.fn.strcharpart(content, 0, max) .. '…'
+--     else
+--       vim_item.abbr = content .. (' '):rep(max - #content)
+--     end
+--     return vim_item
+--   end,
+-- },
+
+sources = { { name = 'nvim_lsp' }, { name = 'buffer' }, { name = 'path' }, { name = 'luasnip' } },
+{ 'saadparwaiz1/cmp_luasnip' },
+completion = { completeopt = 'menuone, noinsert, noselect' },
+experimental = { ghost_text = true },
+
+local lsp_capabilities = (function()
+  local ex = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+  ex.textDocument.completion.completionItem.snippetSupport = true
+  return ex
+end)()
