@@ -50,7 +50,7 @@ M.config = function(name)
       ['stevearc/dressing.nvim'] = function()
         require('dressing').setup({
           input = { enabled = true, prompt_align = 'center', relative = 'editor', prefer_width = 0.6, win_options = { winblend = 0 } }, -- Window transparency (0-100)
-          select = { enabled = true, backend = { 'telescope', 'fzf_lua', 'fzf', 'builtin', 'nui' } },
+          select = { enabled = true, backend = { 'builtin' } },
         })
       end,
       ['ahmedkhalf/project.nvim'] = function() require('project_nvim').setup() end,
@@ -105,7 +105,7 @@ M.config = function(name)
           vim.g.sqlite_clib_path = string.sub(vim.loop.exepath(nvim), 1, -(#nvim + 1)) .. 'sqlite3.dll'
         end
       end,
-      ['folke/trouble.nvim'] = function() require('trouble').setup() end,
+      ['folke/trouble.nvim'] = function() require('trouble').setup({ icons = false }) end,
       ['lukas-reineke/indent-blankline.nvim'] = function() require('indent_blankline').setup() end,
       ['HiPhish/nvim-ts-rainbow2'] = function() require('nvim-treesitter.configs').setup({ rainbow = { enable = { 'c', 'cpp' }, query = 'rainbow-parens', strategy = require('ts-rainbow').strategy['local'] } }) end,
       ['p00f/godbolt.nvim'] = function()

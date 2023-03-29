@@ -14,7 +14,7 @@ return {
   { 'stevearc/aerial.nvim', config = config('stevearc/aerial.nvim') },
   { 'ahmedkhalf/project.nvim', config = config('ahmedkhalf/project.nvim') },
   -- Completion
-  { 'hrsh7th/nvim-cmp', event = { 'InsertEnter' }, config = config('hrsh7th/nvim-cmp'), dependencies = { 'hrsh7th/cmp-cmdline', 'hrsh7th/cmp-buffer', 'hrsh7th/cmp-path', 'hrsh7th/cmp-nvim-lsp' } },
+  { 'hrsh7th/nvim-cmp', event = { 'BufReadPost' }, config = config('hrsh7th/nvim-cmp'), dependencies = { 'hrsh7th/cmp-cmdline', 'hrsh7th/cmp-buffer', 'hrsh7th/cmp-path', 'hrsh7th/cmp-nvim-lsp' } },
   { 'hrsh7th/cmp-cmdline' },
   { 'hrsh7th/cmp-buffer' },
   { 'hrsh7th/cmp-path' },
@@ -38,17 +38,15 @@ return {
   -- Edit
   { 'tpope/vim-obsession', cmd = { 'Obsession' } },
   { 'windwp/nvim-autopairs' },
-  { 'numToStr/Comment.nvim', keys = { { '<leader>cc' }, { '<leader>cb' } } },
+  { 'numToStr/Comment.nvim' },
   { 'fedepujol/move.nvim', cmd = { 'MoveLine', 'MoveBlock', 'MoveHChar', 'MoveHBlock' } },
   { 'ray-x/lsp_signature.nvim', config = config('ray-x/lsp_signature.nvim') },
   { 'folke/trouble.nvim', cmd = { 'TroubleToggle' }, config = config('folke/trouble.nvim') },
   { 'lukas-reineke/indent-blankline.nvim', event = { 'BufReadPost', 'BufNewFile' }, config = config('lukas-reineke/indent-blankline.nvim') },
   { 'HiPhish/nvim-ts-rainbow2', event = 'BufReadPost', config = config('HiPhish/nvim-ts-rainbow2') },
-  { 'p00f/godbolt.nvim', ft = { 'c', 'cpp' }, config = config('p00f/godbolt.nvim') },
+  { 'p00f/godbolt.nvim', cmd = { 'Godbolt' }, config = config('p00f/godbolt.nvim') },
   -- LSP Core
-  { 'neovim/nvim-lspconfig', event = 'InsertEnter', ft = { 'c', 'cpp', 'lua' }, config = require('module.lsp').setup, dependencies = { 'j-hui/fidget.nvim', 'ray-x/lsp_signature.nvim' } },
-  { 'williamboman/mason.nvim' },
-  { 'williamboman/mason-lspconfig.nvim' },
+  { 'neovim/nvim-lspconfig', ft = { 'c', 'cpp', 'lua' }, config = require('module.lsp').setup, dependencies = { 'j-hui/fidget.nvim', 'ray-x/lsp_signature.nvim' } },
   { 'p00f/clangd_extensions.nvim' },
   { 'folke/neodev.nvim' },
 }

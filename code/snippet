@@ -324,3 +324,19 @@ M.map('n', [[\]], '<cmd>Telescope cmdline<cr>', { noremap = true, desc = 'Cmdlin
 telescope.load_extension('cmdline')
 
 
+  -- { 'williamboman/mason.nvim' },
+  -- { 'williamboman/mason-lspconfig.nvim' },
+  M.mason = function()
+    require('mason').setup()
+    require('mason-lspconfig').setup({ ensure_installed = { 'lua_ls' } })
+  end
+  -- It's important that you set up the plugins in the following order:
+M.setup = function()
+  -- M.mason()
+  M.lsp()
+end
+
+local ex = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+ex.textDocument.completion.completionItem.snippetSupport = true
+ex.textDocument.completion.completionItem.resolveSupport = { properties = { 'documentation', 'detail', 'additionalTextEdits' } }
+return ex

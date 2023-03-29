@@ -171,16 +171,13 @@ M.wk = function(wk)
       s = { '<cmd>Telescope lsp_document_symbols<cr>', 'Document Symbols' },
       S = { '<cmd>Telescope lsp_dynamic_workspace_symbols<cr>', 'Workspace Symbols' },
     },
-    g = {
-      name = 'Git',
+    t = {
+      name = 'Run In Command Terminal',
+      h = { '<cmd>ToggleTerm direction=horizontal<cr>', 'Terminal Horizontal' },
+      f = { '<cmd>ToggleTerm direction=float<cr>', 'Terminal Floating' },
       l = { function() _any_toggle('lazygit') end, 'Lazygit' },
       g = { function() _any_toggle('gitui') end, 'GitUI' },
       s = { '<cmd>SublimeMerge<cr>', 'Sublime Merge' },
-    },
-    t = {
-      name = 'Command Terminal',
-      h = { '<cmd>ToggleTerm direction=horizontal<cr>', 'Terminal Horizontal' },
-      f = { '<cmd>ToggleTerm direction=float<cr>', 'Terminal Floating' },
     },
     f = {
       name = 'File Explorer',

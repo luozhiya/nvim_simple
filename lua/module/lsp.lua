@@ -1,10 +1,6 @@
 local bindings = require('module.bindings')
 
 local M = {}
-M.mason = function()
-  require('mason').setup()
-  require('mason-lspconfig').setup({ ensure_installed = { 'lua_ls' } })
-end
 
 M.lsp = function()
   vim.lsp.handlers['textDocument/publishDiagnostics'] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, { virtual_text = false, signs = false, update_in_insert = false, underline = true })
@@ -16,7 +12,6 @@ M.lsp = function()
   local lsp_capabilities = (function()
     local ex = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
     ex.textDocument.completion.completionItem.snippetSupport = true
-    ex.textDocument.completion.completionItem.resolveSupport = { properties = { 'documentation', 'detail', 'additionalTextEdits' } }
     return ex
   end)()
   require('clangd_extensions').setup({ server = { filetypes = { 'c', 'cpp' }, on_attach = lsp_on_attach, capabilities = lsp_capabilities } })
@@ -24,10 +19,6 @@ M.lsp = function()
   require('lspconfig').lua_ls.setup({ on_attach = lsp_on_attach, capabilities = lsp_capabilities })
 end
 
--- It's important that you set up the plugins in the following order:
-M.setup = function()
-  M.mason()
-  M.lsp()
-end
+M.setup = function() M.lsp() end
 
 return M
