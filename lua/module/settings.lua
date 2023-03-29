@@ -106,6 +106,11 @@ M.config = function(name)
         })
       end,
       ['sindrets/diffview.nvim'] = function() require('diffview').setup() end,
+      ['nvim-pack/nvim-spectre'] = function()
+        local opts = {}
+        opts = vim.tbl_deep_extend('error', opts, bindings.spectre())
+        require('spectre').setup(opts)
+      end,
     }
   end
   return M.cached[name]

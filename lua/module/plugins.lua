@@ -6,13 +6,13 @@ return {
   -- Treesitter
   { 'nvim-treesitter/nvim-treesitter', cmd = { 'TSInstall', 'TSBufEnable', 'TSBufDisable', 'TSModuleInfo' }, build = ':TSUpdate', config = config('nvim-treesitter/nvim-treesitter') },
   -- Telescope
-  { 'nvim-telescope/telescope.nvim', cmd = { 'Telescope' }, config = config('nvim-telescope/telescope.nvim'), dependencies = { 'ahmedkhalf/project.nvim' } },
+  { 'nvim-telescope/telescope.nvim', cmd = { 'Telescope' }, config = config('nvim-telescope/telescope.nvim') },
   { 'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' },
   { 'debugloop/telescope-undo.nvim' },
   { 'nvim-telescope/telescope-frecency.nvim' },
   { 'nvim-telescope/telescope-live-grep-args.nvim' },
   { 'stevearc/aerial.nvim', config = config('stevearc/aerial.nvim') },
-  { 'ahmedkhalf/project.nvim', config = config('ahmedkhalf/project.nvim') },
+  { 'ahmedkhalf/project.nvim', event = { 'VeryLazy' }, config = config('ahmedkhalf/project.nvim') },
   -- Completion
   { 'hrsh7th/nvim-cmp', event = { 'BufReadPost' }, config = config('hrsh7th/nvim-cmp'), dependencies = { 'hrsh7th/cmp-cmdline', 'hrsh7th/cmp-buffer', 'hrsh7th/cmp-path', 'hrsh7th/cmp-nvim-lsp' } },
   { 'hrsh7th/cmp-cmdline' },
@@ -24,7 +24,7 @@ return {
   { 'lewis6991/gitsigns.nvim', event = 'BufReadPost', config = config('lewis6991/gitsigns.nvim') },
   { 'sindrets/diffview.nvim', cmd = { 'DiffviewOpen' }, config = config('sindrets/diffview.nvim') },
   -- Buffer
-  { 'kazhala/close-buffers.nvim', cmd = { 'BufferCloseOthers' }, config = config('kazhala/close-buffers.nvim') },
+  { 'kazhala/close-buffers.nvim', cmd = { 'BDelete', 'BWipeout' }, config = config('kazhala/close-buffers.nvim') },
   -- Key Management
   { 'folke/which-key.nvim', keys = { { ',' }, { 'g' } }, config = config('folke/which-key.nvim') },
   -- Appearance
@@ -43,6 +43,7 @@ return {
   { 'lukas-reineke/indent-blankline.nvim', event = { 'BufReadPost', 'BufNewFile' }, config = config('lukas-reineke/indent-blankline.nvim') },
   { 'HiPhish/nvim-ts-rainbow2', event = 'BufReadPost', config = config('HiPhish/nvim-ts-rainbow2') },
   { 'p00f/godbolt.nvim', cmd = { 'Godbolt' }, config = config('p00f/godbolt.nvim') },
+  { 'nvim-pack/nvim-spectre', config = config('nvim-pack/nvim-spectre') },
   -- LSP Core
   { 'neovim/nvim-lspconfig', ft = { 'c', 'cpp', 'lua' }, config = require('module.lsp').setup, dependencies = { 'j-hui/fidget.nvim', 'ray-x/lsp_signature.nvim' } },
   { 'p00f/clangd_extensions.nvim' },
