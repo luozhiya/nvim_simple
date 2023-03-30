@@ -23,7 +23,7 @@ return {
   { 'lewis6991/gitsigns.nvim', event = 'BufReadPost', config = config('lewis6991/gitsigns.nvim') },
   { 'sindrets/diffview.nvim', cmd = { 'DiffviewOpen' }, config = config('sindrets/diffview.nvim') },
   -- Buffer
-  { 'kazhala/close-buffers.nvim', cmd = { 'BDelete', 'BWipeout' }, config = config('kazhala/close-buffers.nvim') },
+  { 'kazhala/close-buffers.nvim', cmd = { 'CloseView', 'BWipeout' }, config = config('kazhala/close-buffers.nvim') },
   -- Key Management
   { 'folke/which-key.nvim', keys = { { ',' }, { 'g' } }, config = config('folke/which-key.nvim') },
   -- Appearance

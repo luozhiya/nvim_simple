@@ -40,9 +40,10 @@ M.config = function(name)
           sync_root_with_cwd = true,
           respect_buf_cwd = true,
           hijack_directories = { enable = false },
-          update_focused_file = { enable = true, update_root = true },
+          update_focused_file = { enable = false, update_root = true },
           actions = { open_file = { resize_window = false } },
           view = { adaptive_size = false, preserve_window_proportions = true },
+          git = { enable = false },
         }
         opts = vim.tbl_deep_extend('error', opts, bindings.nvim_tree())
         require('nvim-tree').setup(opts)
@@ -90,8 +91,8 @@ M.config = function(name)
       ['HiPhish/nvim-ts-rainbow2'] = function() require('nvim-treesitter.configs').setup({ rainbow = { enable = { 'c', 'cpp' }, query = 'rainbow-parens', strategy = require('ts-rainbow').strategy['local'] } }) end,
       ['p00f/godbolt.nvim'] = function()
         require('godbolt').setup({
-          languages = { cpp = { compiler = 'vc2017_64', options = {} }, c = { compiler = 'vc2017_64', options = {} } },
-          url = 'http://localhost:10240', -- https://godbolt.org
+          languages = { cpp = { compiler = 'clangdefault', options = {} }, c = { compiler = 'cclangdefault', options = {} } }, -- vc2017_64
+          url = 'http://localhost:10240', -- https://godbolt.org -- http://localhost:10240
         })
       end,
       ['sindrets/diffview.nvim'] = function() require('diffview').setup() end,

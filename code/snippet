@@ -409,3 +409,9 @@ elseif has_words_before() then
   cmp.complete()
 
   
+
+-- e = { function() require('base').reveal_in_tree() end, 'Reveal In Tree' },
+-- c = { '<cmd>Telescope registers<cr>', 'Register Cached' },
+-- C = { function() require('base').reveal_cwd_in_file_explorer() end, 'Reveal CWD In File Explorer' },
+l = { '<cmd>Telescope live_grep<cr>', 'Find Text' },
+r = { '<cmd>Telescope oldfiles<cr>', 'Recently Used Files' },

@@ -90,7 +90,7 @@ M.spectre = function()
   return { mapping = {
     ['close_search'] = {
       map = '<c-w>',
-      cmd = '<cmd>close<CR>',
+      cmd = '<cmd>close<cr>',
       desc = 'close',
     },
   } }
@@ -105,7 +105,7 @@ M.wk = function(wk)
       float_opts = { border = 'double' },
       on_open = function(term)
         vim.cmd('startinsert!')
-        M.map('n', 'q', '<cmd>close<CR>', { noremap = true, silent = true, buffer = term.bufnr })
+        M.map('n', 'q', '<cmd>close<cr>', { noremap = true, silent = true, buffer = term.bufnr })
       end,
       on_close = function(term) vim.cmd('startinsert!') end,
     })
@@ -198,18 +198,14 @@ M.wk = function(wk)
     f = {
       name = 'File Explorer',
       e = { '<cmd>NvimTreeFindFile<cr>', 'Tree Explorer' },
-      c = { '<cmd>Telescope registers<cr>', 'Register Cached' },
-      f = { '<cmd>Telescope find_files theme=get_dropdown previewer=false<cr>', 'Find files' },
-      l = { '<cmd>Telescope live_grep<cr>', 'Find Text' },
-      L = { '<cmd>Telescope live_grep_args<cr>', 'Find Text Args' },
+      t = { '<cmd>NvimTreeToggle<cr>', 'Tree Explorer' },
+      s = { '<cmd>Telescope find_files theme=get_dropdown previewer=false<cr>', 'Find files' },
+      l = { '<cmd>Telescope live_grep_args<cr>', 'Find Text Args' },
       p = { '<cmd>Telescope projects<cr>', 'Projects' },
-      r = { '<cmd>Telescope oldfiles<cr>', 'Recently Used Files' },
-      R = { '<cmd>Telescope frecency<cr>', 'Mozilla Frecency Algorithm' },
+      f = { '<cmd>Telescope frecency<cr>', 'Mozilla Frecency Algorithm' },
       u = { '<cmd>Telescope undo bufnr=0<cr>', 'Undo Tree' },
       o = { function() require('base').open_with_default_app() end, 'Open With Default APP' },
-      t = { function() require('base').reveal_in_tree() end, 'Reveal In Tree' },
-      E = { function() require('base').reveal_file_in_file_explorer() end, 'Reveal In File Explorer' },
-      C = { function() require('base').reveal_cwd_in_file_explorer() end, 'Reveal CWD In File Explorer' },
+      r = { function() require('base').reveal_file_in_file_explorer() end, 'Reveal In File Explorer' },
     },
     c = {
       name = 'Copy',
@@ -274,15 +270,15 @@ M.setup_code = function()
   M.map({ 'i', 'n' }, '<esc>', '<cmd>noh<cr><esc>', { noremap = true, desc = 'Escape And Clear hlsearch' })
   M.map('n', '<c-j>', '15gj', { noremap = true, desc = 'Move Down 15 Lines' })
   M.map('n', '<c-k>', '15gk', { noremap = true, desc = 'Move Up 15 Lines' })
-  M.map('n', '<left>', '<c-w>h', { desc = 'Jump Left' })
-  M.map('n', '<down>', '<c-w>j', { desc = 'Jump Down' })
-  M.map('n', '<up>', '<c-w>k', { desc = 'Jump Up' })
-  M.map('n', '<right>', '<c-w>l', { desc = 'Jump Right' })
+  M.map('n', '<c-h>', '<c-w>h', { desc = 'Jump Left' })
+  -- M.map('n', '<c-j>', '<c-w>j', { desc = 'Jump Down' })
+  -- M.map('n', '<c-k>', '<c-w>k', { desc = 'Jump Up' })
+  M.map('n', '<c-l>', '<c-w>l', { desc = 'Jump Right' })
   M.map('n', '<a-q>', '<cmd>ToggleWrap<cr>', { desc = 'Toggle Wrap' })
   M.map('v', '<', '<gv', { noremap = true, desc = 'deIndent Continuously' })
   M.map('v', '>', '>gv', { noremap = true, desc = 'Indent Continuously' })
   -- File
-  M.map('n', '<c-w>', '<cmd>BDelete this<cr>', { desc = 'Close' })
+  M.map('n', '<c-w>', '<cmd>CloseView<cr>', { desc = 'Close' })
   M.map('n', '<c-n>', '<cmd>ene<cr>', { desc = 'New Text File' })
   -- Edit
   M.map('n', 'cc', function() require('Comment.api').toggle.linewise.current() end, { desc = 'Comment Line (Comment.nvim)' })
@@ -325,6 +321,14 @@ M.setup_comands = function()
       args = { '-n', require('base').to_native(vim.fn.getcwd()) },
     }):sync()
   end, { desc = 'Sublime Merge' })
+  vim.api.nvim_create_user_command('CloseView', function()
+    local wins = vim.api.nvim_list_wins()
+    if #wins == 1 then
+      require('close_buffers').delete({ type = 'this' })
+    else
+      vim.api.nvim_win_close(0, true)
+    end
+  end, { desc = 'Close View' })
 end
 
 M.setup_autocmd = function() end
