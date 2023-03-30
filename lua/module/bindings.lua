@@ -25,17 +25,11 @@ M.lsp = {
 
 M.cmp = function(cmp)
   local forward = function()
-    local has_words_before = function()
-      local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-      return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
-    end
     return cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
       elseif require('luasnip').expand_or_jumpable() then
         require('luasnip').expand_or_jump()
-      elseif has_words_before() then
-        cmp.complete()
       else
         fallback()
       end
@@ -54,16 +48,16 @@ M.cmp = function(cmp)
   end
   return {
     mapping = {
-      ['<C-k>'] = cmp.mapping.select_prev_item(),
-      ['<C-j>'] = cmp.mapping.select_next_item(),
-      ['<Up>'] = cmp.mapping.select_prev_item(),
-      ['<Down>'] = cmp.mapping.select_next_item(),
+      ['<c-k>'] = cmp.mapping.select_prev_item(),
+      ['<c-j>'] = cmp.mapping.select_next_item(),
+      ['<up>'] = cmp.mapping.select_prev_item(),
+      ['<down>'] = cmp.mapping.select_next_item(),
       ['<cr>'] = cmp.mapping.confirm({ select = true }),
-      ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-      ['<Tab>'] = forward(),
-      ['<S-Tab>'] = backward(),
-      ['<C-y>'] = cmp.mapping.confirm({ select = false }),
-      ['<C-e>'] = cmp.mapping({ i = cmp.mapping.abort(), c = cmp.mapping.close() }),
+      ['<c-space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+      ['<tab>'] = forward(),
+      ['<s-tab>'] = backward(),
+      ['<c-y>'] = cmp.mapping.confirm({ select = false }),
+      ['<c-e>'] = cmp.mapping({ i = cmp.mapping.abort(), c = cmp.mapping.close() }),
     },
   }
 end
@@ -90,6 +84,16 @@ M.telescope = function()
           ['<esc>'] = actions.close,
         }, }, }, }
   -- stylua: ignore end
+end
+
+M.spectre = function()
+  return { mapping = {
+    ['close_search'] = {
+      map = '<c-w>',
+      cmd = '<cmd>close<CR>',
+      desc = 'close',
+    },
+  } }
 end
 
 M.wk = function(wk)
@@ -149,7 +153,6 @@ M.wk = function(wk)
       p = { '<cmd>Lazy profile<cr>', 'Lazy Profile' },
       u = { '<cmd>Lazy update<cr>', 'Lazy Update' },
       c = { '<cmd>Lazy clean<cr>', 'Lazy Clean' },
-      f = { '<cmd>ToggleFocusMode<cr>', 'Focus Mode' },
       e = wk_ve(),
     },
     l = {
@@ -177,7 +180,20 @@ M.wk = function(wk)
       f = { '<cmd>ToggleTerm direction=float<cr>', 'Terminal Floating' },
       l = { function() _any_toggle('lazygit') end, 'Lazygit' },
       g = { function() _any_toggle('gitui') end, 'GitUI' },
+      n = { function() _any_toggle('nnn') end, 'nnn' },
+      b = { function() _any_toggle('btop') end, 'btop' },
+      t = { function() _any_toggle('htop') end, 'htop' },
       s = { '<cmd>SublimeMerge<cr>', 'Sublime Merge' },
+    },
+    s = {
+      name = 'Search',
+      f = { function() require('spectre').open_file_search() end, 'Search File' },
+      p = { function() require('spectre').open() end, 'Search Project' },
+    },
+    e = {
+      name = 'Edit',
+      f = { '<cmd>ToggleFocusMode<cr>', 'Focus Mode' },
+      o = { '<cmd>BWipeout other<cr>', 'Only Current Buffer' },
     },
     f = {
       name = 'File Explorer',
@@ -256,15 +272,18 @@ M.setup_code = function()
   M.map('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, noremap = true })
   M.map('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, noremap = true })
   M.map({ 'i', 'n' }, '<esc>', '<cmd>noh<cr><esc>', { noremap = true, desc = 'Escape And Clear hlsearch' })
-  M.map('n', '<C-j>', '15gj', { noremap = true, desc = 'Move Down 15 Lines' })
-  M.map('n', '<C-k>', '15gk', { noremap = true, desc = 'Move Up 15 Lines' })
-  M.map('n', '<left>', '<C-w>h', { desc = 'Jump Left' })
-  M.map('n', '<down>', '<C-w>j', { desc = 'Jump Down' })
-  M.map('n', '<up>', '<C-w>k', { desc = 'Jump Up' })
-  M.map('n', '<right>', '<C-w>l', { desc = 'Jump Right' })
+  M.map('n', '<c-j>', '15gj', { noremap = true, desc = 'Move Down 15 Lines' })
+  M.map('n', '<c-k>', '15gk', { noremap = true, desc = 'Move Up 15 Lines' })
+  M.map('n', '<left>', '<c-w>h', { desc = 'Jump Left' })
+  M.map('n', '<down>', '<c-w>j', { desc = 'Jump Down' })
+  M.map('n', '<up>', '<c-w>k', { desc = 'Jump Up' })
+  M.map('n', '<right>', '<c-w>l', { desc = 'Jump Right' })
   M.map('n', '<a-q>', '<cmd>ToggleWrap<cr>', { desc = 'Toggle Wrap' })
   M.map('v', '<', '<gv', { noremap = true, desc = 'deIndent Continuously' })
   M.map('v', '>', '>gv', { noremap = true, desc = 'Indent Continuously' })
+  -- File
+  M.map('n', '<c-w>', '<cmd>BDelete this<cr>', { desc = 'Close' })
+  M.map('n', '<c-n>', '<cmd>ene<cr>', { desc = 'New Text File' })
   -- Edit
   M.map('n', 'cc', function() require('Comment.api').toggle.linewise.current() end, { desc = 'Comment Line (Comment.nvim)' })
   M.map('x', 'cc', function()
@@ -279,14 +298,14 @@ M.setup_code = function()
     require('Comment.api').toggle.blockwise(vim.fn.visualmode())
   end, { desc = 'Comment Block (Comment.nvim)' })
   -- Selection
-  M.map('n', '<A-j>', '<cmd>MoveLine(1)<cr>', { noremap = true, desc = 'Line: Move Up (move.nvim)' })
-  M.map('n', '<A-k>', '<cmd>MoveLine(-1)<cr>', { noremap = true, desc = 'Line: Move Down (move.nvim)' })
-  M.map('n', '<A-h>', '<cmd>MoveHChar(-1)<cr>', { noremap = true, desc = 'Line: Move Left (move.nvim)' })
-  M.map('n', '<A-l>', '<cmd>MoveHChar(1)<cr>', { noremap = true, desc = 'Line: Move Right (move.nvim)' })
-  M.map('v', '<A-j>', '<cmd>MoveBlock(1)<cr>', { noremap = true, desc = 'Block: Move Up (move.nvim)' })
-  M.map('v', '<A-k>', '<cmd>MoveBlock(-1)<cr>', { noremap = true, desc = 'Block: Move Down (move.nvim)' })
-  M.map('v', '<A-h>', '<cmd>MoveHBlock(-1)<cr>', { noremap = true, desc = 'Block: Move Left (move.nvim)' })
-  M.map('v', '<A-l>', '<cmd>MoveHBlock(1)<cr>', { noremap = true, desc = 'Block: Move Right (move.nvim)' })
+  M.map('n', '<a-j>', '<cmd>MoveLine(1)<cr>', { noremap = true, desc = 'Line: Move Up (move.nvim)' })
+  M.map('n', '<a-k>', '<cmd>MoveLine(-1)<cr>', { noremap = true, desc = 'Line: Move Down (move.nvim)' })
+  M.map('n', '<a-h>', '<cmd>MoveHChar(-1)<cr>', { noremap = true, desc = 'Line: Move Left (move.nvim)' })
+  M.map('n', '<a-l>', '<cmd>MoveHChar(1)<cr>', { noremap = true, desc = 'Line: Move Right (move.nvim)' })
+  M.map('v', '<a-j>', '<cmd>MoveBlock(1)<cr>', { noremap = true, desc = 'Block: Move Up (move.nvim)' })
+  M.map('v', '<a-k>', '<cmd>MoveBlock(-1)<cr>', { noremap = true, desc = 'Block: Move Down (move.nvim)' })
+  M.map('v', '<a-h>', '<cmd>MoveHBlock(-1)<cr>', { noremap = true, desc = 'Block: Move Left (move.nvim)' })
+  M.map('v', '<a-l>', '<cmd>MoveHBlock(1)<cr>', { noremap = true, desc = 'Block: Move Right (move.nvim)' })
   -- View
   M.map('n', '<c-s-p>', '<cmd>Telescope commands<cr>', { noremap = true, desc = 'Command Palette... (telescope.nvim)' })
   -- Go
@@ -297,7 +316,6 @@ M.setup_code = function()
 end
 
 M.setup_comands = function()
-  vim.api.nvim_create_user_command('BufferCloseOthers', function() require('close_buffers').wipe({ type = 'other' }) end, { desc = 'Close Others' })
   vim.api.nvim_create_user_command('ToggleWrap', function() vim.opt.wrap = vim.opt.wrap._value == false end, { desc = 'Toggle Wrap' })
   vim.api.nvim_create_user_command('ToggleFocusMode', function() vim.opt.laststatus = vim.opt.laststatus._value == 0 and 3 or 0 end, { desc = 'Toggle Focus Mode' })
   vim.api.nvim_create_user_command('SublimeMerge', function()
@@ -305,7 +323,7 @@ M.setup_comands = function()
     Job:new({
       command = 'sublime_merge',
       args = { '-n', require('base').to_native(vim.fn.getcwd()) },
-    }):start()
+    }):sync()
   end, { desc = 'Sublime Merge' })
 end
 
