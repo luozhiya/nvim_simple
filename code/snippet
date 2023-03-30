@@ -425,3 +425,15 @@ blend是混合的意思
 当blend设置为0，自然说明没有这种计算，也即是不透明
 
 M.reveal_in_tree = function() require('nvim-tree.api').tree.find_file({ open = true, update_root = true }) end
+
+
+  { 'folke/trouble.nvim', cmd = { 'TroubleToggle' }, config = config('folke/trouble.nvim') },
+  { 'lukas-reineke/indent-blankline.nvim', event = { 'BufReadPost', 'BufNewFile' }, config = config('lukas-reineke/indent-blankline.nvim') },
+  { 'folke/trouble.nvim', cmd = { 'TroubleToggle' } },
+  { 'lukas-reineke/indent-blankline.nvim', event = { 'BufReadPost', 'BufNewFile' } },
+
+  ['kazhala/close-buffers.nvim'] = function() require('close_buffers').setup({}) end,
+  ['folke/trouble.nvim'] = function() require('trouble').setup({ icons = false }) end,
+  ['lukas-reineke/indent-blankline.nvim'] = function() require('indent_blankline').setup() end,
+  
+  ['sindrets/diffview.nvim'] = function() require('diffview').setup() end,  

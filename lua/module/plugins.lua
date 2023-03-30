@@ -21,9 +21,9 @@ return {
   { 'L3MON4D3/LuaSnip' },
   -- Git
   { 'lewis6991/gitsigns.nvim', event = 'BufReadPost', config = config('lewis6991/gitsigns.nvim') },
-  { 'sindrets/diffview.nvim', cmd = { 'DiffviewOpen' }, config = config('sindrets/diffview.nvim') },
+  { 'sindrets/diffview.nvim', cmd = { 'DiffviewOpen' } },
   -- Buffer
-  { 'kazhala/close-buffers.nvim', cmd = { 'CloseView', 'BWipeout' }, config = config('kazhala/close-buffers.nvim') },
+  { 'kazhala/close-buffers.nvim', cmd = { 'CloseView', 'BWipeout' } },
   -- Key Management
   { 'folke/which-key.nvim', keys = { { ',' }, { 'g' } }, config = config('folke/which-key.nvim') },
   -- Appearance
@@ -38,8 +38,8 @@ return {
   { 'numToStr/Comment.nvim' },
   { 'fedepujol/move.nvim', cmd = { 'MoveLine', 'MoveBlock', 'MoveHChar', 'MoveHBlock' } },
   { 'ray-x/lsp_signature.nvim', config = config('ray-x/lsp_signature.nvim') },
-  { 'folke/trouble.nvim', cmd = { 'TroubleToggle' }, config = config('folke/trouble.nvim') },
-  { 'lukas-reineke/indent-blankline.nvim', event = { 'BufReadPost', 'BufNewFile' }, config = config('lukas-reineke/indent-blankline.nvim') },
+  { 'folke/trouble.nvim', cmd = { 'TroubleToggle' } },
+  { 'lukas-reineke/indent-blankline.nvim', event = { 'BufReadPost', 'BufNewFile' } },
   { 'HiPhish/nvim-ts-rainbow2', event = 'BufReadPost', config = config('HiPhish/nvim-ts-rainbow2') },
   { 'p00f/godbolt.nvim', cmd = { 'Godbolt' }, config = config('p00f/godbolt.nvim') },
   { 'nvim-pack/nvim-spectre', config = config('nvim-pack/nvim-spectre') },

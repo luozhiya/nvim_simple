@@ -49,7 +49,6 @@ M.config = function(name)
         })
       end,
       ['ahmedkhalf/project.nvim'] = function() require('project_nvim').setup() end,
-      ['kazhala/close-buffers.nvim'] = function() require('close_buffers').setup({}) end,
       ['j-hui/fidget.nvim'] = function()
         vim.cmd([[highlight FidgetTitle ctermfg=110 guifg=#0887c7]])
         vim.cmd([[highlight FidgetTask ctermfg=110 guifg=#0887c7]])
@@ -80,8 +79,6 @@ M.config = function(name)
           vim.g.sqlite_clib_path = string.sub(vim.loop.exepath(nvim), 1, -(#nvim + 1)) .. 'sqlite3.dll'
         end
       end,
-      ['folke/trouble.nvim'] = function() require('trouble').setup({ icons = false }) end,
-      ['lukas-reineke/indent-blankline.nvim'] = function() require('indent_blankline').setup() end,
       ['HiPhish/nvim-ts-rainbow2'] = function() require('nvim-treesitter.configs').setup({ rainbow = { enable = { 'c', 'cpp' }, query = 'rainbow-parens', strategy = require('ts-rainbow').strategy['local'] } }) end,
       ['p00f/godbolt.nvim'] = function()
         require('godbolt').setup({
@@ -89,7 +86,6 @@ M.config = function(name)
           url = 'http://localhost:10240', -- https://godbolt.org -- http://localhost:10240
         })
       end,
-      ['sindrets/diffview.nvim'] = function() require('diffview').setup() end,
       ['nvim-pack/nvim-spectre'] = function() require('spectre').setup(bindings.spectre()) end,
     }
   end

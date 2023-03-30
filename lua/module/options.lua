@@ -21,7 +21,12 @@ function M.before()
   vim.g.loaded_perl_provider = 0
   vim.g.loaded_node_provider = 0
 
+	vim.g.did_install_default_menus = 1
+	vim.g.did_install_syntax_menu = 1
+  vim.g.netrw_liststyle = 3
+
   local disabled_built_ins = {
+    'syntax_completion',
     'gzip',
     'man',
     'matchit',
@@ -33,6 +38,11 @@ function M.before()
     'zip',
     'netrwPlugin',
     'netrw',
+    'spellfile_plugin',
+    'vimball',
+    'vimballPlugin',
+    'sql_completion',
+    '2html_plugin',
   }
   for _, v in ipairs(disabled_built_ins) do
     vim.g['loaded_' .. v] = 1
