@@ -14,9 +14,8 @@ return {
   { 'stevearc/aerial.nvim', config = config('stevearc/aerial.nvim') },
   { 'ahmedkhalf/project.nvim', config = config('ahmedkhalf/project.nvim') },
   -- Completion
-  { 'hrsh7th/nvim-cmp', event = { 'BufReadPost' }, config = config('hrsh7th/nvim-cmp'), dependencies = { 'hrsh7th/cmp-cmdline', 'hrsh7th/cmp-buffer', 'hrsh7th/cmp-path', 'hrsh7th/cmp-nvim-lsp' } },
+  { 'hrsh7th/nvim-cmp', event = { 'BufReadPost' }, config = config('hrsh7th/nvim-cmp'), dependencies = { 'hrsh7th/cmp-cmdline', 'hrsh7th/cmp-path', 'hrsh7th/cmp-nvim-lsp' } },
   { 'hrsh7th/cmp-cmdline' },
-  { 'hrsh7th/cmp-buffer' },
   { 'hrsh7th/cmp-path' },
   { 'hrsh7th/cmp-nvim-lsp' },
   { 'L3MON4D3/LuaSnip' },

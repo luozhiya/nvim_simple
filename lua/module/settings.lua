@@ -64,14 +64,13 @@ M.config = function(name)
       ['hrsh7th/nvim-cmp'] = function()
         local cmp = require('cmp')
         local opts = {
-          sources = { { name = 'nvim_lsp' }, { name = 'buffer' }, { name = 'path' } },
+          sources = { { name = 'nvim_lsp' }, { name = 'path' } },
           snippet = { expand = function(args) require('luasnip').lsp_expand(args.body) end },
         }
         opts = vim.tbl_deep_extend('error', opts, bindings.cmp(cmp))
         cmp.setup(opts)
         require('nvim-autopairs').setup()
         cmp.event:on('confirm_done', require('nvim-autopairs.completion.cmp').on_confirm_done({ map_char = { tex = '' } }))
-        cmp.setup.cmdline('/', { mapping = cmp.mapping.preset.cmdline(), sources = { { name = 'buffer' } } })
         cmp.setup.cmdline(':', {
           mapping = cmp.mapping.preset.cmdline(),
           sources = cmp.config.sources({
@@ -90,19 +89,9 @@ M.config = function(name)
       ['lukas-reineke/indent-blankline.nvim'] = function() require('indent_blankline').setup() end,
       ['HiPhish/nvim-ts-rainbow2'] = function() require('nvim-treesitter.configs').setup({ rainbow = { enable = { 'c', 'cpp' }, query = 'rainbow-parens', strategy = require('ts-rainbow').strategy['local'] } }) end,
       ['p00f/godbolt.nvim'] = function()
-        -- https://godbolt.org/api/compilers/
-        -- https://godbolt.org/api/libraries/
         require('godbolt').setup({
-          languages = {
-            cpp = { compiler = 'g122', options = {} },
-            c = { compiler = 'cg122', options = {} },
-            -- any_additional_filetype = { compiler = ..., options = ... },
-          },
-          quickfix = {
-            enable = false, -- whether to populate the quickfix list in case of errors
-            auto_open = false, -- whether to open the quickfix list in case of errors
-          },
-          url = 'https://godbolt.org', -- can be changed to a different godbolt instance
+          languages = { cpp = { compiler = 'vc2017_64', options = {} }, c = { compiler = 'vc2017_64', options = {} } },
+          url = 'http://localhost:10240', -- https://godbolt.org
         })
       end,
       ['sindrets/diffview.nvim'] = function() require('diffview').setup() end,
