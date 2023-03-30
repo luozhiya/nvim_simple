@@ -19,9 +19,7 @@ M.config = function(name)
       end,
       ['nvim-telescope/telescope.nvim'] = function()
         local telescope = require('telescope')
-        local opts = {}
-        opts = vim.tbl_deep_extend('error', opts, bindings.telescope())
-        telescope.setup(opts)
+        telescope.setup(bindings.telescope())
         telescope.load_extension('undo')
         telescope.load_extension('fzf')
         telescope.load_extension('frecency')
@@ -29,11 +27,7 @@ M.config = function(name)
         telescope.load_extension('projects')
       end,
       ['lewis6991/gitsigns.nvim'] = function() require('gitsigns').setup() end,
-      ['akinsho/toggleterm.nvim'] = function()
-        local opts = {}
-        opts = vim.tbl_deep_extend('error', opts, bindings.toggleterm())
-        require('toggleterm').setup(opts)
-      end,
+      ['akinsho/toggleterm.nvim'] = function() require('toggleterm').setup(bindings.toggleterm()) end,
       ['nvim-tree/nvim-tree.lua'] = function()
         local opts = {
           sort_by = 'case_sensitive',
@@ -96,11 +90,7 @@ M.config = function(name)
         })
       end,
       ['sindrets/diffview.nvim'] = function() require('diffview').setup() end,
-      ['nvim-pack/nvim-spectre'] = function()
-        local opts = {}
-        opts = vim.tbl_deep_extend('error', opts, bindings.spectre())
-        require('spectre').setup(opts)
-      end,
+      ['nvim-pack/nvim-spectre'] = function() require('spectre').setup(bindings.spectre()) end,
     }
   end
   return M.cached[name]

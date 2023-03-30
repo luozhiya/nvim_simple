@@ -132,7 +132,6 @@ M.copy_contain_directory = function() return M.copy_to_clipboard(M.to_native(M.g
 
 M.reveal_cwd_in_file_explorer = function() M.open(vim.fn.getcwd()) end
 M.reveal_file_in_file_explorer = function() M.open(M.get_contain_directory()) end
-M.reveal_in_tree = function() require('nvim-tree.api').tree.find_file({ open = true, update_root = true }) end
 M.open_with_default_app = function() M.open(M.get_current_buffer_name()) end
 
 return M

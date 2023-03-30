@@ -415,3 +415,13 @@ elseif has_words_before() then
 -- C = { function() require('base').reveal_cwd_in_file_explorer() end, 'Reveal CWD In File Explorer' },
 l = { '<cmd>Telescope live_grep<cr>', 'Find Text' },
 r = { '<cmd>Telescope oldfiles<cr>', 'Recently Used Files' },
+
+local opts = {}
+opts = vim.tbl_deep_extend('error', opts, bindings.toggleterm())
+
+blend  -- Window transparency (0-100)
+blend是混合的意思
+透明是通过把当前窗口和背景混合起来
+当blend设置为0，自然说明没有这种计算，也即是不透明
+
+M.reveal_in_tree = function() require('nvim-tree.api').tree.find_file({ open = true, update_root = true }) end

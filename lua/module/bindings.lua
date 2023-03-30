@@ -304,6 +304,7 @@ M.setup_code = function()
   M.map('v', '<a-l>', '<cmd>MoveHBlock(1)<cr>', { noremap = true, desc = 'Block: Move Right (move.nvim)' })
   -- View
   M.map('n', '<c-s-p>', '<cmd>Telescope commands<cr>', { noremap = true, desc = 'Command Palette... (telescope.nvim)' })
+  M.map('n', [[\]], '<cmd>Telescope commands<cr>', { noremap = true, desc = 'Command Palette... (telescope.nvim)' })
   -- Go
   M.map('n', '<c-p>', '<cmd>Telescope buffers show_all_buffers=true theme=get_dropdown previewer=false<cr>', { noremap = true, desc = 'Go To File... (telescope.nvim)' })
   -- Run
@@ -312,6 +313,7 @@ M.setup_code = function()
 end
 
 M.setup_comands = function()
+  vim.api.nvim_create_user_command('ToggleFullScreen', function() vim.g.neovide_fullscreen = vim.g.neovide_fullscreen == false end, { desc = 'Toggle Full Screen' })
   vim.api.nvim_create_user_command('ToggleWrap', function() vim.opt.wrap = vim.opt.wrap._value == false end, { desc = 'Toggle Wrap' })
   vim.api.nvim_create_user_command('ToggleFocusMode', function() vim.opt.laststatus = vim.opt.laststatus._value == 0 and 3 or 0 end, { desc = 'Toggle Focus Mode' })
   vim.api.nvim_create_user_command('SublimeMerge', function()
