@@ -22,7 +22,6 @@ M.config = function(name)
         telescope.setup(bindings.telescope())
         telescope.load_extension('undo')
         telescope.load_extension('fzf')
-        telescope.load_extension('frecency')
         telescope.load_extension('live_grep_args')
         telescope.load_extension('projects')
       end,
@@ -87,6 +86,7 @@ M.config = function(name)
         })
       end,
       ['nvim-pack/nvim-spectre'] = function() require('spectre').setup(bindings.spectre()) end,
+      ['lvimuser/lsp-inlayhints.nvim'] = function() require('lsp-inlayhints').setup({}) end,
     }
   end
   return M.cached[name]

@@ -76,7 +76,7 @@ function M.before()
     softtabstop = 0, -- length to use when editing text (eg. TAB and BS keys). (0 for ‘tabstop’, -1 for ‘shiftwidth’)
     shiftround = true, -- round indentation to multiples of 'shiftwidth' when shifting text
     smartindent = true, -- Insert indents automatically
-    cinoptions = vim.opt.cinoptions:append('g0'), -- gN. See https://neovim.io/doc/user/indent.html#cinoptions-values
+    cinoptions = vim.opt.cinoptions:append({ 'g0', 'N-s', ':0', 'E-s' }), -- gN. See https://neovim.io/doc/user/indent.html#cinoptions-values
     synmaxcol = 200, -- don't syntax-highlight long lines
     ignorecase = true, -- Ignore case
     smartcase = true, -- Don't ignore case with capitals

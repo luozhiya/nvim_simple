@@ -9,7 +9,6 @@ return {
   { 'nvim-telescope/telescope.nvim', cmd = { 'Telescope' }, config = config('nvim-telescope/telescope.nvim') },
   { 'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' },
   { 'debugloop/telescope-undo.nvim' },
-  { 'nvim-telescope/telescope-frecency.nvim' },
   { 'nvim-telescope/telescope-live-grep-args.nvim' },
   { 'stevearc/aerial.nvim', config = config('stevearc/aerial.nvim') },
   { 'ahmedkhalf/project.nvim', event = { 'VeryLazy' }, config = config('ahmedkhalf/project.nvim') },
@@ -45,6 +44,6 @@ return {
   { 'nvim-pack/nvim-spectre', config = config('nvim-pack/nvim-spectre') },
   -- LSP Core
   { 'neovim/nvim-lspconfig', ft = { 'c', 'cpp', 'lua' }, config = require('module.lsp').setup, dependencies = { 'j-hui/fidget.nvim', 'ray-x/lsp_signature.nvim' } },
-  { 'p00f/clangd_extensions.nvim' },
+  { 'lvimuser/lsp-inlayhints.nvim', event = 'LspAttach', config = config('lvimuser/lsp-inlayhints.nvim') },
   { 'folke/neodev.nvim' },
 }

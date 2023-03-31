@@ -437,3 +437,18 @@ M.reveal_in_tree = function() require('nvim-tree.api').tree.find_file({ open = t
   ['lukas-reineke/indent-blankline.nvim'] = function() require('indent_blankline').setup() end,
   
   ['sindrets/diffview.nvim'] = function() require('diffview').setup() end,  
+
+
+{ 'nvim-telescope/telescope-frecency.nvim' },
+telescope.load_extension('frecency')
+
+trying to get preamble for non-added document
+重启一下LSP可以解决问题
+
+a = { '<cmd>ClangAST<cr>', 'Clang AST' },
+t = { '<cmd>ClangdTypeHierarchy<cr>', 'Clang Type Hierarchy' },
+h = { '<cmd>ClangdSwitchSourceHeader<cr>', 'Switch C/C++ header/source' },
+m = { '<cmd>ClangdMemoryUsage<cr>', 'Clangd Memory Usage' },
+
+require('clangd_extensions').setup({ server = { filetypes = { 'c', 'cpp' }, on_attach = lsp_on_attach, capabilities = lsp_capabilities } })
+{ 'p00f/clangd_extensions.nvim' },
