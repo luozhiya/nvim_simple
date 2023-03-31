@@ -137,6 +137,9 @@ https://vim.fandom.com/wiki/Map_semicolon_to_colon
 https://stackoverflow.com/questions/73738932/remapped-colon-key-not-show-command-line-mode-immediately
 https://stackoverflow.com/questions/9001337/vim-split-bar-styling
 https://vi.stackexchange.com/questions/11025/passing-visual-range-to-a-command-as-its-argument
+https://neovim.io/doc/user/indent.html#cinoptions-values
+https://vim-jp.org/vimdoc-en/indent.html
+https://vimhelp.org/indent.txt.html#indent.txt
 
 Lua
 ---

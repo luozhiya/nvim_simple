@@ -22,7 +22,6 @@ M.config = function(name)
         telescope.setup(bindings.telescope())
         telescope.load_extension('undo')
         telescope.load_extension('fzf')
-        telescope.load_extension('frecency')
         telescope.load_extension('live_grep_args')
         telescope.load_extension('projects')
       end,

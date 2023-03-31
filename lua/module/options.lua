@@ -21,12 +21,7 @@ function M.before()
   vim.g.loaded_perl_provider = 0
   vim.g.loaded_node_provider = 0
 
-	vim.g.did_install_default_menus = 1
-	vim.g.did_install_syntax_menu = 1
-  vim.g.netrw_liststyle = 3
-
   local disabled_built_ins = {
-    'syntax_completion',
     'gzip',
     'man',
     'matchit',
@@ -39,9 +34,6 @@ function M.before()
     'netrwPlugin',
     'netrw',
     'spellfile_plugin',
-    'vimball',
-    'vimballPlugin',
-    'sql_completion',
     '2html_plugin',
   }
   for _, v in ipairs(disabled_built_ins) do
@@ -74,7 +66,7 @@ function M.before()
     softtabstop = 0, -- length to use when editing text (eg. TAB and BS keys). (0 for ‘tabstop’, -1 for ‘shiftwidth’)
     shiftround = true, -- round indentation to multiples of 'shiftwidth' when shifting text
     smartindent = true, -- Insert indents automatically
-    cinoptions = vim.opt.cinoptions:append('g0'), -- gN. See https://neovim.io/doc/user/indent.html#cinoptions-values
+    cinoptions = vim.opt.cinoptions:append({ 'g0', 'N-s', ':0', 'E-s' }), -- gN. See https://neovim.io/doc/user/indent.html#cinoptions-values
     synmaxcol = 200, -- don't syntax-highlight long lines
     ignorecase = true, -- Ignore case
     smartcase = true, -- Don't ignore case with capitals

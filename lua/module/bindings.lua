@@ -183,6 +183,7 @@ M.wk = function(wk)
       n = { function() _any_toggle('nnn') end, 'nnn' },
       b = { function() _any_toggle('btop') end, 'btop' },
       t = { function() _any_toggle('htop') end, 'htop' },
+      p = { function() _any_toggle('python') end, 'python' },
       s = { '<cmd>SublimeMerge<cr>', 'Sublime Merge' },
     },
     s = {
@@ -202,7 +203,7 @@ M.wk = function(wk)
       s = { '<cmd>Telescope find_files theme=get_dropdown previewer=false<cr>', 'Find files' },
       l = { '<cmd>Telescope live_grep_args<cr>', 'Find Text Args' },
       p = { '<cmd>Telescope projects<cr>', 'Projects' },
-      f = { '<cmd>Telescope frecency<cr>', 'Mozilla Frecency Algorithm' },
+      f = { '<cmd>Telescope oldfiles<cr>', 'Frecency Files' },
       u = { '<cmd>Telescope undo bufnr=0<cr>', 'Undo Tree' },
       o = { function() require('base').open_with_default_app() end, 'Open With Default APP' },
       r = { function() require('base').reveal_file_in_file_explorer() end, 'Reveal In File Explorer' },
@@ -278,21 +279,15 @@ M.setup_code = function()
   M.map('v', '<', '<gv', { noremap = true, desc = 'deIndent Continuously' })
   M.map('v', '>', '>gv', { noremap = true, desc = 'Indent Continuously' })
   -- File
-  M.map('n', '<c-w>', '<cmd>CloseView<cr>', { desc = 'Close' })
+  M.map('n', '<c-q>', '<cmd>CloseView<cr>', { desc = 'Close' })
   M.map('n', '<c-n>', '<cmd>ene<cr>', { desc = 'New Text File' })
   -- Edit
-  M.map('n', 'cc', function() require('Comment.api').toggle.linewise.current() end, { desc = 'Comment Line (Comment.nvim)' })
-  M.map('x', 'cc', function()
-    local esc = vim.api.nvim_replace_termcodes('<ESC>', true, false, true)
-    vim.api.nvim_feedkeys(esc, 'nx', false)
-    require('Comment.api').toggle.linewise(vim.fn.visualmode())
-  end, { desc = 'Comment Line (Comment.nvim)' })
-  M.map('n', 'cb', function() require('Comment.api').toggle.blockwise.current() end, { desc = 'Comment Line (Comment.nvim)' })
-  M.map('x', 'cb', function()
-    local esc = vim.api.nvim_replace_termcodes('<ESC>', true, false, true)
-    vim.api.nvim_feedkeys(esc, 'nx', false)
-    require('Comment.api').toggle.blockwise(vim.fn.visualmode())
-  end, { desc = 'Comment Block (Comment.nvim)' })
+  M.map('n', '<a-c>', '<cmd>ToggleCaseSensitive<cr>')
+  M.map('n', '<c-/>', '<cmd>CommentLine<cr>')
+  M.map('n', 'cc', '<cmd>CommentLine<cr>', { desc = 'Comment Line (Comment.nvim)' })
+  M.map('x', 'cc', '<cmd>CommentLine<cr>', { desc = 'Comment Line (Comment.nvim)' })
+  M.map('n', 'cb', '<cmd>CommentBlock<cr>', { desc = 'Comment Block (Comment.nvim)' })
+  M.map('x', 'cb', '<cmd>CommentBlock<cr>', { desc = 'Comment Block (Comment.nvim)' })
   -- Selection
   M.map('n', '<a-j>', '<cmd>MoveLine(1)<cr>', { noremap = true, desc = 'Line: Move Up (move.nvim)' })
   M.map('n', '<a-k>', '<cmd>MoveLine(-1)<cr>', { noremap = true, desc = 'Line: Move Down (move.nvim)' })
@@ -313,24 +308,32 @@ M.setup_code = function()
 end
 
 M.setup_comands = function()
-  vim.api.nvim_create_user_command('ToggleFullScreen', function() vim.g.neovide_fullscreen = vim.g.neovide_fullscreen == false end, { desc = 'Toggle Full Screen' })
-  vim.api.nvim_create_user_command('ToggleWrap', function() vim.opt.wrap = vim.opt.wrap._value == false end, { desc = 'Toggle Wrap' })
-  vim.api.nvim_create_user_command('ToggleFocusMode', function() vim.opt.laststatus = vim.opt.laststatus._value == 0 and 3 or 0 end, { desc = 'Toggle Focus Mode' })
-  vim.api.nvim_create_user_command('SublimeMerge', function()
-    local Job = require('plenary.job')
-    Job:new({
-      command = 'sublime_merge',
-      args = { '-n', require('base').to_native(vim.fn.getcwd()) },
-    }):sync()
-  end, { desc = 'Sublime Merge' })
-  vim.api.nvim_create_user_command('CloseView', function()
+  local _any_comment = function(wise)
+    local mode = vim.api.nvim_get_mode().mode
+    if mode:find('n') then
+      wise.current()
+    elseif mode:find('V') then
+      vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<esc>', true, false, true), 'nx', false)
+      wise(vim.fn.visualmode())
+    end
+  end
+  local _close_view = function()
     local wins = vim.api.nvim_list_wins()
     if #wins == 1 then
       require('close_buffers').delete({ type = 'this' })
     else
       vim.api.nvim_win_close(0, true)
     end
-  end, { desc = 'Close View' })
+  end
+  vim.api.nvim_create_user_command('ToggleFullScreen', function() vim.g.neovide_fullscreen = vim.g.neovide_fullscreen == false end, { desc = 'Toggle Full Screen' })
+  vim.api.nvim_create_user_command('ToggleWrap', function() vim.opt.wrap = vim.opt.wrap._value == false end, { desc = 'Toggle Wrap' })
+  vim.api.nvim_create_user_command('ToggleFocusMode', function() vim.opt.laststatus = vim.opt.laststatus._value == 0 and 3 or 0 end, { desc = 'Toggle Focus Mode' })
+  vim.api.nvim_create_user_command('ToggleCaseSensitive', function() vim.opt.ignorecase = vim.opt.ignorecase._value == false end, { desc = 'Toggle Case Sensitive' })
+  vim.api.nvim_create_user_command('RemoveExclusiveORM', function() vim.cmd([[:%s/\r//g]]) end, { desc = 'Remove Exclusive ORM' })
+  vim.api.nvim_create_user_command('CommentLine', function() _any_comment(require('Comment.api').toggle.linewise) end, { desc = 'Comment Line' })
+  vim.api.nvim_create_user_command('CommentBlock', function() _any_comment(require('Comment.api').toggle.blockwise) end, { desc = 'Comment Block' })
+  vim.api.nvim_create_user_command('SublimeMerge', function() require('plenary.job'):new({ command = 'sublime_merge', args = { '-n', vim.fn.getcwd() } }):start() end, { desc = 'Sublime Merge' })
+  vim.api.nvim_create_user_command('CloseView', function() _close_view() end, { desc = 'Close View' })
 end
 
 M.setup_autocmd = function() end
