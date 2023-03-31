@@ -48,11 +48,7 @@ M.config = function(name)
         })
       end,
       ['ahmedkhalf/project.nvim'] = function() require('project_nvim').setup() end,
-      ['j-hui/fidget.nvim'] = function()
-        vim.cmd([[highlight FidgetTitle ctermfg=110 guifg=#0887c7]])
-        vim.cmd([[highlight FidgetTask ctermfg=110 guifg=#0887c7]])
-        require('fidget').setup({ text = { done = ' ' }, window = { blend = 0 } })
-      end,
+      ['j-hui/fidget.nvim'] = function() require('fidget').setup({ text = { done = ' ' }, window = { blend = 0 } }) end,
       ['ray-x/lsp_signature.nvim'] = function() require('lsp_signature').setup({ hint_prefix = ' ' }) end,
       ['hrsh7th/nvim-cmp'] = function()
         local cmp = require('cmp')
@@ -72,12 +68,6 @@ M.config = function(name)
           }),
         })
       end,
-      ['kkharji/sqlite.lua'] = function()
-        if require('base').is_windows() then
-          local nvim = 'nvim.exe'
-          vim.g.sqlite_clib_path = string.sub(vim.loop.exepath(nvim), 1, -(#nvim + 1)) .. 'sqlite3.dll'
-        end
-      end,
       ['HiPhish/nvim-ts-rainbow2'] = function() require('nvim-treesitter.configs').setup({ rainbow = { enable = { 'c', 'cpp' }, query = 'rainbow-parens', strategy = require('ts-rainbow').strategy['local'] } }) end,
       ['p00f/godbolt.nvim'] = function()
         require('godbolt').setup({
@@ -85,8 +75,10 @@ M.config = function(name)
           url = 'http://localhost:10240', -- https://godbolt.org
         })
       end,
-      ['nvim-pack/nvim-spectre'] = function() require('spectre').setup(bindings.spectre()) end,
-      ['lvimuser/lsp-inlayhints.nvim'] = function() require('lsp-inlayhints').setup({}) end,
+      ['lvimuser/lsp-inlayhints.nvim'] = function()
+        local opts = { inlay_hints = { parameter_hints = { remove_colon_start = true }, type_hints = { prefix = ' ', remove_colon_start = true } } }
+        require('lsp-inlayhints').setup(opts)
+      end,
     }
   end
   return M.cached[name]

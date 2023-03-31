@@ -111,6 +111,15 @@ M.wk = function(wk)
     })
     run:toggle()
   end
+  local _copy_content = function() return M.copy_to_clipboard(M.get_content()) end
+  local _copy_path = function() return M.copy_to_clipboard(M.to_native(M.get_path())) end
+  local _copy_relative_path = function() return M.copy_to_clipboard(M.to_native(M.get_relative_path())) end
+  local _copy_name = function() return M.copy_to_clipboard(M.name()) end
+  local _copy_name_without_ext = function() return M.copy_to_clipboard(M.get_name_without_ext()) end
+  local _copy_contain_directory = function() return M.copy_to_clipboard(M.to_native(M.get_contain_directory())) end
+  local _reveal_cwd_in_file_explorer = function() M.open(vim.fn.getcwd()) end
+  local _reveal_file_in_file_explorer = function() M.open(M.get_contain_directory()) end
+  local _open_with_default_app = function() M.open(M.get_current_buffer_name()) end
   -- stylua: ignore start
   local wk_ve = function()
     return {
@@ -150,9 +159,6 @@ M.wk = function(wk)
     v = {
       name = 'Vim',
       i = { '<cmd>Lazy<cr>', 'Lazy Dashboard' },
-      p = { '<cmd>Lazy profile<cr>', 'Lazy Profile' },
-      u = { '<cmd>Lazy update<cr>', 'Lazy Update' },
-      c = { '<cmd>Lazy clean<cr>', 'Lazy Clean' },
       e = wk_ve(),
     },
     l = {
@@ -183,15 +189,12 @@ M.wk = function(wk)
       p = { function() _any_toggle('python') end, 'python' },
       s = { '<cmd>SublimeMerge<cr>', 'Sublime Merge' },
     },
-    s = {
-      name = 'Search',
-      f = { function() require('spectre').open_file_search() end, 'Search File' },
-      p = { function() require('spectre').open() end, 'Search Project' },
-    },
     e = {
       name = 'Edit',
       f = { '<cmd>ToggleFocusMode<cr>', 'Focus Mode' },
       o = { '<cmd>BWipeout other<cr>', 'Only Current Buffer' },
+      w = { '<cmd>ToggleWrap<cr>', 'Toggle Wrap' },
+      c = { '<cmd>ToggleCaseSensitive<cr>', 'Toggle Case Sensitive' },
     },
     f = {
       name = 'File Explorer',
@@ -202,17 +205,17 @@ M.wk = function(wk)
       p = { '<cmd>Telescope projects<cr>', 'Projects' },
       f = { '<cmd>Telescope oldfiles<cr>', 'Frecency Files' },
       u = { '<cmd>Telescope undo bufnr=0<cr>', 'Undo Tree' },
-      o = { function() require('base').open_with_default_app() end, 'Open With Default APP' },
-      r = { function() require('base').reveal_file_in_file_explorer() end, 'Reveal In File Explorer' },
+      o = { function() _open_with_default_app() end, 'Open With Default APP' },
+      r = { function() _reveal_file_in_file_explorer() end, 'Reveal In File Explorer' },
     },
     c = {
       name = 'Copy',
-      c = { function() require('base').copy_content() end, 'Copy Content' },
-      n = { function() require('base').copy_name() end, 'Copy File Name' },
-      e = { function() require('base').copy_name_without_ext() end, 'Copy File Name Without Ext' },
-      d = { function() require('base').copy_contain_directory() end, 'Copy Contain Directory' },
-      p = { function() require('base').copy_path() end, 'Copy Path' },
-      r = { function() require('base').copy_relative_path() end, 'Copy Relative Path' },
+      c = { function() _copy_content() end, 'Copy Content' },
+      n = { function() _copy_name() end, 'Copy File Name' },
+      e = { function() _copy_name_without_ext() end, 'Copy File Name Without Ext' },
+      d = { function() _copy_contain_directory() end, 'Copy Contain Directory' },
+      p = { function() _copy_path() end, 'Copy Path' },
+      r = { function() _copy_relative_path() end, 'Copy Relative Path' },
     },
   }
   wk.register(n, { mode = 'n', prefix = '<leader>' })
@@ -333,17 +336,6 @@ M.setup_comands = function()
   vim.api.nvim_create_user_command('CloseView', function() _close_view() end, { desc = 'Close View' })
 end
 
-M.setup_autocmd = function()
-  vim.api.nvim_create_autocmd('LspAttach', {
-    group = vim.api.nvim_create_augroup('LspAttach_inlayhints', {}),
-    callback = function(args)
-      if not (args.data and args.data.client_id) then
-        return
-      end
-      local client = vim.lsp.get_client_by_id(args.data.client_id)
-      require('lsp-inlayhints').on_attach(client, args.buf)
-    end,
-  })
-end
+M.setup_autocmd = function() end
 
 return M

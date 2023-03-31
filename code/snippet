@@ -452,3 +452,38 @@ m = { '<cmd>ClangdMemoryUsage<cr>', 'Clangd Memory Usage' },
 
 require('clangd_extensions').setup({ server = { filetypes = { 'c', 'cpp' }, on_attach = lsp_on_attach, capabilities = lsp_capabilities } })
 { 'p00f/clangd_extensions.nvim' },
+
+p = { '<cmd>Lazy profile<cr>', 'Lazy Profile' },
+u = { '<cmd>Lazy update<cr>', 'Lazy Update' },
+c = { '<cmd>Lazy clean<cr>', 'Lazy Clean' },
+
+s = {
+  name = 'Search',
+  f = { function() require('spectre').open_file_search() end, 'Search File' },
+  p = { function() require('spectre').open() end, 'Search Project' },
+},
+['nvim-pack/nvim-spectre'] = function() require('spectre').setup(bindings.spectre()) end,
+{ 'nvim-pack/nvim-spectre', config = config('nvim-pack/nvim-spectre') },
+
+['kkharji/sqlite.lua'] = function()
+  if require('base').is_windows() then
+    local nvim = 'nvim.exe'
+    vim.g.sqlite_clib_path = string.sub(vim.loop.exepath(nvim), 1, -(#nvim + 1)) .. 'sqlite3.dll'
+  end
+end,
+{ 'kkharji/sqlite.lua', config = config('kkharji/sqlite.lua') },
+
+vim.cmd([[highlight FidgetTitle ctermfg=110 guifg=#0887c7]])
+vim.cmd([[highlight FidgetTask ctermfg=110 guifg=#0887c7]])
+
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('LspAttach_inlayhints', {}),
+  callback = function(args)
+    if not (args.data and args.data.client_id) then
+      return
+    end
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    require('lsp-inlayhints').on_attach(client, args.buf)
+  end,
+})
+{ 'lvimuser/lsp-inlayhints.nvim', event = 'LspAttach', config = config('lvimuser/lsp-inlayhints.nvim') },

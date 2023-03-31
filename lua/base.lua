@@ -123,15 +123,4 @@ M.get_contain_directory = function()
   return i and string.sub(path, 1, #path - i + 1) or nil
 end
 
-M.copy_content = function() return M.copy_to_clipboard(M.get_content()) end
-M.copy_path = function() return M.copy_to_clipboard(M.to_native(M.get_path())) end
-M.copy_relative_path = function() return M.copy_to_clipboard(M.to_native(M.get_relative_path())) end
-M.copy_name = function() return M.copy_to_clipboard(M.name()) end
-M.copy_name_without_ext = function() return M.copy_to_clipboard(M.get_name_without_ext()) end
-M.copy_contain_directory = function() return M.copy_to_clipboard(M.to_native(M.get_contain_directory())) end
-
-M.reveal_cwd_in_file_explorer = function() M.open(vim.fn.getcwd()) end
-M.reveal_file_in_file_explorer = function() M.open(M.get_contain_directory()) end
-M.open_with_default_app = function() M.open(M.get_current_buffer_name()) end
-
 return M
