@@ -44,6 +44,6 @@ return {
   { 'nvim-pack/nvim-spectre', config = config('nvim-pack/nvim-spectre') },
   -- LSP Core
   { 'neovim/nvim-lspconfig', ft = { 'c', 'cpp', 'lua' }, config = require('module.lsp').setup, dependencies = { 'j-hui/fidget.nvim', 'ray-x/lsp_signature.nvim' } },
-  { 'p00f/clangd_extensions.nvim' },
+  { 'lvimuser/lsp-inlayhints.nvim', event = 'LspAttach', config = config('lvimuser/lsp-inlayhints.nvim') },
   { 'folke/neodev.nvim' },
 }

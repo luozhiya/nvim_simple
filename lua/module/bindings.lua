@@ -158,10 +158,7 @@ M.wk = function(wk)
     l = {
       name = 'LSP',
       i = { '<cmd>LspInfo<cr>', 'Info' },
-      a = { '<cmd>ClangAST<cr>', 'Clang AST' },
-      t = { '<cmd>ClangdTypeHierarchy<cr>', 'Clang Type Hierarchy' },
       h = { '<cmd>ClangdSwitchSourceHeader<cr>', 'Switch C/C++ header/source' },
-      m = { '<cmd>ClangdMemoryUsage<cr>', 'Clangd Memory Usage' },
       f = { '<cmd>lua vim.lsp.buf.format{async=true}<cr>', 'Code Format' },
       o = { '<cmd>AerialToggle<cr>', 'Outline' },
       x = { '<cmd>TroubleToggle<cr>', 'Trouble Toggle' },
@@ -336,6 +333,17 @@ M.setup_comands = function()
   vim.api.nvim_create_user_command('CloseView', function() _close_view() end, { desc = 'Close View' })
 end
 
-M.setup_autocmd = function() end
+M.setup_autocmd = function()
+  vim.api.nvim_create_autocmd('LspAttach', {
+    group = vim.api.nvim_create_augroup('LspAttach_inlayhints', {}),
+    callback = function(args)
+      if not (args.data and args.data.client_id) then
+        return
+      end
+      local client = vim.lsp.get_client_by_id(args.data.client_id)
+      require('lsp-inlayhints').on_attach(client, args.buf)
+    end,
+  })
+end
 
 return M

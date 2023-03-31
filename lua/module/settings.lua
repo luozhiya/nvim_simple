@@ -86,6 +86,7 @@ M.config = function(name)
         })
       end,
       ['nvim-pack/nvim-spectre'] = function() require('spectre').setup(bindings.spectre()) end,
+      ['lvimuser/lsp-inlayhints.nvim'] = function() require('lsp-inlayhints').setup({}) end,
     }
   end
   return M.cached[name]
