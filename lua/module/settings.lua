@@ -6,7 +6,7 @@ M.cached = {}
 M.config = function(name)
   if vim.tbl_isempty(M.cached) then
     M.cached = {
-      ['nvim-treesitter/nvim-treesitter'] = function() require('nvim-treesitter.configs').setup({ ensure_installed = { 'cpp', 'c', 'lua', 'cmake', 'markdown', 'markdown_inline' } }) end,
+      ['nvim-treesitter/nvim-treesitter'] = function() require('nvim-treesitter.configs').setup({ ensure_installed = { 'cpp', 'c', 'lua', 'cmake' } }) end,
       ['stevearc/aerial.nvim'] = function()
         local opts = { backends = { 'treesitter', 'lsp' }, layout = { max_width = { 60, 0.4 } } }
         opts = vim.tbl_deep_extend('error', opts, bindings.aerial())
@@ -44,7 +44,7 @@ M.config = function(name)
       end,
       ['stevearc/dressing.nvim'] = function()
         require('dressing').setup({
-          input = { enabled = true, prompt_align = 'center', relative = 'editor', prefer_width = 0.6, win_options = { winblend = 0 } }, -- Window transparency (0-100)
+          input = { enabled = true, prompt_align = 'center', relative = 'editor', prefer_width = 0.6, win_options = { winblend = 0 } },
           select = { enabled = true, backend = { 'builtin' } },
         })
       end,
@@ -83,7 +83,7 @@ M.config = function(name)
       ['p00f/godbolt.nvim'] = function()
         require('godbolt').setup({
           languages = { cpp = { compiler = 'clangdefault', options = {} }, c = { compiler = 'cclangdefault', options = {} } }, -- vc2017_64
-          url = 'http://localhost:10240', -- https://godbolt.org -- http://localhost:10240
+          url = 'http://localhost:10240', -- https://godbolt.org
         })
       end,
       ['nvim-pack/nvim-spectre'] = function() require('spectre').setup(bindings.spectre()) end,
