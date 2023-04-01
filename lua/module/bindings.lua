@@ -86,16 +86,6 @@ M.telescope = function()
   -- stylua: ignore end
 end
 
-M.spectre = function()
-  return { mapping = {
-    ['close_search'] = {
-      map = '<c-w>',
-      cmd = '<cmd>close<cr>',
-      desc = 'close',
-    },
-  } }
-end
-
 M.wk = function(wk)
   function _any_toggle(cmd)
     local run = require('toggleterm.terminal').Terminal:new({
@@ -183,11 +173,9 @@ M.wk = function(wk)
       f = { '<cmd>ToggleTerm direction=float<cr>', 'Terminal Floating' },
       l = { function() _any_toggle('lazygit') end, 'Lazygit' },
       g = { function() _any_toggle('gitui') end, 'GitUI' },
-      n = { function() _any_toggle('nnn') end, 'nnn' },
       b = { function() _any_toggle('btop') end, 'btop' },
       t = { function() _any_toggle('htop') end, 'htop' },
       p = { function() _any_toggle('python') end, 'python' },
-      s = { '<cmd>SublimeMerge<cr>', 'Sublime Merge' },
     },
     e = {
       name = 'Edit',
@@ -195,9 +183,12 @@ M.wk = function(wk)
       o = { '<cmd>BWipeout other<cr>', 'Only Current Buffer' },
       w = { '<cmd>ToggleWrap<cr>', 'Toggle Wrap' },
       c = { '<cmd>ToggleCaseSensitive<cr>', 'Toggle Case Sensitive' },
+      m = { '<cmd>SublimeMerge<cr>', 'Sublime Merge' },
+      s = { '<cmd>SublimeText<cr>', 'Sublime Text' },      
     },
     f = {
       name = 'File Explorer',
+      n = { function() vim.cmd('NnnPicker ' .. require('base').get_contain_directory()) end, 'nnn Explorer' },
       e = { '<cmd>NvimTreeFindFile<cr>', 'Tree Explorer' },
       t = { '<cmd>NvimTreeToggle<cr>', 'Tree Explorer' },
       s = { '<cmd>Telescope find_files theme=get_dropdown previewer=false<cr>', 'Find files' },
@@ -332,7 +323,8 @@ M.setup_comands = function()
   vim.api.nvim_create_user_command('RemoveExclusiveORM', function() vim.cmd([[:%s/\r//g]]) end, { desc = 'Remove Exclusive ORM' })
   vim.api.nvim_create_user_command('CommentLine', function() _any_comment(require('Comment.api').toggle.linewise) end, { desc = 'Comment Line' })
   vim.api.nvim_create_user_command('CommentBlock', function() _any_comment(require('Comment.api').toggle.blockwise) end, { desc = 'Comment Block' })
-  vim.api.nvim_create_user_command('SublimeMerge', function() require('plenary.job'):new({ command = 'sublime_merge', args = { '-n', vim.fn.getcwd() } }):start() end, { desc = 'Sublime Merge' })
+  vim.api.nvim_create_user_command('SublimeMerge', function() require('plenary.job'):new({ command = 'sublime_merge', args = { '-n', vim.fn.getcwd() } }):sync() end, { desc = 'Sublime Merge' })
+  vim.api.nvim_create_user_command('SublimeText', function() require('plenary.job'):new({ command = 'sublime_text', args = { '-n', vim.fn.getcwd() } }):sync() end, { desc = 'Sublime Text' })  
   vim.api.nvim_create_user_command('CloseView', function() _close_view() end, { desc = 'Close View' })
 end
 

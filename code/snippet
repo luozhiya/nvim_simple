@@ -487,3 +487,25 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 { 'lvimuser/lsp-inlayhints.nvim', event = 'LspAttach', config = config('lvimuser/lsp-inlayhints.nvim') },
+
+local opts = { inlay_hints = { parameter_hints = { remove_colon_start = true }, type_hints = { prefix = ' ', remove_colon_start = true } } }
+
+['j-hui/fidget.nvim'] = function() require('fidget').setup({ text = { done = ' ' }, window = { blend = 0 } }) end,
+['ray-x/lsp_signature.nvim'] = function() require('lsp_signature').setup({ hint_prefix = ' ' }) end,
+
+n = { function() _any_toggle('nnn') end, 'nnn' },
+
+-- n = { function() require('nnn').toggle('picker', { require('base').get_contain_directory() }) end, 'nnn Explorer' },
+-- n = { '<cmd>NnnPicker require("base").get_contain_directory()<cr>', 'nnn Explorer' },
+n = { function() vim.cmd('NnnPicker ' .. require('base').get_contain_directory()) end, 'nnn Explorer' },
+
+M.spectre = function()
+  return { mapping = {
+    ['close_search'] = {
+      map = '<c-w>',
+      cmd = '<cmd>close<cr>',
+      desc = 'close',
+    },
+  } }
+end
+

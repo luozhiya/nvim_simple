@@ -44,12 +44,12 @@ M.config = function(name)
       ['stevearc/dressing.nvim'] = function()
         require('dressing').setup({
           input = { enabled = true, prompt_align = 'center', relative = 'editor', prefer_width = 0.6, win_options = { winblend = 0 } },
-          select = { enabled = true, backend = { 'builtin' } },
+          select = { enabled = true, backend = { 'telescope' } },
         })
       end,
       ['ahmedkhalf/project.nvim'] = function() require('project_nvim').setup() end,
-      ['j-hui/fidget.nvim'] = function() require('fidget').setup({ text = { done = ' ' }, window = { blend = 0 } }) end,
-      ['ray-x/lsp_signature.nvim'] = function() require('lsp_signature').setup({ hint_prefix = ' ' }) end,
+      ['j-hui/fidget.nvim'] = function() require('fidget').setup({ window = { blend = 0 } }) end,
+      ['ray-x/lsp_signature.nvim'] = function() require('lsp_signature').setup({ hint_prefix = '< ' }) end,
       ['hrsh7th/nvim-cmp'] = function()
         local cmp = require('cmp')
         local opts = {
@@ -76,9 +76,10 @@ M.config = function(name)
         })
       end,
       ['lvimuser/lsp-inlayhints.nvim'] = function()
-        local opts = { inlay_hints = { parameter_hints = { remove_colon_start = true }, type_hints = { prefix = ' ', remove_colon_start = true } } }
+        local opts = { inlay_hints = { parameter_hints = { prefix = '< ', remove_colon_start = true }, type_hints = { prefix = '< ', remove_colon_start = true } } }
         require('lsp-inlayhints').setup(opts)
       end,
+      ['luukvbaal/nnn.nvim'] = function() require('nnn').setup() end,
     }
   end
   return M.cached[name]
